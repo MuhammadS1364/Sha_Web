@@ -1,20 +1,30 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="card mx-auto mt-5" style="max-width: 400px;">
-    <div class="card-body">
-        <h4 class="card-title text-center">Login</h4>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control">
-            </div>
-            <button class="btn btn-primary w-100">Login</button>
-        </form>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to shaad</title>
+</head>
+
+<body>
+    <div class="card mx-auto mt-5" style="max-width: 400px;">
+        <div class="card-body">
+            <h4 class="card-title text-center">Login</h4>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control">
+                </div>
+                <button class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
     </div>
-</div>
-{% endblock %}
+</body>
+
+</html>

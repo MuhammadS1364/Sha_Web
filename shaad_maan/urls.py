@@ -20,4 +20,6 @@ from admin_panel import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('log/', views.login_view, name="login_view"),
+    path('newUser/', views.newUser, name="newUser"),
+    path('addStn/', views.add_student, name="add_student"),
 ]
