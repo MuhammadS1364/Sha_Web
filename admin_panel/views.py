@@ -20,12 +20,31 @@ def login_view (request):
 
 def newUser (request):
     if request.method == 'POST':
-        userName = request.POST.get("username")
-        userPass = request.POST.get("password")
-        new_studnet = User.objects.create_user(username=userName, password=userPass)
-        new_studnet.save()
+        userName = request.POST.get("userName")
+        userEmail = request.POST.get("userEmail")
+        userPass = request.POST.get("userPass")
+        userRole = request.POST.get("role")
+        new_user = User.objects.create_user(
+            username = userName, 
+            email = userEmail,
+            password = userPass
+        )
+        new_user.save()
+        if userRole == "Admin":
+            new_user.is_superuser = True
+            new_user.is_staff = True
+
+        elif userRole == 'Wing':
+            new_user.is_staff = True
+
+        else:
+            new_user.is_superuser = False
+            new_user.is_staff = False
+            
+        new_user.save()
+
         return HttpResponse("yes user created........")
-    return render(request, "login_user.html")
+    return render(request, "addUser.html")
 
 from .forms import *
 
