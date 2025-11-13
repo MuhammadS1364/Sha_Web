@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-m8)+((6w-_#-*%6d&!^_lo*juv83*8_@cj7an1ad*j+(dl##do
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+import os
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'center_panel',
+    'admin_panel',
+    'wing_panel',
+    'students_panel',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +58,7 @@ ROOT_URLCONF = 'shaad_maan.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
