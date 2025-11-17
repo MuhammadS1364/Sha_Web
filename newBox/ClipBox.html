@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
         }
+        @import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&display=swap');
         body{
             width: 100%;
             height: 100vh;
@@ -19,10 +20,15 @@
             align-items: center;
             background: #f3e0e0;
         }
+        h2,h4,button {
+        font-family: "Stack Sans Text", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: weight;
+        font-style: normal;
+        }
         .container{
             width: 650px;
             height: 400px;
-            /* padding: 3.5em 2em; */
             background: rgba(188, 219, 240, 0.925);
             border: 10px solid #fff;
             border-radius: 7px;
@@ -62,8 +68,8 @@
         }
     </style>
     <div class="container">
-        <h2>Join Our Learning Community</h2>
-        <h4>Discove a World of Knowledge</h4>
+        <h2 class="head">Join Our Learning Community</h2>
+        <h4 class="head">Discove a World of Knowledge</h4>
         <div class="btns">
             <button type="button" class="black-btn">Get started Free</button>
             <button type="button">Book A Deno</button>

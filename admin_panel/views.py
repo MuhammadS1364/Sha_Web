@@ -34,11 +34,11 @@ def login_view (request):
 
     return render(request, "login_user.html")
 
+
+
 def logout_view(request):
     logout(request)
     return redirect("login_view")
-
-
 
 
 # Creating New User for Administration 
@@ -111,13 +111,16 @@ def add_student(request):
         if new_stn_form.is_valid():
 
 
+            # Getting the New User Object
+            newStn_Obj = User.objects.get(username = new_stn_user)
+
             new_Student = new_stn_form.save(commit=False)
-            new_Student.user_Stn = new_stn_user
+            new_Student.user_Stn = newStn_Obj
             new_Student.save()
 
 
             # Return their data to the DashBoard 
-            login(request, new_stn_user)
+            login(request, newStn_Obj)
             return redirect ("Student_DashBoard")
         else:
             return HttpResponse("Student Not Added.........")
@@ -136,12 +139,17 @@ def add_wing(request):
         new_wing_user = request.POST.get("wing_user")
 
         if new_stn_form.is_valid():
+
+
+            # Getting the New User Object
+            newWing_Obj = User.objects.get(username = new_wing_user)
+
             new_Wing = new_stn_form.save(commit=False)
-            new_Wing.wing_user = new_wing_user
+            new_Wing.wing_user = newWing_Obj
             new_Wing.save()
 
             # Return their data to the DashBoard 
-            login(request, new_wing_user)
+            login(request, newWing_Obj)
             return redirect ("Wing_DashBoard")
         else:
             return HttpResponse("Wing Not Added.........")
