@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaadMaan | {{request.user}}</title>
+</head>
+
+<body>
+    <h1>Wel Come to The Admin DashBoard </h1>
+    <h3>We Come {{request.user}}</h3>
+
+    <!-- table for All User  -->
+    <table border="1">
+        <tr>
+            <th>username</th>
+            <th>userEmail</th>
+            <th>userRole</th>
+        </tr>
+        {% for user in all_Users %}
+        <tr>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            {% if user.is_superuser %}
+            <td>Admin</td>
+            {% elif user.is_staff %}
+            <td>Wing</td>
+            {% else %}
+            <td>Student</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+    </table> <br> <br>
+
+    <!-- Table for Wing  -->
+
+    <table border="1">
+        <tr>
+            <th>wing_user</th>
+            <th>Wing_Code</th>
+            <th>Wing_Name</th>
+            <th>Chair_Person</th>
+            <th>Assist_Person</th>
+            <th>wing_logo</th>
+        </tr>
+        {% for wings in all_Wings %}
+        <tr>
+            <td>{{wings.wing_user}}</td>
+            <td>{{wings.Wing_Code}}</td>
+            <td>{{wings.Wing_Name}}</td>
+            <td>{{wings.Wing_Email}}</td>
+            <td>{{wings.Chair_Person}}</td>
+            <td>{{wings.Assist_Person}}</td>
+            <td>
+                <img src="{{wings.wing_logo.url}}" alt="" width="100px">
+            </td>
+        </tr>
+        {% endfor %}
+    </table> <br> <br>
+
+    <!-- table for students  -->
+
+    <table border="1">
+        <tr>
+            <th>user_Stn</th>
+            <th>Student_Add_no</th>
+            <th>Student_Name</th>
+            <th>Student_Email</th>
+            <th>Student_Phone</th>
+            <th>Student_Position</th>
+            <th>Student_Goal</th>
+            <th>Student_Dob</th>
+            <th>Student_Father</th>
+            <th>Student_Address</th>
+            <th>Student_Img</th>
+        </tr>
+        {% for stn in all_students %}
+        <tr>
+            <td>{{stn.user_Stn}}</td>
+            <td>{{stn.Student_Add_no}}</td>
+            <td>{{stn.Student_Name}}</td>
+            <td>{{stn.Student_Email}}</td>
+            <td>{{stn.Student_Phone}}</td>
+            <td>{{stn.Student_Position}}</td>
+            <td>{{stn.Student_Goal}}</td>
+            <td>{{stn.Student_Dob}}</td>
+            <td>{{stn.Student_Father}}</td>
+            <td>{{stn.Student_Address}}</td>
+            <td>
+                <img src="{{stn.Student_Img.url}}" alt="" width="100px">
+            </td>
+        </tr>
+        {% endfor %}
+    </table> <br> <br>
+
+    <a href="{% url 'logout_view' %}">Log Out </a>
+
+</body>
+
+</html>

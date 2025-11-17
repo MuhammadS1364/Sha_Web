@@ -18,8 +18,17 @@ def login_view (request):
         userPass = request.POST.get("password")
         act_user = authenticate(request, username = userName, password = userPass)
         if act_user is not None:
+
             login(request, act_user)
-            return HttpResponse(f"Hello, {request.user}!")
+
+            # log in Redirect 
+            if act_user.is_superuser:
+                return redirect("Admin_DashBoard")
+            elif act_user.is_staff:
+                return redirect("Wing_DashBoard")
+            else:
+                return redirect("Student_DashBoard")
+
         else:
             return HttpResponse(f"Hello, {request.user}!, login failed......")
 
@@ -35,10 +44,10 @@ def logout_view(request):
 # Creating New User for Administration 
 
 def newUser (request):
+
     if request.method == 'POST':
 
     #    form = User(request.POST, request.FILES)
-
        userName = request.POST.get('userName')
        userEmail = request.POST.get('userEmail')
        userPass1 = request.POST.get('userPass1')
@@ -109,16 +118,30 @@ def newUser (request):
 # Admin Dash Board
 
 def Admin_DashBoard(request):
-    return render(request, "admin_dashboard.html")
+
+    # Rendering All The Data to Admin DashBoard
+
+    all_Users = User.objects.all()
+    all_students = Student_Model.objects.all()
+    all_Wings = Wing_Model.objects.all()
+
+    context = {
+       "all_Users" :  all_Users,
+       "all_students" :  all_students,
+       "all_Wings" :  all_Wings,
+    }
+    return render(request, "admin_dashboard.html", context)
 
 # Wing Dash Board
 
 def Wing_DashBoard(request):
+    
     return render(request, "student_dashboard.html")
 
 
 # Student DashBoard
 
 def Student_DashBoard(request):
+    
     return render(request, "wing_dashboard.html")
 
