@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clip Box</title>
+</head>
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f3e0e0;
+        }
+        .container{
+            width: 650px;
+            height: 400px;
+            /* padding: 3.5em 2em; */
+            background: rgba(188, 219, 240, 0.925);
+            border: 10px solid #fff;
+            border-radius: 7px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+        h2{
+            font-size: 2.5em;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        h4{
+            font-size: 20px;
+            font-family:Georgia, 'Times New Roman', Times, serif ;
+            text-align: center;
+        }
+
+        button{
+            padding: 15px;
+            margin: 0 20px;
+            text-align: center;
+            font-size: 22px;
+            gap: 20px;
+            border-radius: 25px;
+            border: none;
+            background: #f8f8f8de;
+            cursor: pointer;
+        }
+        button:hover{
+            opacity: 0.8;
+        }
+        .black-btn{
+            background: black;
+            color: #fff;
+        }
+    </style>
+    <div class="container">
+        <h2>Join Our Learning Community</h2>
+        <h4>Discove a World of Knowledge</h4>
+        <div class="btns">
+            <button type="button" class="black-btn">Get started Free</button>
+            <button type="button">Book A Deno</button>
+        </div>
+    </div>
+</body>
+</html>
