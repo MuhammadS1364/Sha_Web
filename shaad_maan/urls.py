@@ -20,6 +20,15 @@ from admin_panel import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('log/', views.login_view, name="login_view"),
+    
+    path('log/', views.logout_view, name="logout_view"),
     path('newUser/', views.newUser, name="newUser"),
-    path('addStn/', views.add_student, name="add_student"),
+    # path('addStn/', views.add_student, name="add_student"),
+
+
+    # Dash Board Views 
+    path('admin-dash/', views.Admin_DashBoard, name="Admin_DashBoard"),
+    path('wing-dash/', views.Wing_DashBoard, name="Wing_DashBoard"),
+    path('student-dash/', views.Student_DashBoard, name="Student_DashBoard"),
+
 ]

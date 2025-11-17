@@ -3,19 +3,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-
-class All_Users(User):
-    n_User = models.OneToOneField(User, on_delete=models.CASCADE)
-    n_role = models.CharField(max_length=250)
-
-
  
 class Student_Model(models.Model):
     user_Stn = models.OneToOneField(User, on_delete=models.CASCADE)  # link with login user
     Student_Add_no = models.CharField(max_length=50, unique=True)
     Student_Name = models.CharField(max_length=250, unique=True)
-    Student_Email = models.EmailField(unique=True, primary_key=True)
+    Student_Email = models.EmailField(unique=True)
     Student_Phone = models.CharField(max_length=15)
 
     Student_Position = models.CharField(max_length=100)
@@ -34,12 +27,20 @@ class Student_Model(models.Model):
 
 
 class Wing_Model(models.Model):
-    wing_user = models.OneToOneField(All_Users, on_delete=models.CASCADE)  # link with login user
+    wing_user = models.OneToOneField(User, on_delete=models.CASCADE)  # link with login user
     Wing_Code = models.CharField(max_length=50, unique=True)
     Wing_Name = models.CharField(max_length=250, unique=True)
     Wing_Email = models.EmailField(unique=True, primary_key=True)
-    Chair_Person = models.ForeignKey(Student_Model, on_delete=models.CASCADE)
-    Assist_Person = models.ForeignKey(Student_Model, on_delete=models.CASCADE)
+
+    Chair_Person = models.ForeignKey(
+        Student_Model, on_delete=models.CASCADE,
+        related_name="chairPerson_in_wings"
+    )
+
+    Assist_Person = models.ForeignKey(
+        Student_Model, on_delete=models.CASCADE,
+        related_name="assistant_in_wings"
+    )
     wing_logo = models.ImageField(upload_to='wing_img/')
 
     def __str__(self):
