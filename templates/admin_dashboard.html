@@ -45,6 +45,7 @@
             <th>Assist_Person</th>
             <th>wing_logo</th>
         </tr>
+        {% if request.user.is_authenticated %}
         {% for wings in all_Wings %}
         <tr>
             <td>{{wings.wing_user}}</td>
@@ -58,6 +59,7 @@
             </td>
         </tr>
         {% endfor %}
+        {% endif %}
     </table> <br> <br>
 
     <!-- table for students  -->
@@ -89,7 +91,11 @@
             <td>{{stn.Student_Father}}</td>
             <td>{{stn.Student_Address}}</td>
             <td>
-                <img src="{{stn.Student_Img.url}}" alt="" width="100px">
+                {% if stn.Student_Img %}
+                <img src="{{ stn.Student_Img.url }}" alt="" width="200px">
+                {% else %}
+                <p>No Image</p>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

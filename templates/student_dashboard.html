@@ -1,14 +1,128 @@
-<!-- {% extends 'base.html' %}
-{% block content %}
-<h2>Welcome, {{ student.user.first_name }}</h2>
-<p>Add No: {{ student.add_no }}</p>
-<p>Class: {{ student.class_name }}</p>
-<h4>Your Programs:</h4>
-<ul>
-  {% for p in programs %}
-  <li>{{ p.title }} - {{ p.date }}</li>
-  {% empty %}
-  <li>No programs joined yet.</li>
-  {% endfor %}
-</ul>
-{% endblock %} -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShaadMaan | {{request.user}}</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    h3 {
+      text-align: center;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .table-box {
+      width: 90%;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: #4a90e2;
+      padding: 10px;
+      color: white;
+      font-weight: bold;
+    }
+
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    img {
+      border-radius: 10px;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .links a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 18px;
+      background: #4a90e2;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .links a:hover {
+      background: #357abd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Welcome to Student Dashboard</h1>
+  <h3>Welcome {{ request.user.username }}</h3>
+
+  <div class="table-box">
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Admission No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Position</th>
+        <th>Goal</th>
+        <th>DOB</th>
+        <th>Father Name</th>
+        <th>Address</th>
+        <th>Image</th>
+      </tr>
+
+      <tr>
+        <td>{{ act_stn.user_Stn }}</td>
+        <td>{{ act_stn.Student_Add_no }}</td>
+        <td>{{ act_stn.Student_Name }}</td>
+        <td>{{ act_stn.Student_Email }}</td>
+        <td>{{ act_stn.Student_Phone }}</td>
+        <td>{{ act_stn.Student_Position }}</td>
+        <td>{{ act_stn.Student_Goal }}</td>
+        <td>{{ act_stn.Student_Dob }}</td>
+        <td>{{ act_stn.Student_Father }}</td>
+        <td>{{ act_stn.Student_Address }}</td>
+        <td>
+          <img src="{{ act_stn.Student_Img.url }}" width="100px">
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+  <div class="links">
+    <a href="{% url 'logout_view' %}">Log Out</a>
+    <a href="{% url 'Admin_DashBoard' %}">Admin Dashboard</a>
+  </div>
+
+</body>
+
+</html>

@@ -19,11 +19,17 @@ from django.urls import path
 from admin_panel import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('log/', views.login_view, name="login_view"),
-    
-    path('log/', views.logout_view, name="logout_view"),
+
+
+    # Entery and Exit Functions 
+    path('log-in/', views.login_view, name="login_view"),
+    path('log-out/', views.logout_view, name="logout_view"),
+
+
+    # Adding New Users , Students , and Wings 
     path('newUser/', views.newUser, name="newUser"),
-    # path('addStn/', views.add_student, name="add_student"),
+    path('addStn/', views.add_student, name="add_student"),
+    path('addWing/', views.add_wing, name="add_wing"),
 
 
     # Dash Board Views 

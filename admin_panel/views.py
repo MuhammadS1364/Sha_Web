@@ -36,7 +36,7 @@ def login_view (request):
 
 def logout_view(request):
     logout(request)
-    return redirect("logout_view")
+    return redirect("login_view")
 
 
 
@@ -99,20 +99,55 @@ def newUser (request):
         
     return render(request, "addUser.html", {"form":form})
 
+# Add New Student
 
-# def add_student(request):
-#     if request.method == 'POST':
+def add_student(request):
+    if request.method == 'POST':
 
-#         new_stn_form = Student_form(request.POST,request.FILES )
+        new_stn_form = Student_form(request.POST,request.FILES )
 
-#         if new_stn_form.is_valid():
-#             new_stn_form.save()
-#             return HttpResponse("Student Added.........")
-#         else:
-#             return HttpResponse("Student Not Added.........")
-#     else:
-#         new_stn_form = Student_form()
-#     return render(request, 'addUser.html', {"form": new_stn_form})
+        new_stn_user = request.POST.get("user_Stn")
+
+        if new_stn_form.is_valid():
+
+
+            new_Student = new_stn_form.save(commit=False)
+            new_Student.user_Stn = new_stn_user
+            new_Student.save()
+
+
+            # Return their data to the DashBoard 
+            login(request, new_stn_user)
+            return redirect ("Student_DashBoard")
+        else:
+            return HttpResponse("Student Not Added.........")
+    else:
+        new_stn_form = Student_form()
+    return render(request, 'forms.html', {"form": new_stn_form})
+
+
+# Add New Wing
+
+def add_wing(request):
+    if request.method == 'POST':
+
+        new_stn_form = Wing_form(request.POST,request.FILES )
+
+        new_wing_user = request.POST.get("wing_user")
+
+        if new_stn_form.is_valid():
+            new_Wing = new_stn_form.save(commit=False)
+            new_Wing.wing_user = new_wing_user
+            new_Wing.save()
+
+            # Return their data to the DashBoard 
+            login(request, new_wing_user)
+            return redirect ("Wing_DashBoard")
+        else:
+            return HttpResponse("Wing Not Added.........")
+    else:
+        new_stn_form = Wing_form()
+    return render(request, 'forms.html', {"form": new_stn_form})
 
 
 # Admin Dash Board
@@ -135,13 +170,19 @@ def Admin_DashBoard(request):
 # Wing Dash Board
 
 def Wing_DashBoard(request):
-    
-    return render(request, "student_dashboard.html")
+    act_wing = Wing_Model.objects.filter(wing_user = request.user)
+    context = {
+        "act_wing" : act_wing,
+    }
+    return render(request, "student_dashboard.html", context)
 
 
 # Student DashBoard
 
 def Student_DashBoard(request):
-    
-    return render(request, "wing_dashboard.html")
+    act_stn = Student_Model.objects.filter(user_Stn = request.user)
+    context = {
+        "act_stn" : act_stn,
+    }
+    return render(request, "wing_dashboard.html", context)
 
