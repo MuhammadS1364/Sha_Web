@@ -5,52 +5,154 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .input-box {
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .input-box input:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+        }
+
+        .radio-group {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .radio-option label {
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4A90E2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #357ABD;
+        }
+    </style>
 </head>
 
 <body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="text" name="userName" id="" placeholder="username">
-        <input type="email" name="userEmail" id="" placeholder="userEmail">
-        <input type="password" name="userPass1" id="" placeholder="password">
-        <input type="password" name="userPass2" id="" placeholder="password">
-        <p>User Role</p>
-        <div>
-            <input type="radio" name="userRole" id="Admin" value="Admin">
-            <label for="Admin">Admin</label>
-        </div>
-        <div>
-            <input type="radio" name="userRole" id="Wing" value="Wing">
-            <label for="Wing">Wing</label>
-        </div>
-        <div>
-            <input type="radio" name="userRole" id="student" value="student">
-            <label for="student">student</label>
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+
+    <div class="card">
+        <h2>Add New User</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-box">
+                <input type="text" name="userName" placeholder="Username" required>
+            </div>
+
+            <div class="input-box">
+                <input type="email" name="userEmail" placeholder="Email Address" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="userPass1" placeholder="Password" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="userPass2" placeholder="Confirm Password" required>
+            </div>
+
+            <p><strong>User Role</strong></p>
+
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" name="userRole" id="Admin" value="Admin" required>
+                    <label for="Admin">Admin</label>
+                </div>
+
+                <div class="radio-option">
+                    <input type="radio" name="userRole" id="Wing" value="Wing">
+                    <label for="Wing">Wing</label>
+                </div>
+
+                <div class="radio-option">
+                    <input type="radio" name="userRole" id="student" value="student">
+                    <label for="student">Student</label>
+                </div>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
 </body>
 
 </html>
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add user</title>
-</head>
-
-<body>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-
-</html> -->

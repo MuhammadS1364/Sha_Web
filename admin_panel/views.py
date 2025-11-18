@@ -71,7 +71,8 @@ def newUser (request):
                 new_user.is_superuser = True
                 new_user.is_staff = True
                 new_user.save()
-
+                
+                login(request, new_user)
                 # redirect to the Admin DashBoard
                 return redirect("Admin_DashBoard")
                 
@@ -80,6 +81,7 @@ def newUser (request):
                 new_user.is_staff = True
                 new_user.save()
 
+                login(request, new_user)
                 # redirect to the Wing DashBoard
                 return redirect("Wing_DashBoard")
 
@@ -87,9 +89,11 @@ def newUser (request):
                 new_user.is_superuser = False
                 new_user.is_staff = False
                 new_user.save()
-
+                
+                login(request, new_user)
                 # redirect to the Student DashBoard
                 return redirect("Student_DashBoard")
+            
        else:
            return HttpResponse("Password 2 is not match.....")
             
@@ -182,7 +186,7 @@ def Wing_DashBoard(request):
     context = {
         "act_wing" : act_wing,
     }
-    return render(request, "student_dashboard.html", context)
+    return render(request, "wing_dashboard.html", context)
 
 
 # Student DashBoard
@@ -192,5 +196,5 @@ def Student_DashBoard(request):
     context = {
         "act_stn" : act_stn,
     }
-    return render(request, "wing_dashboard.html", context)
+    return render(request, "student_dashboard.html", context)
 

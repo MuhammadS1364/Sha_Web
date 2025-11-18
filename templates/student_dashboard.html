@@ -14,46 +14,52 @@
       padding: 20px;
     }
 
-    h1 {
+    h1,
+    h3 {
       text-align: center;
       color: #333;
+      margin: 0;
     }
 
     h3 {
-      text-align: center;
-      color: #555;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     .table-box {
-      width: 90%;
+      width: 95%;
+      max-width: 1200px;
       margin: auto;
       background: white;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      text-align: left;
+      min-width: 800px;
     }
 
     th {
       background: #4a90e2;
-      padding: 10px;
+      padding: 12px;
       color: white;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     td {
       padding: 10px;
       border-bottom: 1px solid #ddd;
+      vertical-align: top;
     }
 
     img {
       border-radius: 10px;
+      width: 80px;
+      height: auto;
     }
 
     .links {
@@ -64,7 +70,7 @@
     .links a {
       display: inline-block;
       margin: 10px;
-      padding: 10px 18px;
+      padding: 10px 20px;
       background: #4a90e2;
       color: white;
       text-decoration: none;
@@ -75,6 +81,38 @@
     .links a:hover {
       background: #357abd;
     }
+
+    /* ---------------------- MOBILE RESPONSIVE ---------------------- */
+    @media (max-width: 768px) {
+      table {
+        display: none;
+      }
+
+      .mobile-card {
+        display: block;
+        width: 95%;
+        margin: auto;
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .mobile-card p {
+        margin: 5px 0;
+        font-size: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 5px;
+      }
+
+      .mobile-card img {
+        margin-top: 10px;
+        width: 100%;
+        max-width: 200px;
+        display: block;
+        border-radius: 10px;
+      }
+    }
   </style>
 </head>
 
@@ -84,6 +122,8 @@
   <h3>Welcome {{ request.user.username }}</h3>
 
   <div class="table-box">
+
+    <!-- DESKTOP TABLE -->
     <table>
       <tr>
         <th>User</th>
@@ -111,11 +151,27 @@
         <td>{{ act_stn.Student_Father }}</td>
         <td>{{ act_stn.Student_Address }}</td>
         <td>
-          <img src="{{ act_stn.Student_Img.url }}" width="100px">
+          <img src="{{ act_stn.Student_Img.url }}">
         </td>
       </tr>
-
     </table>
+
+    <!-- MOBILE CARD VIEW -->
+    <div class="mobile-card">
+      <p><strong>User:</strong> {{ act_stn.user_Stn }}</p>
+      <p><strong>Admission No:</strong> {{ act_stn.Student_Add_no }}</p>
+      <p><strong>Name:</strong> {{ act_stn.Student_Name }}</p>
+      <p><strong>Email:</strong> {{ act_stn.Student_Email }}</p>
+      <p><strong>Phone:</strong> {{ act_stn.Student_Phone }}</p>
+      <p><strong>Position:</strong> {{ act_stn.Student_Position }}</p>
+      <p><strong>Goal:</strong> {{ act_stn.Student_Goal }}</p>
+      <p><strong>DOB:</strong> {{ act_stn.Student_Dob }}</p>
+      <p><strong>Father Name:</strong> {{ act_stn.Student_Father }}</p>
+      <p><strong>Address:</strong> {{ act_stn.Student_Address }}</p>
+
+      <img src="{{ act_stn.Student_Img.url }}">
+    </div>
+
   </div>
 
   <div class="links">
