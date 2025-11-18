@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from admin_panel import views
+from django.conf.urls import handler404, handler500
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name="Main_admin"),
 
 
     # Entery and Exit Functions 
@@ -38,3 +39,9 @@ urlpatterns = [
     path('student-dash/', views.Student_DashBoard, name="Student_DashBoard"),
 
 ]
+
+
+handler404 = "admin_panel.views.error_404"
+handler500 = "admin_panel.views.error_500"
+handler403 = "admin_panel.views.error_403"
+handler400 = "admin_panel.views.error_400"

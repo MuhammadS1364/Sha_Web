@@ -72,7 +72,7 @@ def newUser (request):
                 new_user.is_staff = True
                 new_user.save()
                 
-                login(request, new_user)
+                # login(request, new_user)
                 # redirect to the Admin DashBoard
                 return redirect("Admin_DashBoard")
                 
@@ -81,18 +81,18 @@ def newUser (request):
                 new_user.is_staff = True
                 new_user.save()
 
-                login(request, new_user)
+                # login(request, new_user)
                 # redirect to the Wing DashBoard
-                return redirect("Wing_DashBoard")
+                return redirect("add_wing")
 
             else:
                 new_user.is_superuser = False
                 new_user.is_staff = False
                 new_user.save()
-                
-                login(request, new_user)
+
+                # login(request, new_user)
                 # redirect to the Student DashBoard
-                return redirect("Student_DashBoard")
+                return redirect("add_student")
             
        else:
            return HttpResponse("Password 2 is not match.....")
@@ -116,7 +116,7 @@ def add_student(request):
 
 
             # Getting the New User Object
-            newStn_Obj = User.objects.get(username = new_stn_user)
+            newStn_Obj = User.objects.get(id = new_stn_user)
 
             new_Student = new_stn_form.save(commit=False)
             new_Student.user_Stn = newStn_Obj
@@ -130,7 +130,7 @@ def add_student(request):
             return HttpResponse("Student Not Added.........")
     else:
         new_stn_form = Student_form()
-    return render(request, 'forms.html', {"form": new_stn_form})
+    return render(request, 'addStudent.html', {"form": new_stn_form})
 
 
 # Add New Wing
@@ -146,7 +146,7 @@ def add_wing(request):
 
 
             # Getting the New User Object
-            newWing_Obj = User.objects.get(username = new_wing_user)
+            newWing_Obj = User.objects.get(id=new_wing_user)
 
             new_Wing = new_stn_form.save(commit=False)
             new_Wing.wing_user = newWing_Obj
@@ -159,7 +159,7 @@ def add_wing(request):
             return HttpResponse("Wing Not Added.........")
     else:
         new_stn_form = Wing_form()
-    return render(request, 'forms.html', {"form": new_stn_form})
+    return render(request, 'addWing.html', {"form": new_stn_form})
 
 
 # Admin Dash Board
@@ -182,7 +182,7 @@ def Admin_DashBoard(request):
 # Wing Dash Board
 
 def Wing_DashBoard(request):
-    act_wing = Wing_Model.objects.filter(wing_user = request.user)
+    act_wing = Wing_Model.objects.get(wing_user = request.user)
     context = {
         "act_wing" : act_wing,
     }
@@ -192,9 +192,29 @@ def Wing_DashBoard(request):
 # Student DashBoard
 
 def Student_DashBoard(request):
-    act_stn = Student_Model.objects.filter(user_Stn = request.user)
+    act_stn = Student_Model.objects.get(user_Stn = request.user)
     context = {
         "act_stn" : act_stn,
     }
     return render(request, "student_dashboard.html", context)
 
+
+
+
+# error pages 
+
+
+
+from django.shortcuts import render
+
+def error_404(request, exception):
+    return render(request, "errors/404.html", status=404)
+
+def error_500(request):
+    return render(request, "errors/500.html", status=500)
+
+def error_403(request, exception=None):
+    return render(request, "errors/403.html", status=403)
+
+def error_400(request, exception=None):
+    return render(request, "errors/400.html", status=400)
