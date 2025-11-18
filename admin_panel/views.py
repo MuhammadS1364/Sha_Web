@@ -4,7 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
 
 
 

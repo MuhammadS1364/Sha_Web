@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Records</title>
+
+    <style>
+        body {
+            background: #f4f4f8;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .sub {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .desc {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .date {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Your Records</h2>
+
+    <div class="card-container">
+
+        {% for item in outreach %} <!-- OR achievements -->
+        <div class="card">
+
+            {% if item.programe_poster %}
+            <img src="{{ item.programe_poster.url }}" alt="">
+            {% endif %}
+
+            <div class="title">
+                {{ item.programe_name }} <!-- Achievement: item.achieved_Title -->
+            </div>
+
+            <div class="sub">
+                <span class="label">Result:</span>
+                {{ item.result }}
+            </div>
+
+            <div class="sub">
+                <span class="label">Conducted By:</span>
+                {{ item.programe_Conductor }}
+            </div>
+
+            <div class="date">
+                📅 {{ item.programe_date }}
+            </div>
+
+            <div class="desc">
+                {{ item.programe_discription|truncatewords:25 }}
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>

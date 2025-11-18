@@ -14,3 +14,12 @@ class Achievements_Form (forms.ModelForm):
     class Meta:
         model = Achievements_Model
         fields = "__all__"
+        widgets = {
+             "programe_date": forms.DateInput(attrs={
+                "type": "date",
+                "class": "form-control"
+            }),
+             "programe_poster": forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
