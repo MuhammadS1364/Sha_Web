@@ -140,6 +140,7 @@
         <div class="actions">
             {% if request.user.is_authenticated %}
             <a href="{% url 'newUser' %}">Add User</a>
+            <a href="{% url 'editePassword' %}">Edite Password</a>
             <a href="{% url 'add_student' %}">Add Student</a>
             <a href="{% url 'add_wing' %}">Add Wing</a>
             <a href="/admin/">Main_admin</a>

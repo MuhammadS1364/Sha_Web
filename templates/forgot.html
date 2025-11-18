@@ -4,66 +4,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found</title>
+    <title>Add User</title>
 
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
             text-align: center;
+            margin-bottom: 25px;
+            color: #333;
         }
 
-        .box {
-            background: white;
-            padding: 40px;
-            max-width: 400px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        .input-box {
+            margin-bottom: 16px;
+            width: 100%;
         }
 
-        h1 {
-            font-size: 80px;
-            margin: 0;
-            color: #ff4d4d;
-        }
-
-        p {
-            font-size: 18px;
-            margin: 10px 0 20px;
-        }
-
-        a {
-            text-decoration: none;
-            padding: 12px 25px;
-            background: #4f46e5;
-            color: white;
+        .input-box input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ccc;
             border-radius: 8px;
-            font-size: 16px;
+            outline: none;
             transition: 0.3s;
+            font-size: 14px;
         }
 
-        a:hover {
-            background: #3730a3;
+        .input-box input:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+        }
+
+        .radio-group {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .radio-option label {
+            margin-left: 6px;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4A90E2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #357ABD;
         }
     </style>
 </head>
 
 <body>
-    <div class="box">
-        {% csrf_token %}
 
-        <input type="text" value="{{request.user}}" name="userNmae" disabled>
-        <input type="password" name="newPass1">
-        <input type="password" name="newPass2">
-        <button type="submit">Submit</button>
-        <a href="/">⬅ Back to Home</a>
+    <div class="card">
+        <h2>Add New User</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="input-box">
+                <input type="text" name="userName" value="{{request.user.username}}" readonly>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="userPass1" placeholder="Password" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="userPass2" placeholder="Confirm Password" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
     </div>
+
 </body>
 
 </html>

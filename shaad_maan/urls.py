@@ -23,7 +23,7 @@ urlpatterns = [
 
 
     # Entery and Exit Functions 
-    path('log-in/', views.login_view, name="login_view"),
+    path('', views.login_view, name="login_view"),
     path('log-out/', views.logout_view, name="logout_view"),
 
 
@@ -37,6 +37,10 @@ urlpatterns = [
     path('admin-dash/', views.Admin_DashBoard, name="Admin_DashBoard"),
     path('wing-dash/', views.Wing_DashBoard, name="Wing_DashBoard"),
     path('student-dash/', views.Student_DashBoard, name="Student_DashBoard"),
+
+    # edite functions 
+    path('pass/', views.editePassword, name="editePassword"),
+
 
 ]
 

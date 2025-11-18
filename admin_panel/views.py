@@ -201,9 +201,54 @@ def Student_DashBoard(request):
 
 
 
+# edite functions 
+
+def editePassword(request):
+    if request.method == 'POST':
+        userName = request.POST.get("userName")
+        userPass1 = request.POST.get("userPass1")
+        userPass2 = request.POST.get("userPass2")
+
+
+        # get the User Object 
+        if userName:
+
+            if userPass1 != userPass2:
+                return HttpResponse("Password 2 doesnto Matched.........")
+
+            toChange = User.objects.get(username = userName)
+
+            toChange.set_password(userPass1)
+            toChange.save()
+
+            return redirect("login_view")
+        else:
+            return HttpResponse("Username not received from form!")
+
+    
+
+    return render(request, "forgot.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # error pages 
-
-
 
 from django.shortcuts import render
 
