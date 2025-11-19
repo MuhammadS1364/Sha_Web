@@ -96,7 +96,7 @@
 <body>
 
     <div class="container">
-        <h2>Add Student</h2>
+        <h2>Add Achievement</h2>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -105,39 +105,39 @@
                 <div class="form-group">
                     <label>Student Name</label>
                     <!-- {{ form.student_name }} -->
-                    <input type="text" name="student_name" value="{{request.user}}" readonly>
+                    <input type="text" name="Achiever" value="{{request.user}}" readonly>
                 </div>
 
                 <div class="form-group">
-                    <label>Progame Name</label>
-                    {{ form.programe_name }}
+                    <label>Progame Tile</label>
+                    {{ form.achieved_Title }}
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Result</label>
-                {{ form.result }}
+                {{ form.resulted }}
             </div>
 
             <div class="form-group">
                 <label>Programe Conductor</label>
-                {{ form.programe_Conductor }}
+                {{ form.achieveMent_Conductor }}
             </div>
 
             <div class="form-group">
                 <label>Programe Date</label>
-                {{ form.programe_date }}
+                {{ form.achieveMent_date }}
             </div>
 
             <div class="row">
                 <div class="form-group">
                     <label>Any Poster (Optional)</label>
-                    {{ form.programe_poster }}
+                    {{ form.achieveMent_poster }}
                 </div>
 
                 <div class="form-group">
                     <label>Programe Discription</label>
-                    {{ form.programe_discription }}
+                    {{ form.achieveMent_discription }}
                 </div>
             </div>
 

@@ -82,6 +82,77 @@
       background: #357abd;
     }
 
+
+    /* OutReach Card  */
+
+    body {
+      background: #f4f4f8;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .sub {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 5px;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #444;
+    }
+
+    .desc {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .date {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
     /* ---------------------- MOBILE RESPONSIVE ---------------------- */
     @media (max-width: 768px) {
       table {
@@ -121,6 +192,12 @@
   <h1>Welcome to Student Dashboard</h1>
   <h3>Welcome {{ request.user.username }}</h3>
 
+  <div class="links">
+    <a href="{% url 'add_OutReach' %}">Add OutReach</a>
+    <a href="{% url 'add_AchieveMents' %}">Add Achievement</a>
+    <a href="{% url 'logout_view' %}">Log Out</a>
+    <a href="{% url 'Admin_DashBoard' %}">Admin Dashboard</a>
+  </div>
   <div class="table-box">
 
     <!-- DESKTOP TABLE -->
@@ -174,12 +251,89 @@
 
   </div>
 
-  <div class="links">
+  <h2>Your Records</h2>
 
-    <a href="{% url 'add_OutReach' %}">Add OutReach</a>
-    <a href="{% url 'logout_view' %}">Log Out</a>
-    <a href="{% url 'Admin_DashBoard' %}">Admin Dashboard</a>
-  </div>
+  <div class="card-container">
+    {% for item in All_OutReach %}
+    {% if item %}
+    <!-- OR achievements -->
+    <div class="card">
+
+      {% if item.programe_poster %}
+      <img src="{{ item.programe_poster.url }}" alt="">
+      {% endif %}
+
+      <div class="title">
+        {{ item.programe_name }} <!-- Achievement: item.achieved_Title -->
+      </div>
+
+      <div class="sub">
+        <span class="label">Result:</span>
+        {{ item.result }}
+      </div>
+
+      <div class="sub">
+        <span class="label">Conducted By:</span>
+        {{ item.programe_Conductor }}
+      </div>
+
+      <div class="date">
+        📅 {{ item.programe_date }}
+      </div>
+
+      <div class="desc">
+        {{ item.programe_discription|truncatewords:25 }}
+      </div>
+
+    </div>
+    {% else %}
+    <div>No OutReach Uploaded Yet...</div>
+
+    {% endif %}
+
+    {% endfor %}
+
+
+    <div class="card-container">
+      {% for item in All_Achievements %}
+      {% if item %}
+      <!-- OR achievements -->
+      <div class="card">
+
+        {% if item.achieveMent_poster %}
+        <img src="{{ item.programe_poster.url }}" alt="">
+        {% endif %}
+
+        <div class="title">
+          {{ item.achieved_Title }} <!-- Achievement: item.achieved_Title -->
+        </div>
+
+        <div class="sub">
+          <span class="label">Result:</span>
+          {{ item.resulted }}
+        </div>
+
+        <div class="sub">
+          <span class="label">Conducted By:</span>
+          {{ item.achieveMent_Conductor }}
+        </div>
+
+        <div class="date">
+          📅 {{ item.achieveMent_date }}
+        </div>
+
+        <div class="desc">
+          {{ item.achieveMent_discription|truncatewords:25 }}
+        </div>
+
+      </div>
+      {% else %}
+      <div>No OutReach Uploaded Yet...</div>
+      {% endif %}
+      {% endfor %}
+
+    </div>
+
 
 </body>
 

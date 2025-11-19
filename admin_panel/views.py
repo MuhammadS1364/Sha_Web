@@ -5,12 +5,13 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.shortcuts import get_object_or_404
 
 
 
 from .forms import *
-
+from students_panel.models import *
+from wing_panel.models import *
 
 def login_view (request):
     if request.method == 'POST':
@@ -192,9 +193,16 @@ def Wing_DashBoard(request):
 # Student DashBoard
 
 def Student_DashBoard(request):
-    act_stn = Student_Model.objects.get(user_Stn = request.user)
+    act_stn = get_object_or_404(Student_Model, user_Stn = request.user)
+
+
+    All_OutReach = OutReach_Model.objects.filter(student_name = act_stn)
+    All_Achievements = Achievements_Model.objects.filter(Achiever = act_stn)
+
     context = {
         "act_stn" : act_stn,
+        "All_OutReach" : All_OutReach,
+        "All_Achievements" : All_Achievements
     }
     return render(request, "student_dashboard.html", context)
 
@@ -250,7 +258,6 @@ def editePassword(request):
 
 # error pages 
 
-from django.shortcuts import render
 
 def error_404(request, exception):
     return render(request, "errors/404.html", status=404)
