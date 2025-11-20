@@ -4,8 +4,8 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Program)
-class ProgrameAdmin(admin.ModelAdmin):
-    list_display = ("program_Created", "program_name")
+# admin.site.register(New_Program)
+# class ProgrameAdmin(admin.ModelAdmin):
+#     list_display = ("program_Created", "program_name")
 
-admin.site.register(ProgramRegistration)
+# admin.site.register(ProgramRegistration)

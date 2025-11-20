@@ -11,15 +11,15 @@ class OutReach_Model(models.Model):
         Student_Model,
         on_delete=models.CASCADE
         )
-    programe_name = models.CharField(max_length=250 )
-    result = models.CharField(max_length=250)
-    programe_Conductor = models.CharField(max_length=500)
-    programe_date = models.DateField()
-    programe_poster = models.ImageField(upload_to='OutReach/', blank=True,null=True)
-    programe_discription = models.TextField(max_length=600)
+    OutReach_Programe_name = models.CharField(max_length=250 )
+    OutReach_result = models.CharField(max_length=250)
+    OutReach_Conductor = models.CharField(max_length=500)
+    OutReach_date = models.DateField()
+    OutReach_poster = models.ImageField(upload_to='OutReach/', blank=True,null=True)
+    OutReach_discription = models.TextField(max_length=600)
     
     def __str__(self):
-        return f"{self.student_name} {self.programe_name} {self.result}"
+        return f"{self.student_name} {self.OutReach_Programe_name} {self.OutReach_result}"
 
 
 
@@ -31,7 +31,7 @@ class Achievements_Model(models.Model):
         on_delete=models.CASCADE
         )
     achieved_Title = models.CharField(max_length=250 )
-    resulted = models.CharField(max_length=250)
+    achiever_Result = models.CharField(max_length=250)
     achieveMent_Conductor = models.CharField(max_length=500)
     achieveMent_date = models.DateField()
     achieveMent_poster = models.ImageField(upload_to='AchieveMents/', blank=True,null=True)
@@ -39,4 +39,4 @@ class Achievements_Model(models.Model):
 
     
     def __str__(self):
-        return f"{self.Achiever} {self.achieved_Title} {self.resulted}"
+        return f"{self.Achiever} {self.achieved_Title} {self.achieveMent_poster}"

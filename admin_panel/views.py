@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
+from django.contrib import messages
 
 
 from .forms import *
@@ -22,7 +22,7 @@ def login_view (request):
               # Step 1: Check if entered value is email
         if User.objects.filter(email=userName).exists():
             user_obj = User.objects.get(email=userName)
-            final_username = user_obj.username
+            final_username = user_obj.email
         else:
             final_username = userName
 
@@ -41,7 +41,7 @@ def login_view (request):
                 return redirect("Student_DashBoard")
 
         else:
-            return HttpResponse(f"Hello, {request.user}!, login failed......")
+            return messages.error(f"Login Failed. {request.user}")
 
     return render(request, "login_user.html")
 
@@ -64,11 +64,13 @@ def newUser (request):
        userPass1 = request.POST.get('userPass1')
        userPass2 = request.POST.get('userPass2')
        userRole = request.POST.get('userRole')
-       print(userRole)
+
+
     #    Protecting the Dobble User Error 
        if User.objects.filter(username = userName).exists():
-           return HttpResponse("This User Already Exist.....")
+           return messages.error("This User Already Exist.....")
 
+       
        if userPass1 == userPass2:
             new_user = User.objects.create_user(
                 username= userName,
@@ -83,8 +85,8 @@ def newUser (request):
                 new_user.is_staff = True
                 new_user.save()
                 
-                # login(request, new_user)
-                # redirect to the Admin DashBoard
+                login(request, new_user)
+                
                 return redirect("Admin_DashBoard")
                 
             elif userRole == "Wing":
@@ -92,8 +94,6 @@ def newUser (request):
                 new_user.is_staff = True
                 new_user.save()
 
-                # login(request, new_user)
-                # redirect to the Wing DashBoard
                 return redirect("add_wing")
 
             else:
@@ -101,14 +101,12 @@ def newUser (request):
                 new_user.is_staff = False
                 new_user.save()
 
-                # login(request, new_user)
-                # redirect to the Student DashBoard
                 return redirect("add_student")
             
        else:
-           return HttpResponse("Password 2 is not match.....")
+           return messages.error("Password1 did Not Match to Password2!, Plz Check It...")
             
-            # HttpResponse("No!, New User Not Created...")
+           
     else:
         form = User()
         
@@ -119,17 +117,17 @@ def newUser (request):
 def add_student(request):
     if request.method == 'POST':
 
-        new_stn_form = Student_form(request.POST,request.FILES )
+        newStdn_Form = Student_form(request.POST,request.FILES )
 
         new_stn_user = request.POST.get("user_Stn")
 
-        if new_stn_form.is_valid():
+        if newStud_Form.is_valid():
 
 
             # Getting the New User Object
             newStn_Obj = User.objects.get(id = new_stn_user)
 
-            new_Student = new_stn_form.save(commit=False)
+            new_Student = newStud_Form.save(commit=False)
             new_Student.user_Stn = newStn_Obj
             new_Student.save()
 
@@ -138,10 +136,10 @@ def add_student(request):
             login(request, newStn_Obj)
             return redirect ("Student_DashBoard")
         else:
-            return HttpResponse("Student Not Added.........")
+            return messages.error("Student Not Added.........")
     else:
-        new_stn_form = Student_form()
-    return render(request, 'addStudent.html', {"form": new_stn_form})
+        newStud_Form = Student_form()
+    return render(request, 'addStudent.html', {"form": newStud_Form})
 
 
 # Add New Wing
@@ -149,17 +147,17 @@ def add_student(request):
 def add_wing(request):
     if request.method == 'POST':
 
-        new_stn_form = Wing_form(request.POST,request.FILES )
+        newWing_Form = Wing_form(request.POST,request.FILES )
 
         new_wing_user = request.POST.get("wing_user")
 
-        if new_stn_form.is_valid():
+        if newWing_Form.is_valid():
 
 
             # Getting the New User Object
             newWing_Obj = User.objects.get(id=new_wing_user)
 
-            new_Wing = new_stn_form.save(commit=False)
+            new_Wing = newWing_Form.save(commit=False)
             new_Wing.wing_user = newWing_Obj
             new_Wing.save()
 
@@ -167,10 +165,10 @@ def add_wing(request):
             login(request, newWing_Obj)
             return redirect ("Wing_DashBoard")
         else:
-            return HttpResponse("Wing Not Added.........")
+            return messages.error("Wing Not Added.........")
     else:
-        new_stn_form = Wing_form()
-    return render(request, 'addWing.html', {"form": new_stn_form})
+        newWing_Form = Wing_form()
+    return render(request, 'addWing.html', {"form": newWing_Form})
 
 
 # Admin Dash Board
@@ -194,7 +192,7 @@ def Admin_DashBoard(request):
 
 def Wing_DashBoard(request):
     act_wing = Wing_Model.objects.get(wing_user = request.user)
-    all_Programe = Program.objects.filter(program_Created = act_wing)
+    all_Programe = Program_Bank.objects.filter(program_Created = act_wing)
     context = {
         "act_wing" : act_wing,
         "all_Programe" : all_Programe
@@ -234,7 +232,7 @@ def editePassword(request):
         if userName:
 
             if userPass1 != userPass2:
-                return HttpResponse("Password 2 doesnto Matched.........")
+                return messages.error("Password 2 doesnto Matched.........")
 
             toChange = User.objects.get(username = userName)
 
@@ -243,29 +241,10 @@ def editePassword(request):
 
             return redirect("login_view")
         else:
-            return HttpResponse("Username not received from form!")
+            return messages.error("Username not received from form!")
 
-    
 
     return render(request, "forgot.html")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # error pages 

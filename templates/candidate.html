@@ -103,11 +103,12 @@
             <div class="row">
                 <div class="form-group">
                     <label>Program </label>
-                    <select name="program" id="">
+                    <select name="program">
                         {% for pro in all_Programes %}
-                        <option value="{{pro.id}}">{{pro.program_name}}</option>
+                        <option value="{{ pro.id }}">{{ pro.program_name }}</option>
                         {% endfor %}
                     </select>
+
                 </div>
             </div>
 
