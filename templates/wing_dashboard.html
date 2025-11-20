@@ -144,14 +144,41 @@
                 </tr>
 
             </table>
-        </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>program_Created</th>
+                        <th>program_name</th>
+                        <th>program_date</th>
+                        <th>program_disc</th>
+                        <th>Assist_Person</th>
+                        <th>programe_poster</th>
+                    </tr>
+                    {% for item in all_Programe %}
 
-        <div class="links">
-            <a href="{% url 'logout_view' %}" class="btn logout">Log Out</a>
-            <a href="{% url 'Admin_DashBoard' %}" class="btn">Admin Dashboard</a>
-        </div>
+                    <tr>
+                        <td>{{item.program_Created}}</td>
+                        <td>{{item.program_name}}</td>
+                        <td>{{item.program_date}}</td>
+                        <td>{{item.program_disc}}</td>
+                        <td>{{item.Assist_Person}}</td>
+                        <td>
+                            <img src="{{item.program_poster.url}}" alt="" width="70px">
+                        </td>
+                    </tr>
+                    {% endfor %}
 
-    </div>
+                </table>
+            </div>
+
+            <div class="links">
+                <a href="{% url 'Admin_DashBoard' %}" class="btn">Admin Dashboard</a>
+                <a href="{% url 'Add_Programes' %}" class="btn">Register Programe</a>
+                <a href="{% url 'Register_StudentToPrograme' %}" class="btn">Register Candidate</a>
+                <a href="{% url 'logout_view' %}" class="btn logout">Log Out</a>
+            </div>
+
+        </div>
 
 </body>
 

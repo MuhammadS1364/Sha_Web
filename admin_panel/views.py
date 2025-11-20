@@ -13,11 +13,21 @@ from .forms import *
 from students_panel.models import *
 from wing_panel.models import *
 
+
 def login_view (request):
     if request.method == 'POST':
         userName = request.POST.get("username")
         userPass = request.POST.get("password")
-        act_user = authenticate(request, username = userName, password = userPass)
+
+              # Step 1: Check if entered value is email
+        if User.objects.filter(email=userName).exists():
+            user_obj = User.objects.get(email=userName)
+            final_username = user_obj.username
+        else:
+            final_username = userName
+
+
+        act_user = authenticate(request, username = final_username , password = userPass)
         if act_user is not None:
 
             login(request, act_user)
@@ -184,8 +194,10 @@ def Admin_DashBoard(request):
 
 def Wing_DashBoard(request):
     act_wing = Wing_Model.objects.get(wing_user = request.user)
+    all_Programe = Program.objects.filter(program_Created = act_wing)
     context = {
         "act_wing" : act_wing,
+        "all_Programe" : all_Programe
     }
     return render(request, "wing_dashboard.html", context)
 
@@ -257,16 +269,3 @@ def editePassword(request):
 
 
 # error pages 
-
-
-def error_404(request, exception):
-    return render(request, "errors/404.html", status=404)
-
-def error_500(request):
-    return render(request, "errors/500.html", status=500)
-
-def error_403(request, exception=None):
-    return render(request, "errors/403.html", status=403)
-
-def error_400(request, exception=None):
-    return render(request, "errors/400.html", status=400)

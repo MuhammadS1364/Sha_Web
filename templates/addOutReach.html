@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Student | {{request.user}}</title>
+    <title>Add OutReach | {{request.user}}</title>
 
     <style>
         body {
@@ -96,7 +96,7 @@
 <body>
 
     <div class="container">
-        <h2>Add Student</h2>
+        <h2>Add OutReach</h2>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -144,7 +144,7 @@
             <button type="submit">Submit Student</button>
 
         </form>
-        <a href="{url " Student_DashBoard"}">To Back</a>
+        <a href="{% url 'Student_DashBoard'%}">To Back</a>
     </div>
 
 </body>

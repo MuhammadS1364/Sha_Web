@@ -17,12 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from admin_panel import views
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('admin/', admin.site.urls, name="Main_admin"),
 
 
-    path('student-out-reach/', include("students_panel.urls")),
+    path('student-panel/', include("students_panel.urls")),
+    path('wing-panel/', include("wing_panel.urls")),
 
     
 
@@ -47,9 +52,6 @@ urlpatterns = [
 
 
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
-handler404 = "admin_panel.views.error_404"
-handler500 = "admin_panel.views.error_500"
-handler403 = "admin_panel.views.error_403"
-handler400 = "admin_panel.views.error_400"
