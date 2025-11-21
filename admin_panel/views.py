@@ -209,11 +209,19 @@ def Admin_DashBoard(request):
     all_Users = User.objects.all()
     all_students = Student_Model.objects.all()
     all_Wings = Wing_Model.objects.all()
+    all_Programes = Program_Bank.objects.all()
+    all_OutReachs = OutReach_Model.objects.all()
+    all_Achievements = Achievements_Model.objects.all()
+    all_Creations = Self_Creations_Bank.objects.all()
 
     context = {
        "all_Users" :  all_Users,
        "all_students" :  all_students,
-       "all_Wings" :  all_Wings,
+       "all_Wings" : all_Wings ,
+       "all_Programes" :  all_Programes,
+       "all_OutReachs" :  all_OutReachs,
+       "all_Achievements" :  all_Achievements,
+       "all_Creations" :  all_Creations,
     }
     return render(request, "admin_dashboard.html", context)
 
@@ -221,7 +229,13 @@ def Admin_DashBoard(request):
 
 def Wing_DashBoard(request):
     act_wing = Wing_Model.objects.get(wing_user = request.user)
-    all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
+
+    # Try to check Is the user have any prgrame
+    try:
+        all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
+    except Program_Bank.DoesNotExist:
+        all_Programe = None
+
     context = {
         "act_wing" : act_wing,
         "all_Programe" : all_Programe
@@ -234,13 +248,28 @@ def Wing_DashBoard(request):
 def Student_DashBoard(request):
     act_stn = User.objects.get(user_Stn = request.user)
 
-    All_OutReach = OutReach_Model.objects.filter(student_name = act_stn)
-    All_Achievements = Achievements_Model.objects.filter(Achiever = act_stn)
+    # checking Is student info exist
+    try:
+        act_stn = Student_Model.objects.get(user_Stn = request.user)
+    except Student_Model.DoesNotExist:
+        act_stn = None
+    
+    # Getting All OutReach
+    try:
+        all_OutReach = OutReach_Model.objects.filter(student_name = act_stn)
+    except OutReach_Model.DoesNotExist:
+        all_OutReach = None
+
+    # Getting All Achievements
+    try:
+        all_Achievements = Achievements_Model.objects.filter(Achiever = act_stn)
+    except Achievements_Model.DoesNotExist:
+        all_Achievements = None
 
     context = {
         "act_stn" : act_stn,
-        "All_OutReach" : All_OutReach,
-        "All_Achievements" : All_Achievements
+        "all_OutReach" : all_OutReach,
+        "all_Achievements" : all_Achievements
     }
     return render(request, "student_dashboard.html", context)
 

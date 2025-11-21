@@ -52,9 +52,8 @@ class Wing_Model(models.Model):
     )
     wing_logo = models.ImageField(upload_to='wing_Box/')
 
-    # Total Wings Status
     Total_Registered = models.IntegerField(default=0, blank=True,null=True)
-    Total_Resulted = models.IntegerField(default=0, blank=True,null=True)
+    Total_ReSulted = models.IntegerField(default=0, blank=True,null=True)
 
     def __str__(self):
         return f"{self.Wing_Code} - {self.Wing_Name}"

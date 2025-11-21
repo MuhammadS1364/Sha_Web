@@ -133,15 +133,15 @@
 
 
 
-      {% if messages %}
-  {% for msg in messages %}
-  <div class="radio-option">
-    <label for="">error</label>
-    {{ msg }}
-  </div>
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="radio-option">
+        <label for="">error</label>
+        {{ msg }}
+    </div>
 
-  {% endfor %}
-  {% endif %}
+    {% endfor %}
+    {% endif %}
 
     <div class="navbar">
         <h1>Admin Dashboard — ShaadMaan</h1>
@@ -158,7 +158,6 @@
             <a href="{% url 'add_student' %}">Add Student</a>
             <a href="{% url 'add_wing' %}">Add Wing</a>
             <a href="/admin/">Main_admin</a>
-
             {% endif %}
         </div>
 

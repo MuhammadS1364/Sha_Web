@@ -45,3 +45,18 @@ class Achievements_Model(models.Model):
     
     def __str__(self):
         return f"{self.Achiever} {self.achieved_Title} {self.achieveMent_poster}"
+
+
+# Self Creation Program Bank Model
+class Self_Creations_Bank(models.Model):
+    creator_Student = models.ForeignKey(
+        Student_Model,
+        on_delete=models.CASCADE
+        )
+    Creation_Title = models.CharField(max_length=250)
+    Creation_Description = models.TextField(max_length=1000)
+    Creation_Date = models.DateField()
+    Creation_File = models.FileField(upload_to='Self_Creations/', blank=True,null=True)
+
+    def __str__(self):
+        return f"{self.creator_Student} {self.Creation_Title}"
