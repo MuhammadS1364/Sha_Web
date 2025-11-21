@@ -4,6 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 
 
@@ -24,7 +25,7 @@ def Add_Programes(request):
     if request.method == 'POST':
 
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
-        wing_Obj = Wing_Model.objects.get(wing_user = request.user)
+        stn_Objt = Wing_Model.objects.get(wing_user = request.user)
 
         # SubMitting the OutReach Form 
         Programe_Objt = Add_Program_Form(request.POST, request.FILES)
@@ -32,12 +33,16 @@ def Add_Programes(request):
         if Programe_Objt.is_valid():
             new_Registered = Programe_Objt.save(commit=False)
 
-            new_Registered.Program_Created = wing_Obj
+            new_Registered.Program_Created = stn_Objt
             new_Registered.save()
 
             return redirect("Wing_DashBoard")
         else:
-            return HttpResponse("Programe Not Registered .......")
+            Programe_Objt = Add_Program_Form()
+
+            messages.error("Programe Not Registered .......")
+            return render(request, "addProg.html", {"form" : Programe_Objt})
+
     else:
         Programe_Objt = Add_Program_Form()
 
@@ -45,20 +50,21 @@ def Add_Programes(request):
 
 
 
+
 def Register_StudentToPrograme(request):
     all_Programes = Program_Bank.objects.all()
 
     if request.method == 'POST':
-        newRegistration = Registration_Programe(request.POST)
+        newRegistration = Candidate_Registration_Form(request.POST)
 
         program_id = request.POST.get("program")
         To_Reg_Programe = Program_Bank.objects.get(id = program_id)
 
-        wing_Obj = Wing_Model.objects.get(wing_user=request.user)
+        stn_Objt = Student_Model.objects.get(user_Stn=request.user)
         
         if newRegistration.is_valid():
             Registered = newRegistration.save(commit=False)
-            Registered.wing_name = wing_Obj
+            Registered.user_Stn = stn_Objt
             Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
 
@@ -67,10 +73,15 @@ def Register_StudentToPrograme(request):
 
             return redirect("Wing_DashBoard")
         else:
-            return HttpResponse("Candidate Not Registered.......")
+            messages.error("Candidate Not Registered.......")
+            return render(request, 'candidate.html', {
+        "form": newRegistration,
+        "all_Programes": all_Programes
+        })
+
 
     else:
-        newRegistration = Registration_Programe()
+        newRegistration = Candidate_Registration_Form()
 
     return render(request, 'candidate.html', {
         "form": newRegistration,
