@@ -96,7 +96,15 @@
 
     <div class="container">
         <h2>Add Wing</h2>
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="radio-option">
+            <label for="">error</label>
+            {{ msg }}
+        </div>
 
+        {% endfor %}
+        {% endif %}
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -107,7 +115,7 @@
                     <select name="wing_user" id="">
                         {% for wingUser in all_Users %}
                         {% if wingUser.is_staff %}
-                        <option value="{{ wingUser.username}}"> {{ wingUser.username}}</option>
+                        <option value="{{ wingUser.id}}"> {{ wingUser.username}}</option>
                         {% endif %}
                         {% endfor %}
                     </select>
@@ -128,7 +136,7 @@
             <!-- Email -->
             <div class="form-group">
                 <label>Wing Email</label>
-                <select name="wing_user" id="">
+                <select name="Wing_Email" id="">
                     {% for wingUser in all_Users %}
                     {% if wingUser.is_staff %}
                     <option value="{{ wingUser.email}}"> {{ wingUser.email}}</option>

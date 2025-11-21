@@ -20,14 +20,17 @@ def login_view (request):
         userPass = request.POST.get("password")
 
               # Step 1: Check if entered value is email
-        if User.objects.filter(email=userName).exists():
-            user_obj = User.objects.get(email=userName)
-            final_username = user_obj.email
-        else:
-            final_username = userName
+        # if User.objects.filter(email=userName).exists():
+        #     user_obj = User.objects.get(email=userName)
+        #     # print(user_obj.email, "it is .....")
+        #     final_username = user_obj.email
+        # else:
+        #     messages.error(request,f"Login Failed. {request.user}, May be your email")
+        #     final_username = userName
+        #     return render(request, "login_user.html")
 
+        act_user = authenticate(request, username = userName , password = userPass)
 
-        act_user = authenticate(request, username = final_username , password = userPass)
         if act_user is not None:
 
             login(request, act_user)
@@ -41,7 +44,9 @@ def login_view (request):
                 return redirect("Student_DashBoard")
 
         else:
-            return messages.error(f"Login Failed. {request.user}")
+            messages.error(request,f"Login Failed. {request.user}, technical issu")
+            return render(request, "login_user.html")
+
 
     return render(request, "login_user.html")
 
@@ -118,33 +123,48 @@ def newUser (request):
 
 
 def add_student(request):
+    # Sending All User objects
+    all_User = User.objects.all()
+
     if request.method == 'POST':
 
         newStdn_Form = Student_form(request.POST, request.FILES)
 
         new_stn_user = request.POST.get("user_Stn")
+
         new_stn_addNo = request.POST.get("Student_Add_no")
 
+
+        if Student_Model.objects.filter(Student_Add_no=new_stn_addNo).exists():
+            messages.error(request, "Student Already Exists")
+            return redirect("login_view")
+                
         if newStdn_Form.is_valid():
 
-            if Student_Model.objects.filter(Student_Add_no=new_stn_addNo).exists():
-                messages.error(request, "Student Already Exists")
-                return redirect("login_view")
-                
             newStn_Obj = User.objects.get(id=new_stn_user)
+
 
             new_Student = newStdn_Form.save(commit=False)
             new_Student.user_Stn = newStn_Obj
             new_Student.save()
 
             messages.success(request, "Student Added Successfully")
-            login(request, new_Student)
+            login(request, newStn_Obj)
             return redirect("Student_DashBoard")
+        else:
+            messages.error(request, "This Form is not Valid Form , plz check.")
+            return render(request, 'addStudent.html', {
+        "form": newStdn_Form,
+        "all_User" : all_User
+        })
 
     else:
         newStdn_Form = Student_form()
 
-    return render(request, 'addStudent.html', {"form": newStdn_Form})
+    return render(request, 'addStudent.html', {
+        "form": newStdn_Form,
+        "all_User" : all_User
+        })
 
 
 
@@ -156,22 +176,29 @@ def add_wing(request):
 
         newWing_Form = Wing_form(request.POST,request.FILES )
 
-        new_wing_user = request.POST.get("wing_user")
+        wing_user = request.POST.get("wing_user")
 
         if newWing_Form.is_valid():
 
             # Getting the New User Object
-            newWing_Obj = User.objects.get(id=new_wing_user)
+            newWing_Obj = User.objects.get(id=wing_user)
+
+            print(f"Wing User is : {newWing_Obj}")
+
 
             new_Wing = newWing_Form.save(commit=False)
             new_Wing.wing_user = newWing_Obj
             new_Wing.save()
 
-            login(request, new_Wing)
+            login(request, newWing_Obj)
             # Return their data to the DashBoard 
             return redirect("Wing_DashBoard")
         else:
-            return messages.error(request ,"Wing Not Added.........")
+            messages.error(request ,"Validation Problem.........")
+            return render(request, 'addWing.html', {
+        "form": newWing_Form,
+        "all_Users" :all_Users
+        })
     else:
         newWing_Form = Wing_form()
         
@@ -214,8 +241,7 @@ def Wing_DashBoard(request):
 # Student DashBoard
 
 def Student_DashBoard(request):
-    act_stn = get_object_or_404(Student_Model, user_Stn = request.user)
-
+    act_stn = User.objects.get(user_Stn = request.user)
 
     All_OutReach = OutReach_Model.objects.filter(student_name = act_stn)
     All_Achievements = Achievements_Model.objects.filter(Achiever = act_stn)

@@ -25,6 +25,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             animation: fadeIn 0.7s ease;
+
         }
 
         .login-card h4 {
@@ -32,7 +33,17 @@
             color: #333;
         }
 
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
         button {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
             border-radius: 50px;
         }
 
@@ -60,13 +71,23 @@
 
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" required>
+                <input type="text" name="username" class="form-control" placeholder="Username or Email....." required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" placeholder="Password...." required>
             </div>
+
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="radio-option">
+                <label for="">error</label>
+                {{ msg }}
+            </div>
+
+            {% endfor %}
+            {% endif %}
 
             <button class="btn btn-primary w-100 mb-2">Login</button>
 

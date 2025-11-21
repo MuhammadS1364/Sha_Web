@@ -104,7 +104,13 @@
             <div class="row">
                 <div class="form-group">
                     <label>User (Login Account)</label>
-                    <input type="text" name="user_Stn" id="" placeholder="Your UserName">
+                    <select name="user_Stn" id="">
+                        {% for stnUser in all_User %}
+                        {% if not stnUser.is_superuser and not stnUser.is_staff %}
+                        <option value="{{ stnUser.id}}"> {{ stnUser.username}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -120,7 +126,13 @@
 
             <div class="form-group">
                 <label>Student Email</label>
-                {{ form.Student_Email }}
+                <select name="Student_Email" id="">
+                    {% for stnUser in all_User %}
+                    {% if not stnUser.is_superuser and not stnUser.is_staff %}
+                    <option value="{{ stnUser.email}}"> {{ stnUser.email}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="form-group">
@@ -131,7 +143,17 @@
             <div class="row">
                 <div class="form-group">
                     <label>Position</label>
-                    {{ form.Student_Position }}
+                    <!-- {{ form.Student_Position }} -->
+                    <select name="Student_Position" id="">
+                        <option value="President">President (ShaadMate)</option>
+                        <option value="Secretry">Secretry (ShaadMate)</option>
+                        <option value="Treasaror">Treasaror (ShaadMate)</option>
+                        <option value="Class Leader">Class Leader (ShaadMate)</option>
+                        <option value="Wing Manager">Wing Manager (ShaadMate)</option>
+                        <option value="Wing Assistant">Wing Assistant (ShaadMate)</option>
+                        <option value="Shaad Member">Shaad Member (ShaadMate)</option>
+                        <option value="Batch Member">Batch Member (ShaadMate)</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -161,7 +183,15 @@
                 <label>Upload Photo</label>
                 {{ form.Student_Img }}
             </div>
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="radio-option">
+                <label for="">error</label>
+                {{ msg }}
+            </div>
 
+            {% endfor %}
+            {% endif %}
             <button type="submit">Submit Student</button>
 
         </form>
