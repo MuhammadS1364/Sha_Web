@@ -19,6 +19,15 @@ class Student_Model(models.Model):
     Student_Address = models.CharField(max_length=250)
     Student_Img = models.ImageField(upload_to='student_Box/')
 
+    # Student OverAll Status
+    
+    Total_Achievements = models.IntegerField(default=0, blank=True,null=True)
+    Total_OutReachs = models.IntegerField(default=0, blank=True,null=True)
+    ShaadMaan_Total = models.IntegerField(default=0, blank=True,null=True)
+    Total_Anjuman = models.IntegerField(default=0,blank=True,null=True)
+
+
+
     def __str__(self):
         return f"{self.Student_Add_no} - {self.Student_Name}"
 
@@ -42,6 +51,10 @@ class Wing_Model(models.Model):
         related_name="assistant_in_wings"
     )
     wing_logo = models.ImageField(upload_to='wing_Box/')
+
+    # Total Wings Status
+    Total_Registered = models.IntegerField(default=0, blank=True,null=True)
+    Total_ReSulted = models.IntegerField(default=0, blank=True,null=True)
 
     def __str__(self):
         return f"{self.Wing_Code} - {self.Wing_Name}"
