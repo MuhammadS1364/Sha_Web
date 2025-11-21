@@ -449,15 +449,17 @@
       </a>
 
       <a href="{% url 'Register_StudentToPrograme' %}">
-        <i class="fas fa-plus-circle"></i> Register Programe
+        <i class="fas fa-plus-circle"></i> Register Program
       </a>
 
       <a href="{% url 'add_AchieveMents' %}">
         <i class="fas fa-trophy"></i> Add Achievement
       </a>
+
       <a href="{% url 'Admin_DashBoard' %}">
         <i class="fas fa-user-shield"></i> Admin Dashboard
       </a>
+
       <a href="{% url 'logout_view' %}">
         <i class="fas fa-sign-out-alt"></i> Log Out
       </a>
@@ -466,7 +468,6 @@
     <div class="table-box">
       <h2>Student Profile</h2>
 
-      <!-- DESKTOP TABLE -->
       <table>
         <tr>
           <th>User</th>
@@ -482,6 +483,7 @@
           <th>Image</th>
         </tr>
 
+        {% if act_stn %}
         <tr>
           <td>{{ act_stn.user_Stn }}</td>
           <td>{{ act_stn.Student_Add_no }}</td>
@@ -493,13 +495,18 @@
           <td>{{ act_stn.Student_Dob }}</td>
           <td>{{ act_stn.Student_Father }}</td>
           <td>{{ act_stn.Student_Address }}</td>
-          <td>
-            <img src="{{ act_stn.Student_Img.url }}">
+          <td><img src="{{ act_stn.Student_Img.url }}"></td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="11" style="text-align: center; color: var(--gray); padding: 20px 0;">
+            No student profile found. Please contact the administrator.
           </td>
         </tr>
+        {% endif %}
       </table>
 
-      <!-- MOBILE CARD VIEW -->
+      {% if act_stn %}
       <div class="mobile-card">
         <p><strong>User:</strong> {{ act_stn.user_Stn }}</p>
         <p><strong>Admission No:</strong> {{ act_stn.Student_Add_no }}</p>
@@ -514,102 +521,98 @@
 
         <img src="{{ act_stn.Student_Img.url }}">
       </div>
+      {% endif %}
     </div>
 
     <h2>Your Records</h2>
 
     <div class="card-container">
-      {% if All_OutReach %}
-        {% for item in All_OutReach %}
-          {% if item %}
-          <div class="card outreach">
-            {% if item.programe_poster %}
-            <img src="{{ item.programe_poster.url }}" alt="{{ item.programe_name }}">
-            {% endif %}
 
-            <div class="title">
-              {{ item.programe_name }}
-            </div>
+      {% if all_OutReach %}
+      {% for item in all_OutReach %}
+      <div class="card outreach">
 
-            <div class="sub">
-              <i class="fas fa-chart-line"></i>
-              <span class="label">Result:</span>
-              {{ item.result }}
-            </div>
-
-            <div class="sub">
-              <i class="fas fa-user-tie"></i>
-              <span class="label">Conducted By:</span>
-              {{ item.programe_Conductor }}
-            </div>
-
-            <div class="date">
-              <i class="far fa-calendar-alt"></i> {{ item.programe_date }}
-            </div>
-
-            <div class="desc">
-              {{ item.programe_discription|truncatewords:25 }}
-            </div>
-          </div>
-          {% endif %}
-        {% endfor %}
-      {% else %}
-        <div class="empty-state">
-          <i class="fas fa-inbox"></i>
-          <h3>No Outreach Activities</h3>
-          <p>You haven't added any outreach activities yet.</p>
-          <a href="{% url 'add_OutReach' %}" class="links" style="margin-top: 15px; display: inline-block;">
-            <i class="fas fa-plus-circle"></i> Add Your First Outreach
-          </a>
-        </div>
-      {% endif %}
-
-      {% for item in All_Achievements %}
-        {% if item %}
-        <div class="card achievement">
-          {% if item.achieveMent_poster %}
-          <img src="{{ item.achieveMent_poster.url }}" alt="{{ item.achieved_Title }}">
-          {% endif %}
-
-          <div class="title">
-            {{ item.achieved_Title }}
-          </div>
-
-          <div class="sub">
-            <i class="fas fa-medal"></i>
-            <span class="label">Result:</span>
-            {{ item.resulted }}
-          </div>
-
-          <div class="sub">
-            <i class="fas fa-user-tie"></i>
-            <span class="label">Conducted By:</span>
-            {{ item.achieveMent_Conductor }}
-          </div>
-
-          <div class="date">
-            <i class="far fa-calendar-alt"></i> {{ item.achieveMent_date }}
-          </div>
-
-          <div class="desc">
-            {{ item.achieveMent_discription|truncatewords:25 }}
-          </div>
-        </div>
+        {% if item.programe_poster %}
+        <img src="{{ item.programe_poster.url }}" alt="{{ item.programe_name }}">
         {% endif %}
-      {% endfor %}
-      
-      {% if not All_Achievements and not All_OutReach %}
-        <div class="empty-state">
-          <i class="fas fa-trophy"></i>
-          <h3>No Achievements Yet</h3>
-          <p>You haven't added any achievements yet.</p>
-          <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
-            <i class="fas fa-plus-circle"></i> Add Your First Achievement
-          </a>
+
+        <div class="title">{{ item.programe_name }}</div>
+
+        <div class="sub">
+          <i class="fas fa-chart-line"></i>
+          <span class="label">Result:</span>
+          {{ item.result }}
         </div>
+
+        <div class="sub">
+          <i class="fas fa-user-tie"></i>
+          <span class="label">Conducted By:</span>
+          {{ item.programe_Conductor }}
+        </div>
+
+        <div class="date">
+          <i class="far fa-calendar-alt"></i> {{ item.programe_date }}
+        </div>
+
+        <div class="desc">{{ item.programe_discription|truncatewords:25 }}</div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h3>No Outreach Activities</h3>
+        <p>You haven't added any outreach activities yet.</p>
+        <a href="{% url 'add_OutReach' %}" class="links" style="margin-top: 15px; display: inline-block;">
+          <i class="fas fa-plus-circle"></i> Add Your First Outreach
+        </a>
+      </div>
       {% endif %}
+
+      {% if all_Achievements %}
+      {% for item in all_Achievements %}
+      <div class="card achievement">
+
+        {% if item.achieveMent_poster %}
+        <img src="{{ item.achieveMent_poster.url }}" alt="{{ item.achieved_Title }}">
+        {% endif %}
+
+        <div class="title">{{ item.achieved_Title }}</div>
+
+        <div class="sub">
+          <i class="fas fa-medal"></i>
+          <span class="label">Result:</span>
+          {{ item.resulted }}
+        </div>
+
+        <div class="sub">
+          <i class="fas fa-user-tie"></i>
+          <span class="label">Conducted By:</span>
+          {{ item.achieveMent_Conductor }}
+        </div>
+
+        <div class="date">
+          <i class="far fa-calendar-alt"></i> {{ item.achieveMent_date }}
+        </div>
+
+        <div class="desc">{{ item.achieveMent_discription|truncatewords:25 }}</div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if not all_Achievements and not all_OutReach %}
+      <div class="empty-state">
+        <i class="fas fa-trophy"></i>
+        <h3>No Achievements Yet</h3>
+        <p>You haven't added any achievements yet.</p>
+        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
+          <i class="fas fa-plus-circle"></i> Add Your First Achievement
+        </a>
+      </div>
+      {% endif %}
+
     </div>
   </div>
 </body>
+
 
 </html>

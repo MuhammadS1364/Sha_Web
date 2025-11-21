@@ -397,7 +397,7 @@
         <!-- Header -->
         <div class="header">
             <div>
-                <h1>ShaadMaan Student Dashboard</h1>
+                <h1>ShaadMaan Wing Dashboard</h1>
                 <h3>Welcome back, {{request.user.username}}!</h3>
             </div>
             <div class="user-info">
@@ -457,6 +457,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if not act_wing == None %}
                         <tr>
                             <td>{{act_wing.wing_user}}</td>
                             <td>{{act_wing.Wing_Code}}</td>
@@ -468,6 +469,13 @@
                                 <img class="logo" src="{{act_wing.wing_logo.url}}" alt="Wing Logo">
                             </td>
                         </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--gray);">
+                                No active wing information available.
+                            </td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -492,6 +500,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if not all_Programe == None%}
                         {% for item in all_Programe %}
                         <tr>
                             <td>{{item.program_Created}}</td>
@@ -504,6 +513,13 @@
                             </td>
                         </tr>
                         {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">
+                                No program information available.
+                            </td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -528,10 +544,10 @@
 
     <script>
         // Add some interactive elements
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Add animation to cards on scroll
             const cards = document.querySelectorAll('.card, .stat-card');
-            
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -540,7 +556,7 @@
                     }
                 });
             }, { threshold: 0.1 });
-            
+
             cards.forEach(card => {
                 card.style.opacity = 0;
                 card.style.transform = 'translateY(20px)';

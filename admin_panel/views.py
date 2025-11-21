@@ -246,7 +246,7 @@ def Wing_DashBoard(request):
 # Student DashBoard
 
 def Student_DashBoard(request):
-    act_stn = User.objects.get(user_Stn = request.user)
+    act_stn = Student_Model.objects.get(user_Stn = request.user)
 
     # checking Is student info exist
     try:
