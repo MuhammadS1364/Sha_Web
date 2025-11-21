@@ -9,6 +9,16 @@
 
 <body>
     <h1>Register Student</h1>
+      {% if messages %}
+  {% for msg in messages %}
+  <div class="radio-option">
+    <label for="">error</label>
+    {{ msg }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}

@@ -82,6 +82,16 @@
     <h2>Your Records</h2>
 
     <div class="card-container">
+          {% if messages %}
+  {% for msg in messages %}
+  <div class="radio-option">
+    <label for="">error</label>
+    {{ msg }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
 
         {% for item in OutReach %} <!-- OR achievements -->
         <div class="card">

@@ -129,6 +129,20 @@
 </head>
 
 <body>
+
+
+
+
+      {% if messages %}
+  {% for msg in messages %}
+  <div class="radio-option">
+    <label for="">error</label>
+    {{ msg }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
     <div class="navbar">
         <h1>Admin Dashboard — ShaadMaan</h1>
         <a href="{% url 'logout_view' %}">Logout</a>

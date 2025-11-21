@@ -98,6 +98,16 @@
     <div class="container">
         <h2>Add Achievement</h2>
 
+          {% if messages %}
+  {% for msg in messages %}
+  <div class="radio-option">
+    <label for="">error</label>
+    {{ msg }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
