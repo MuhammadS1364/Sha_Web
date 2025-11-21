@@ -9,6 +9,11 @@ class OutReach_Form (forms.ModelForm):
         model = OutReach_Model
         fields = "__all__"
         exclude = ["student_name"]
+        widgets = {
+            "OutReach_date" : forms.DateInput(attrs={
+                "type" : "date"
+            })
+        }
 
 # Achievements Programes Form
 class Achievements_Form (forms.ModelForm):
@@ -17,11 +22,11 @@ class Achievements_Form (forms.ModelForm):
         fields = "__all__"
         exclude = ["Achiever"]
         widgets = {
-             "programe_date": forms.DateInput(attrs={
+             "achieveMent_date": forms.DateInput(attrs={
                 "type": "date",
                 "class": "form-control"
             }),
-             "programe_poster": forms.ClearableFileInput(attrs={
+             "achieveMent_poster": forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),
         }

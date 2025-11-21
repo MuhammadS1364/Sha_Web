@@ -19,12 +19,12 @@ class Program_Bank(models.Model):
    def __str__(self):
        return f"{self.Program_name} {self.Program_Created}"
 
-class ProgramRegistration(models.Model):
+class Candidates_Registration_Model(models.Model):
     wing_name = models.ForeignKey(Wing_Model, on_delete=models.CASCADE,)
     Registered_Programe = models.ForeignKey(Program_Bank, on_delete=models.CASCADE)
-    Candidates_Name = models.ManyToManyField(Student_Model)   # MANY STUDENTS
+    Candidates_Name = models.CharField(max_length=230)  
 
     def __str__(self):
-        return f"Registrations for {self.program.program_name}"
+        return f"Registrations for {self.Registered_Programe}"
 
 # Result upload Model

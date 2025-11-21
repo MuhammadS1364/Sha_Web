@@ -4,8 +4,12 @@ from django.contrib import admin
 
 from .models import *
 
-# admin.site.register(New_Program)
-# class ProgrameAdmin(admin.ModelAdmin):
-#     list_display = ("program_Created", "program_name")
+class Programe_Admin(admin.ModelAdmin):
+    list_display = ["Program_Created", "Program_name"]
 
-# admin.site.register(ProgramRegistration)
+admin.site.register(Program_Bank, Programe_Admin)
+
+class Candidates_Registration_Admin(admin.ModelAdmin):
+    list_display = ["wing_name", "Registered_Programe"]
+
+admin.site.register(Candidates_Registration_Model,Candidates_Registration_Admin)

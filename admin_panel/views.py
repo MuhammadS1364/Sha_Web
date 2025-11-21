@@ -68,7 +68,7 @@ def newUser (request):
 
     #    Protecting the Dobble User Error 
        if User.objects.filter(username = userName).exists():
-           return messages.error("This User Already Exist.....")
+           return messages.error(request , "This User Already Exist.....")
 
        
        if userPass1 == userPass2:
@@ -104,7 +104,7 @@ def newUser (request):
                 return redirect("add_student")
             
        else:
-           return messages.error("Password1 did Not Match to Password2!, Plz Check It...")
+           return messages.error(request ,"Password1 did Not Match to Password2!, Plz Check It...")
             
            
     else:
@@ -112,39 +112,42 @@ def newUser (request):
         
     return render(request, "addUser.html", {"form":form})
 
-# Add New Student
 
 def add_student(request):
     if request.method == 'POST':
 
-        newStdn_Form = Student_form(request.POST,request.FILES )
+        newStdn_Form = Student_form(request.POST, request.FILES)
 
         new_stn_user = request.POST.get("user_Stn")
+        new_stn_addNo = request.POST.get("Student_Add_no")
 
-        if newStud_Form.is_valid():
+        if newStdn_Form.is_valid():
 
+            if Student_Model.objects.filter(Student_Add_no=new_stn_addNo).exists():
+                messages.error(request, "Student Already Exists")
+                return redirect("login_view")
+                
+            newStn_Obj = User.objects.get(id=new_stn_user)
 
-            # Getting the New User Object
-            newStn_Obj = User.objects.get(id = new_stn_user)
-
-            new_Student = newStud_Form.save(commit=False)
+            new_Student = newStdn_Form.save(commit=False)
             new_Student.user_Stn = newStn_Obj
             new_Student.save()
 
+            messages.success(request, "Student Added Successfully")
+            login(request, new_Student)
+            return redirect("Student_DashBoard")
 
-            # Return their data to the DashBoard 
-            login(request, newStn_Obj)
-            return redirect ("Student_DashBoard")
-        else:
-            return messages.error("Student Not Added.........")
     else:
-        newStud_Form = Student_form()
-    return render(request, 'addStudent.html', {"form": newStud_Form})
+        newStdn_Form = Student_form()
+
+    return render(request, 'addStudent.html', {"form": newStdn_Form})
+
 
 
 # Add New Wing
 
 def add_wing(request):
+    all_Users = User.objects.all()
     if request.method == 'POST':
 
         newWing_Form = Wing_form(request.POST,request.FILES )
@@ -153,7 +156,6 @@ def add_wing(request):
 
         if newWing_Form.is_valid():
 
-
             # Getting the New User Object
             newWing_Obj = User.objects.get(id=new_wing_user)
 
@@ -161,14 +163,19 @@ def add_wing(request):
             new_Wing.wing_user = newWing_Obj
             new_Wing.save()
 
+            login(request, new_Wing)
             # Return their data to the DashBoard 
-            login(request, newWing_Obj)
-            return redirect ("Wing_DashBoard")
+            return redirect("Wing_DashBoard")
         else:
-            return messages.error("Wing Not Added.........")
+            return messages.error(request ,"Wing Not Added.........")
     else:
         newWing_Form = Wing_form()
-    return render(request, 'addWing.html', {"form": newWing_Form})
+        
+    return render(request, 'addWing.html', {
+        "form": newWing_Form,
+        "all_Users" :all_Users
+        })
+
 
 
 # Admin Dash Board
@@ -192,7 +199,7 @@ def Admin_DashBoard(request):
 
 def Wing_DashBoard(request):
     act_wing = Wing_Model.objects.get(wing_user = request.user)
-    all_Programe = Program_Bank.objects.filter(program_Created = act_wing)
+    all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
     context = {
         "act_wing" : act_wing,
         "all_Programe" : all_Programe

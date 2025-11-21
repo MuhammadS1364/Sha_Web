@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Student_Model(models.Model):
     user_Stn = models.OneToOneField(User, on_delete=models.CASCADE)  # link with login user
     Student_Add_no = models.CharField(max_length=50, unique=True)
-    Student_Name = models.CharField(max_length=250, unique=True)
+    Student_Name = models.CharField(max_length=250)
     Student_Email = models.EmailField(unique=True)
     Student_Phone = models.CharField(max_length=15)
 

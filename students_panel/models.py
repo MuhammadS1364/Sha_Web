@@ -17,6 +17,7 @@ class OutReach_Model(models.Model):
     OutReach_date = models.DateField()
     OutReach_poster = models.ImageField(upload_to='OutReach/', blank=True,null=True)
     OutReach_discription = models.TextField(max_length=600)
+    Total_OutReach = models.IntegerField(default=0)
     
     def __str__(self):
         return f"{self.student_name} {self.OutReach_Programe_name} {self.OutReach_result}"
@@ -36,7 +37,7 @@ class Achievements_Model(models.Model):
     achieveMent_date = models.DateField()
     achieveMent_poster = models.ImageField(upload_to='AchieveMents/', blank=True,null=True)
     achieveMent_discription = models.TextField(max_length=600)
-
+    Total_Achievements = models.IntegerField(default=0)
     
     def __str__(self):
         return f"{self.Achiever} {self.achieved_Title} {self.achieveMent_poster}"

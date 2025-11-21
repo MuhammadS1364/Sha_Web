@@ -27,72 +27,43 @@ def Add_Programes(request):
         wing_Obj = Wing_Model.objects.get(wing_user = request.user)
 
         # SubMitting the OutReach Form 
-        new_Progs_Obj = Add_Program_Form(request.POST, request.FILES)
+        Programe_Objt = Add_Program_Form(request.POST, request.FILES)
 
-        if new_Progs_Obj.is_valid():
-            new_Register = new_Progs_Obj.save(commit=False)
+        if Programe_Objt.is_valid():
+            new_Registered = Programe_Objt.save(commit=False)
 
-            new_Register.program_Created = wing_Obj
-            new_Register.save()
+            new_Registered.Program_Created = wing_Obj
+            new_Registered.save()
 
             return redirect("Wing_DashBoard")
         else:
             return HttpResponse("Programe Not Registered .......")
     else:
-        new_Progs_Obj = Add_Program_Form()
+        Programe_Objt = Add_Program_Form()
 
-    return render(request, "addProg.html", {"form" : new_Progs_Obj})
+    return render(request, "addProg.html", {"form" : Programe_Objt})
 
 
-# def Register_StudentToPrograme(request):
-#     all_Programes = Program.objects.all()
-
-#     if request.method == 'POST':
-
-#         newRegistration = Registration_Programe(request.POST , request.FILES)
-
-#         Programe_iDS = request.POST.get("program_name")
-#         To_Reg_Programe = Program.objects.get(id =Programe_iDS)
-
-#         # which wing member register 
-#         wing_Obj = Wing_Model.objects.get(wing_user = request.user)
-        
-#         if newRegistration.is_valid():
-#             Registered = newRegistration.save(commit=False)
-#             Registered.wing_name = wing_Obj
-#             Registered.program = To_Reg_Programe
-#             Registered.save()
-#             return redirect("Wing_DashBoard")
-#         else:
-#             return HttpResponse("Candidate Not Registered.......")
-#     else:
-#         newRegistration = Registration_Programe()
-
-#     return render(request, 'candidate.html', {
-#         "form": newRegistration,
-#         "all_Programes" : all_Programes
-#         })
 
 def Register_StudentToPrograme(request):
-    all_Programes = Program.objects.all()
+    all_Programes = Program_Bank.objects.all()
 
     if request.method == 'POST':
-        print("POST DATA = ", request.POST)
         newRegistration = Registration_Programe(request.POST)
 
         program_id = request.POST.get("program")
-        To_Reg_Programe = Program.objects.get(id = program_id)
+        To_Reg_Programe = Program_Bank.objects.get(id = program_id)
 
         wing_Obj = Wing_Model.objects.get(wing_user=request.user)
         
         if newRegistration.is_valid():
             Registered = newRegistration.save(commit=False)
             Registered.wing_name = wing_Obj
-            Registered.program = To_Reg_Programe
+            Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
 
-            # ManyToMany students save karna:
-            newRegistration.save_m2m()
+            # students save karna:
+            newRegistration.save()
 
             return redirect("Wing_DashBoard")
         else:
