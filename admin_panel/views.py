@@ -68,7 +68,8 @@ def newUser (request):
 
     #    Protecting the Dobble User Error 
        if User.objects.filter(username = userName).exists():
-           return messages.error(request , "This User Already Exist.....")
+           messages.error(request , "This User Already Exist.....")
+           return redirect("login_view")
 
        
        if userPass1 == userPass2:
@@ -104,7 +105,10 @@ def newUser (request):
                 return redirect("add_student")
             
        else:
-           return messages.error(request ,"Password1 did Not Match to Password2!, Plz Check It...")
+           messages.error(request ,"Password1 did Not Match to Password2!, Plz Check It...")
+           form = User()
+           return render(request, "addUser.html", {"form":form})
+
             
            
     else:

@@ -147,6 +147,17 @@
                     <input type="radio" name="userRole" id="student" value="student">
                     <label for="student">Student</label>
                 </div>
+
+
+                {% if messages %}
+                {% for msg in messages %}
+                <div class="radio-option">
+                    <label for="student">error</label>
+                    {{ msg }}
+                </div>
+
+                {% endfor %}
+                {% endif %}
             </div>
 
             <button type="submit">Submit</button>
