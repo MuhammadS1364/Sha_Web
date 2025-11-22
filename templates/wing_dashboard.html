@@ -401,7 +401,7 @@
                 <h3>Welcome back, {{request.user.username}}!</h3>
             </div>
             <div class="user-info">
-                <span class="badge badge-primary"><i class="fas fa-user"></i> Student</span>
+                <span class="badge badge-primary"><i class="fas fa-user"></i> Wing Panel</span>
             </div>
         </div>
 
@@ -533,8 +533,8 @@
             <a href="{% url 'Add_Programes' %}" class="btn btn-secondary">
                 <i class="fas fa-plus-circle"></i> Register Program
             </a>
-            <a href="{% url 'Register_StudentToPrograme' %}" class="btn btn-outline">
-                <i class="fas fa-user-plus"></i> Register Candidate
+            <a href="{% url 'Upload_Result' %}" class="btn btn-outline">
+                <i class="fas fa-user-plus"></i> Upload Result
             </a>
             <a href="{% url 'logout_view' %}" class="btn btn-danger">
                 <i class="fas fa-sign-out-alt"></i> Log Out

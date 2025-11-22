@@ -90,3 +90,7 @@ def Register_StudentToPrograme(request):
         "all_Programes": all_Programes,
         "all_Students" : all_Students
     })
+
+
+def Upload_Result(request):
+    return HttpResponse("Upload Result Page")
