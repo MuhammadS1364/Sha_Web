@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Upload_Result | {{request.user}}</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            width: 95%;
+            max-width: 650px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #357abd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Upload_Result</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Wing User (Login Account)</label>
+                    <select name="Result_Uploaded_By" id="">
+                        {% for wingUser in all_User %}
+                        {% if wingUser.is_staff %}
+                        <option value="{{ wingUser.id}}"> {{ wingUser.username}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Programes List</label>
+                    <select name="Ready_To_Upload" id="">
+                        {% for programe in all_Programes %}
+                        <option value="{{ programe.id}}"> {{ programe.Programe_Name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- candidate  -->
+            </div>
+
+
+            <div class="form-group">
+                <label>Holder 1 Img</label>
+
+            </div>
+            <div class="form-group">
+                <label>First Holder</label>
+                <select name="Position_Holder1" id="">
+                    {% for candidate in This_Candidate_List %}
+                    <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number</label>
+                {{ form.Student_Phone }}
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Position</label>
+                    <!-- {{ form.Student_Position }} -->
+                    <select name="Student_Position" id="">
+                        <option value="President">President (ShaadMate)</option>
+                        <option value="Secretry">Secretry (ShaadMate)</option>
+                        <option value="Treasaror">Treasaror (ShaadMate)</option>
+                        <option value="Class Leader">Class Leader (ShaadMate)</option>
+                        <option value="Wing Manager">Wing Manager (ShaadMate)</option>
+                        <option value="Wing Assistant">Wing Assistant (ShaadMate)</option>
+                        <option value="Shaad Member">Shaad Member (ShaadMate)</option>
+                        <option value="Batch Member">Batch Member (ShaadMate)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Goal (Optional)</label>
+                    {{ form.Student_Goal }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Date of Birth</label>
+                    {{ form.Student_Dob }}
+                </div>
+
+                <div class="form-group">
+                    <label>Father Name</label>
+                    {{ form.Student_Father }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Full Address</label>
+                {{ form.Student_Address }}
+            </div>
+
+            <div class="form-group">
+                <label>Upload Photo</label>
+                {{ form.Student_Img }}
+            </div>
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="radio-option">
+                <label for="">error</label>
+                {{ msg }}
+            </div>
+
+            {% endfor %}
+            {% endif %}
+            <button type="submit">Submit Student</button>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

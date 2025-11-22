@@ -33,3 +33,43 @@ class Candidates_Registration_Model(models.Model):
         return f"Registrations for {self.Registered_Programe}"
 
 # Result upload Model
+
+class Upload_Result(models.Model):
+    Result_Uploaded_By = models.ForeignKey(Wing_Model, on_delete=models.CASCADE)
+
+    Result_Programe = models.ForeignKey(Program_Bank, on_delete=models.CASCADE)
+
+    Position_Holder1 = models.ForeignKey(
+        Student_Model,
+        on_delete=models.CASCADE,
+        related_name='position_holder_1',
+        blank=True,
+        null=True
+        )
+    Position_Holder1_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+
+    Position_Holder2 = models.ForeignKey(
+        Student_Model,
+        on_delete=models.CASCADE,
+        related_name='position_holder_2',
+        blank=True,
+        null=True
+        )
+    Position_Holder2_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+
+
+    Position_Holder3 = models.ForeignKey(
+        Student_Model,
+        on_delete=models.CASCADE,
+        related_name='position_holder_3',
+        blank=True,
+        null=True
+        )
+
+    Position_Holder3_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+
+
+    Result_Baner = models.FileField(upload_to="Results/", blank=True, null=True)
+
+    def __str__(self):
+        return f"Result for {self.Result_Programe} First is {self.Position_Holder1}"
