@@ -493,23 +493,35 @@
                         <tr>
                             <th>Created</th>
                             <th>Program Name</th>
-                            <th>Date</th>
-                            <th>Description</th>
-                            <th>Assist Person</th>
-                            <th>Poster</th>
+                            <th>Program Venue</th>
+                            <th>Program Date</th>
+                            <th>Program Status</th>
+                            <th>Program Resulted?</th>
+                            <th>Program Poster</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% if not all_Programe == None%}
                         {% for item in all_Programe %}
                         <tr>
-                            <td>{{item.program_Created}}</td>
-                            <td>{{item.program_name}}</td>
-                            <td>{{item.program_date}}</td>
-                            <td>{{item.program_disc}}</td>
-                            <td>{{item.Assist_Person}}</td>
+                            <td>{{item.Program_Created}}</td>
+                            <td>{{item.Program_name}}</td>
+                            <td>{{item.Program_Venue}}</td>
+                            <td>{{item.Program_date}}</td>
+
+                            {% if item.is_Registration_Active%}
+                            <td><span class="badge badge-success">Registration Open</span></td>
+                            {% else %}
+                            <td><span class="badge badge-warning">Registration Closed</span></td>
+                            {% endif %}
+
+                            {% if item.is_Resulted%}
+                            <td><span class="badge badge-success">Result Uploaded</span></td>
+                            {% else %}
+                            <td><span class="badge badge-warning">Result Pending</span></td>
+                            {% endif %}
                             <td>
-                                <img class="logo" src="{{item.program_poster.url}}" alt="Program Poster">
+                                <img class="logo" src="{{item.Program_poster.url}}" alt="Program Poster">
                             </td>
                         </tr>
                         {% endfor %}

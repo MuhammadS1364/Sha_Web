@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
 # from .forms import *
@@ -13,7 +13,7 @@ class Program_Bank(models.Model):
    Program_Created = models.ForeignKey(Wing_Model, on_delete=models.CASCADE)
    Program_name = models.CharField(max_length=200)
    Program_Venue = models.CharField(max_length=250)
-   Program_date = models.DateField(auto_now=True)
+   Program_date = models.DateField(default=timezone.now)
    Program_poster = models.ImageField(upload_to="Programs/", blank=True, null=True)
 
     # Program Status

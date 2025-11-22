@@ -96,15 +96,15 @@
 
     <div class="container">
         <h2>Register Candidate</h2>
-          {% if messages %}
-  {% for msg in messages %}
-  <div class="radio-option">
-    <label for="">error</label>
-    {{ msg }}
-  </div>
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="radio-option">
+            <label for="">error</label>
+            {{ msg }}
+        </div>
 
-  {% endfor %}
-  {% endif %}
+        {% endfor %}
+        {% endif %}
 
 
         <form method="post" enctype="multipart/form-data">
@@ -115,16 +115,17 @@
                     <label>Program </label>
                     <select name="program">
                         {% for pro in all_Programes %}
-                        <option value="{{ pro.id }}">{{ pro.program_name }}</option>
+                        {% if pro.is_Registration_Active %}
+                        <option value="{{ pro.id }}">{{ pro.Program_name }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
-
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Candidate</label>
-                {{ form.students }}
+                <label>Candidate Name (User)</label>
+                <input type="text" name="Candidates_Name" value="{{request.user}}" readonly>
             </div>
 
             <button type="submit">Register Candidate</button>

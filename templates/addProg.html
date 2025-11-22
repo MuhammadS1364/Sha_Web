@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Programe</title>
+    <title>Add Programe | {{request.user}}</title>
 
     <style>
         body {
@@ -95,16 +95,16 @@
 <body>
 
     <div class="container">
-        <h2>Add Wing</h2>
-          {% if messages %}
-  {% for msg in messages %}
-  <div class="radio-option">
-    <label for="">error</label>
-    {{ msg }}
-  </div>
+        <h2>Register Your Programes</h2>
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="radio-option">
+            <label for="">error</label>
+            {{ msg }}
+        </div>
 
-  {% endfor %}
-  {% endif %}
+        {% endfor %}
+        {% endif %}
 
 
         <form method="post" enctype="multipart/form-data">
@@ -113,30 +113,30 @@
             <div class="row">
                 <div class="form-group">
                     <label>Wing User</label>
-                    <input type="text" name="program_Created" value="{{request.user}}" readonly>
+                    <input type="text" name="Program_Created" value="{{request.user}}" readonly>
                 </div>
             </div>
 
             <div class="row">
                 <div class="form-group">
                     <label>Program Name</label>
-                    {{ form.program_name }}
+                    {{ form.Program_name }}
+                </div>
+                <div class="form-group">
+                    <label>Program Venue</label>
+                    {{ form.Program_Venue }}
                 </div>
             </div>
 
-            <div class="form-group">
-                <label>Program Date</label>
-                {{ form.program_date }}
-            </div>
-
-            <div class="form-group">
-                <label>Program Poster (Optional)</label>
-                {{ form.program_poster }}
-            </div>
-
-            <div class="form-group">
-                <label>Program Description</label>
-                {{ form.program_disc }}
+            <div class="row">
+                <div class="form-group">
+                    <label>Program_date</label>
+                    {{ form.Program_date }}
+                </div>
+                <div class="form-group">
+                    <label>Program_poster</label>
+                    {{ form.Program_poster }}
+                </div>
             </div>
 
             <button type="submit">Add Program</button>

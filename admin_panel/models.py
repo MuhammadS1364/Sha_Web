@@ -56,7 +56,7 @@ class Wing_Model(models.Model):
     Total_ReSulted = models.IntegerField(default=0, blank=True,null=True)
 
     def __str__(self):
-        return f"{self.Wing_Code} - {self.Wing_Name}"
+        return f"{self.Wing_Name}"
     
 
 

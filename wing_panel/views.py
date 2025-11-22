@@ -25,7 +25,7 @@ def Add_Programes(request):
     if request.method == 'POST':
 
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
-        stn_Objt = Wing_Model.objects.get(wing_user = request.user)
+        wing_Objt = Wing_Model.objects.get(wing_user = request.user)
 
         # SubMitting the OutReach Form 
         Programe_Objt = Add_Program_Form(request.POST, request.FILES)
@@ -33,7 +33,7 @@ def Add_Programes(request):
         if Programe_Objt.is_valid():
             new_Registered = Programe_Objt.save(commit=False)
 
-            new_Registered.Program_Created = stn_Objt
+            new_Registered.Program_Created = wing_Objt
             new_Registered.save()
 
             return redirect("Wing_DashBoard")
@@ -55,6 +55,12 @@ def Register_StudentToPrograme(request):
     all_Programes = Program_Bank.objects.all()
     all_Students = Student_Model.objects.all()
 
+    # To_Be_Registered = None
+    # for programe in all_Programes:
+    #     To_Reg_Programe = programe
+    
+
+
     if request.method == 'POST':
         newRegistration = Candidate_Registration_Form(request.POST)
 
@@ -65,20 +71,20 @@ def Register_StudentToPrograme(request):
         
         if newRegistration.is_valid():
             Registered = newRegistration.save(commit=False)
-            Registered.user_Stn = stn_Objt
+            Registered.Candidates_Name = stn_Objt
             Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
 
             # students save karna:
             newRegistration.save()
 
-            return redirect("Wing_DashBoard")
+            return redirect("Student_DashBoard")
         else:
             messages.error("Candidate Not Registered.......")
             return render(request, 'candidate.html', {
         "form": newRegistration,
         "all_Programes": all_Programes,
-        "all_Students" : all_Students
+        "all_Programes" : all_Programes
         })
 
 
@@ -88,7 +94,7 @@ def Register_StudentToPrograme(request):
     return render(request, 'candidate.html', {
         "form": newRegistration,
         "all_Programes": all_Programes,
-        "all_Students" : all_Students
+        "all_Students" : all_Students,
     })
 
 

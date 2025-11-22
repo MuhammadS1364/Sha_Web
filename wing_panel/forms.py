@@ -11,6 +11,8 @@ class Add_Program_Form(forms.ModelForm):
             "Program_poster": forms.ClearableFileInput(attrs={'class': 'form-control'}),               
             
         }
+
+        
 class Candidate_Registration_Form(forms.ModelForm):
     class Meta:
         model = Candidates_Registration_Model

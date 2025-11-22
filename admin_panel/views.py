@@ -266,10 +266,17 @@ def Student_DashBoard(request):
     except Achievements_Model.DoesNotExist:
         all_Achievements = None
 
+    # All Registered Programes
+    try:
+        all_Registered = Candidates_Registration_Model.objects.filter(Candidates_Name = act_stn)
+    except Candidates_Registration_Model.DoesNotExist:
+        all_Registered = None
+
     context = {
         "act_stn" : act_stn,
         "all_OutReach" : all_OutReach,
-        "all_Achievements" : all_Achievements
+        "all_Achievements" : all_Achievements,
+        "all_Registered" : all_Registered
     }
     return render(request, "student_dashboard.html", context)
 
