@@ -96,6 +96,9 @@ def Upload_Result(request):
     all_Users = User.objects.all()
     all_Programes = Program_Bank.objects.all()
     all_Registered_Candidates = Candidates_Registration_Model.objects.all()
+
+    # form for Uploading Result
+    Upload_Result_Form_Obj = Upload_Result_Form()
     
     # Getting the Active Programe can be Uploaded
     Ready_To_Upload = None
@@ -114,5 +117,6 @@ def Upload_Result(request):
         "all_User": all_Users,
         "Ready_To_Upload": Ready_To_Upload,
         "This_Candidate_List": This_Candidate_List,
+        "form": Upload_Result_Form_Obj
     }
-    return render(request, "UploadResult.html")
+    return render(request, "UploadResult.html", context)

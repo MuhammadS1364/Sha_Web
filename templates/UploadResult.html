@@ -123,68 +123,59 @@
                 <!-- candidate  -->
             </div>
 
-
-            <div class="form-group">
-                <label>Holder 1 Img</label>
-
-            </div>
-            <div class="form-group">
-                <label>First Holder</label>
-                <select name="Position_Holder1" id="">
-                    {% for candidate in This_Candidate_List %}
-                    <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Phone Number</label>
-                {{ form.Student_Phone }}
-            </div>
-
             <div class="row">
                 <div class="form-group">
-                    <label>Position</label>
-                    <!-- {{ form.Student_Position }} -->
-                    <select name="Student_Position" id="">
-                        <option value="President">President (ShaadMate)</option>
-                        <option value="Secretry">Secretry (ShaadMate)</option>
-                        <option value="Treasaror">Treasaror (ShaadMate)</option>
-                        <option value="Class Leader">Class Leader (ShaadMate)</option>
-                        <option value="Wing Manager">Wing Manager (ShaadMate)</option>
-                        <option value="Wing Assistant">Wing Assistant (ShaadMate)</option>
-                        <option value="Shaad Member">Shaad Member (ShaadMate)</option>
-                        <option value="Batch Member">Batch Member (ShaadMate)</option>
+                    <label>First Holder</label>
+                    <select name="Position_Holder1" id="">
+                        {% for candidate in This_Candidate_List %}
+                        <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
+                        {% endfor %}
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label>Goal (Optional)</label>
-                    {{ form.Student_Goal }}
+                    <label>Holder 1 Img (Optional)</label>
+                    {{ form.Position_Holder1_img }}
                 </div>
             </div>
+            <!-- Position Holde section  -->
 
             <div class="row">
                 <div class="form-group">
-                    <label>Date of Birth</label>
-                    {{ form.Student_Dob }}
+                    <label>Second Holder (Optional)</label>
+                    <select name="Position_Holder2" id="">
+                        {% for candidate in This_Candidate_List %}
+                        <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-
                 <div class="form-group">
-                    <label>Father Name</label>
-                    {{ form.Student_Father }}
+                    <label>Holder 2 Img (Optional)</label>
+                    {{ form.Position_Holder2_img }}
                 </div>
             </div>
+            <!-- Position Holde section  -->
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Third Holder</label>
+                    <select name="Position_Holder3" id="">
+                        {% for candidate in This_Candidate_List %}
+                        <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Holder 3 Img (Optional)</label>
+                    {{ form.Position_Holder3_img }}
+                </div>
+            </div>
+            <!-- Position Holde section  -->
 
             <div class="form-group">
-                <label>Full Address</label>
-                {{ form.Student_Address }}
+                <label>Programe Baner (Optional)</label>
+                {{ form.Result_Baner }}
             </div>
 
-            <div class="form-group">
-                <label>Upload Photo</label>
-                {{ form.Student_Img }}
-            </div>
             {% if messages %}
             {% for msg in messages %}
             <div class="radio-option">
@@ -194,7 +185,7 @@
 
             {% endfor %}
             {% endif %}
-            <button type="submit">Submit Student</button>
+            <button type="submit">Add Result</button>
 
         </form>
     </div>
