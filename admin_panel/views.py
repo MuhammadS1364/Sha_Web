@@ -19,15 +19,6 @@ def login_view (request):
         userName = request.POST.get("username")
         userPass = request.POST.get("password")
 
-              # Step 1: Check if entered value is email
-        # if User.objects.filter(email=userName).exists():
-        #     user_obj = User.objects.get(email=userName)
-        #     # print(user_obj.email, "it is .....")
-        #     final_username = user_obj.email
-        # else:
-        #     messages.error(request,f"Login Failed. {request.user}, May be your email")
-        #     final_username = userName
-        #     return render(request, "login_user.html")
 
         act_user = authenticate(request, username = userName , password = userPass)
 
