@@ -17,7 +17,7 @@ class Program_Bank(models.Model):
    Program_poster = models.ImageField(upload_to="Programs/", blank=True, null=True)
 
     # Program Status
-   is_Registration_Active = models.BooleanField(default=False, blank=True, null=True)
+   is_Registration_Active = models.BooleanField(default=True, blank=True, null=True)
    is_Resulted = models.BooleanField(default=False, blank=True, null=True)            
    Total_Programes = models.IntegerField(default=0, blank=True, null=True)        
 

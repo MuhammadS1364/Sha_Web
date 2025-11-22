@@ -53,6 +53,7 @@ def Add_Programes(request):
 
 def Register_StudentToPrograme(request):
     all_Programes = Program_Bank.objects.all()
+    all_Students = Student_Model.objects.all()
 
     if request.method == 'POST':
         newRegistration = Candidate_Registration_Form(request.POST)
@@ -76,7 +77,8 @@ def Register_StudentToPrograme(request):
             messages.error("Candidate Not Registered.......")
             return render(request, 'candidate.html', {
         "form": newRegistration,
-        "all_Programes": all_Programes
+        "all_Programes": all_Programes,
+        "all_Students" : all_Students
         })
 
 
@@ -85,5 +87,6 @@ def Register_StudentToPrograme(request):
 
     return render(request, 'candidate.html', {
         "form": newRegistration,
-        "all_Programes": all_Programes
+        "all_Programes": all_Programes,
+        "all_Students" : all_Students
     })

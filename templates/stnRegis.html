@@ -4,12 +4,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaadMaan | {{request.user}}</title>
+    <title>Add OutReach | {{request.user}}</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            width: 95%;
+            max-width: 650px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #357abd;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Register Student</h1>
-      {% if messages %}
+
+    <div class="container">
+        <h2>Add OutReach</h2>
+          {% if messages %}
   {% for msg in messages %}
   <div class="radio-option">
     <label for="">error</label>
@@ -19,11 +107,203 @@
   {% endfor %}
   {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">Submit</button>
-    </form>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Student Name</label>
+                    <!-- {{ form.student_name }} -->
+                    <input type="text" name="student_name" value="{{request.user}}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Progame Name</label>
+                    {{ form.OutReach_Programe_name }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Result</label>
+                {{ form.OutReach_result }}
+            </div>
+
+            <div class="form-group">
+                <label>Programe Conductor</label>
+                {{ form.OutReach_Conductor }}
+            </div>
+
+            <div class="form-group">
+                <label>Programe Date</label>
+                {{ form.OutReach_date }}
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Any Poster (Optional)</label>
+                    {{ form.OutReach_poster }}
+                </div>
+
+                <div class="form-group">
+                    <label>Programe Discription</label>
+                    {{ form.OutReach_discription }}
+                </div>
+            </div>
+
+            <button type="submit">Submit Student</button>
+
+        </form>
+        <a href="{% url 'Student_DashBoard'%}">To Back</a>
+    </div>
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Candidat | {{request.user}}</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            width: 95%;
+            max-width: 650px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #357abd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Register Student for Programes</h2>
+          {% if messages %}
+  {% for msg in messages %}
+  <div class="radio-option">
+    <label for="">error</label>
+    {{ msg }}
+  </div>
+
+  {% endfor %}
+  {% endif %}
+
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="form-group">
+                    <label>Candidate User</label>
+                    <select name="user_Stn" id="">
+                        {% for stnUser in all_User %}
+                        {% if not stnUser.is_superuser and not stnUser.is_staff %}
+                        <option value="{{ stnUser.id}}"> {{ stnUser.username}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="student_name" value="{{request.user}}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Progame List</label>
+                    <select name="programName" id="">
+                        {% for programe in all_Programes %}
+                        {% if programe.is_Registration_Active %}
+                          <option value="{{ programe.id }}">{{ programe.Program_name }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <button type="submit">Submit Student</button>
+
+        </form>
+        <a href="{% url 'Student_DashBoard'%}">To Back</a>
+    </div>
+
 </body>
 
 </html>
