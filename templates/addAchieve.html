@@ -98,15 +98,15 @@
     <div class="container">
         <h2>Add Achievement</h2>
 
-          {% if messages %}
-  {% for msg in messages %}
-  <div class="radio-option">
-    <label for="">error</label>
-    {{ msg }}
-  </div>
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="radio-option">
+            <label for="">error</label>
+            {{ msg }}
+        </div>
 
-  {% endfor %}
-  {% endif %}
+        {% endfor %}
+        {% endif %}
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -115,7 +115,7 @@
                 <div class="form-group">
                     <label>Student Name</label>
                     <!-- {{ form.student_name }} -->
-                    <input type="text" name="Achiever" value="{{request.user}}" readonly>
+                    <input type="text" value="{{request.user}}" readonly>
                 </div>
 
                 <div class="form-group">
@@ -154,7 +154,7 @@
             <button type="submit">Submit Student</button>
 
         </form>
-        <a href="{url " Student_DashBoard"}">To Back</a>
+        <a href="{% url " Student_DashBoard"%}">To Back</a>
     </div>
 
 </body>

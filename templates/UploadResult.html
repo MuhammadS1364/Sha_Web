@@ -104,19 +104,13 @@
             <div class="row">
                 <div class="form-group">
                     <label>Wing User (Login Account)</label>
-                    <select name="Result_Uploaded_By" id="">
-                        {% for wingUser in all_User %}
-                        {% if wingUser.is_staff %}
-                        <option value="{{ wingUser.id}}"> {{ wingUser.username}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
+                    <input type="text" value="{{ request.user}}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Programes List</label>
                     <select name="Ready_To_Upload" id="">
                         {% for programe in all_Programes %}
-                        <option value="{{ programe.id}}"> {{ programe.Programe_Name}}</option>
+                        <option value="{{ programe.id}}"> {{ programe.Program_name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -126,11 +120,11 @@
             <div class="row">
                 <div class="form-group">
                     <label>First Holder</label>
-                    <select name="Position_Holder1" id="">
+                    <!-- <select name="Position_Holder1" id="">
                         {% for candidate in This_Candidate_List %}
                         <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
                         {% endfor %}
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Holder 1 Img (Optional)</label>
@@ -142,11 +136,11 @@
             <div class="row">
                 <div class="form-group">
                     <label>Second Holder (Optional)</label>
-                    <select name="Position_Holder2" id="">
+                    <!-- <select name="Position_Holder2" id="">
                         {% for candidate in This_Candidate_List %}
                         <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
                         {% endfor %}
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Holder 2 Img (Optional)</label>
@@ -158,11 +152,11 @@
             <div class="row">
                 <div class="form-group">
                     <label>Third Holder</label>
-                    <select name="Position_Holder3" id="">
+                    <!-- <select name="Position_Holder3" id="">
                         {% for candidate in This_Candidate_List %}
                         <option value="{{ candidate.id}}"> {{ candidate.Student_Name}}</option>
                         {% endfor %}
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Holder 3 Img (Optional)</label>

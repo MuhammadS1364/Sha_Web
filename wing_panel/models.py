@@ -35,6 +35,7 @@ class Candidates_Registration_Model(models.Model):
 # Result upload Model
 
 class Upload_Result(models.Model):
+    
     Result_Uploaded_By = models.ForeignKey(Wing_Model, on_delete=models.CASCADE)
 
     Result_Programe = models.ForeignKey(Program_Bank, on_delete=models.CASCADE)

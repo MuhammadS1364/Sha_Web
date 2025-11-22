@@ -7,7 +7,7 @@ from .models import *
 class OutReach_Form (forms.ModelForm):
     class Meta:
         model = OutReach_Model
-        fields = "__all__"
+        # fields = "__all__"
         exclude = ["student_name"]
         widgets = {
             "OutReach_date" : forms.DateInput(attrs={
@@ -26,7 +26,7 @@ class OutReach_Form (forms.ModelForm):
 class Achievements_Form (forms.ModelForm):
     class Meta:
         model = Achievements_Model
-        fields = "__all__"
+        # fields = "__all__"
         exclude = ["Achiever"]
         widgets = {
              "achieveMent_date": forms.DateInput(attrs={

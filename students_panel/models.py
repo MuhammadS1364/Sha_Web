@@ -41,7 +41,7 @@ class Achievements_Model(models.Model):
     achieveMent_discription = models.TextField(max_length=600)
 
     # Total Achiever Status 
-    Total_Achievements = models.IntegerField(default=0)
+    Total_Achievements = models.IntegerField(default=0, null=True,blank=True)
     
     def __str__(self):
         return f"{self.Achiever} {self.achieved_Title} {self.achieveMent_poster}"

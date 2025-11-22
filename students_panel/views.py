@@ -19,7 +19,11 @@ def add_OutReach(request):
     if request.method == 'POST':
 
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
-        student_Obj = Student_Model.objects.get(user_Stn = request.user)
+        student_Obj = Student_Model.objects.filter(user_Stn=request.user).first()
+
+        if not student_Obj:
+            return HttpResponse("Error: You are not registered as a Student!")
+
 
         # SubMitting the OutReach Form 
         new_Objt = OutReach_Form(request.POST, request.FILES)

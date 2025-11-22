@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ShaadMaan | Admin Panel</title>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
         * {
             margin: 0;
@@ -19,7 +25,7 @@
             color: #333;
         }
 
-        /* Navbar */
+        /* ---------------- NAVBAR ---------------- */
         .navbar {
             width: 100%;
             padding: 15px 20px;
@@ -31,27 +37,40 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .navbar h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 600;
         }
 
         .navbar a {
             background: #ffffff22;
-            padding: 8px 16px;
+            padding: 9px 16px;
             border-radius: 6px;
             color: #fff;
             text-decoration: none;
             transition: 0.2s;
+            font-weight: 500;
         }
 
         .navbar a:hover {
-            background: #ffffff44;
+            background: #ffffff40;
         }
 
-        /* Container */
+        /* ---------------- MESSAGES ---------------- */
+        .message-box {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 10px 15px;
+            border-left: 4px solid #dc2626;
+            margin: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* ---------------- CONTAINER ---------------- */
         .container {
             padding: 20px;
             max-width: 1300px;
@@ -59,16 +78,75 @@
         }
 
         .section-title {
-            margin: 25px 0 10px;
+            margin: 20px 0 10px;
             font-size: 22px;
             font-weight: 600;
         }
 
-        /* Card buttons */
+        /* ---------------- DASHBOARD CARDS ---------------- */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .icon-circle {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-size: 22px;
+        }
+
+        .icon-primary {
+            background: #4f46e5;
+        }
+
+        .icon-secondary {
+            background: #7c3aed;
+        }
+
+        .icon-success {
+            background: #059669;
+        }
+
+        .icon-warning {
+            background: #d97706;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ---------------- ACTION BUTTONS ---------------- */
         .actions a {
             display: inline-block;
             margin-right: 10px;
-            padding: 10px 15px;
+            padding: 10px 16px;
             background: #4f46e5;
             color: #fff;
             text-decoration: none;
@@ -81,18 +159,18 @@
             background: #4338ca;
         }
 
-        /* Tables */
+        /* ---------------- TABLES ---------------- */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 12px;
             background: #fff;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        table thead {
+        thead {
             background: #eef2ff;
         }
 
@@ -114,10 +192,20 @@
             object-fit: cover;
         }
 
-        /* Responsive */
+        /* ---------------- RESPONSIVE ---------------- */
         @media (max-width: 768px) {
             table {
                 font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+            }
+
+            img {
+                width: 45px;
+                height: 45px;
             }
 
             .actions a {
@@ -130,74 +218,68 @@
 
 <body>
 
-
-
-
     {% if messages %}
     {% for msg in messages %}
-    <div class="radio-option">
-        <label for="">error</label>
+    <div class="message-box">
         {{ msg }}
     </div>
-
     {% endfor %}
     {% endif %}
 
+    <!-- NAVBAR -->
     <div class="navbar">
         <h1>Admin Dashboard — ShaadMaan</h1>
         <a href="{% url 'logout_view' %}">Logout</a>
     </div>
 
-    <!-- over view  -->
-    <!-- over view  -->
+    <!-- DASHBOARD STATS -->
     <div class="stats-container">
+
         <div class="stat-card">
-            <div class="icon-circle icon-primary">
-                <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-value">1</div>
-            <div class="stat-label">Active Wing</div>
+            <div class="icon-circle icon-primary"><i class="fas fa-users"></i></div>
+            <div class="stat-value">{{all_Wings|length}}</div>
+            <div class="stat-label">Active Wings</div>
         </div>
+
         <div class="stat-card">
-            <div class="icon-circle icon-secondary">
-                <i class="fas fa-calendar-alt"></i>
-            </div>
-            <div class="stat-value">{{ all_Programe|length }}</div>
-            <div class="stat-label">Total Programs</div>
+            <div class="icon-circle icon-secondary"><i class="fas fa-calendar-alt"></i></div>
+            <div class="stat-value">{{ all_Programe.is_Registration_Active|length }}</div>
+            <div class="stat-label">Programs Registered</div>
         </div>
+
         <div class="stat-card">
-            <div class="icon-circle icon-success">
-                <i class="fas fa-trophy"></i>
-            </div>
-            <div class="stat-value">5</div>
+            <div class="icon-circle icon-secondary"><i class="fas fa-flag-checkered"></i></div>
+            <div class="stat-value">{{ all_Programe.is_Resulted|length }}</div>
+            <div class="stat-label">Programs Resulted</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon-circle icon-success"><i class="fas fa-trophy"></i></div>
+            <div class="stat-value">{{all_Achievements|length}}</div>
             <div class="stat-label">Achievements</div>
         </div>
+
         <div class="stat-card">
-            <div class="icon-circle icon-warning">
-                <i class="fas fa-bell"></i>
-            </div>
-            <div class="stat-value">3</div>
-            <div class="stat-label">Notifications</div>
+            <div class="icon-circle icon-warning"><i class="fas fa-bell"></i></div>
+            <div class="stat-value">{{all_OutReachs|length}}</div>
+            <div class="stat-label">Outreach Programs</div>
         </div>
     </div>
 
-    <!-- over view  -->
-
-    <!--  -->
     <div class="container">
         <h2 class="section-title">Welcome, {{ request.user.username }}</h2>
 
         <div class="actions">
             {% if request.user.is_authenticated %}
             <a href="{% url 'newUser' %}">Add User</a>
-            <a href="{% url 'editePassword' %}">Edite Password</a>
+            <a href="{% url 'editePassword' %}">Edit Password</a>
             <a href="{% url 'add_student' %}">Add Student</a>
             <a href="{% url 'add_wing' %}">Add Wing</a>
-            <a href="/admin/">Main_admin</a>
+            <a href="/admin/">Main Admin</a>
             {% endif %}
         </div>
 
-        <!-- USERS TABLE -->
+        <!-- USERS -->
         <h2 class="section-title">All Users</h2>
         <table>
             <thead>
@@ -213,9 +295,9 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        {% if user.is_superuser %}Admin
-                        {% elif user.is_staff %}Wing
-                        {% else %}Student
+                        {% if user.is_superuser %} Admin
+                        {% elif user.is_staff %} Wing
+                        {% else %} Student
                         {% endif %}
                     </td>
                 </tr>
@@ -223,7 +305,7 @@
             </tbody>
         </table>
 
-        <!-- WINGS TABLE -->
+        <!-- WINGS -->
         <h2 class="section-title">Wings</h2>
         <table>
             <thead>
@@ -246,13 +328,13 @@
                     <td>{{ wing.Wing_Email }}</td>
                     <td>{{ wing.Chair_Person }}</td>
                     <td>{{ wing.Assist_Person }}</td>
-                    <td><img src="{{ wing.wing_logo.url }}" alt=""></td>
+                    <td><img src="{{ wing.wing_logo.url }}" /></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <!-- STUDENTS TABLE -->
+        <!-- STUDENTS -->
         <h2 class="section-title">Students</h2>
         <table>
             <thead>
@@ -278,14 +360,100 @@
                     <td>
                         {% if stn.Student_Img %}
                         <img src="{{ stn.Student_Img.url }}" />
-                        {% else %}
-                        No Image
-                        {% endif %}
+                        {% else %} No Image {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <!-- OUTREACH -->
+        <h2 class="section-title">OutReach Board</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Program</th>
+                    <th>Result</th>
+                    <th>Conductor</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Poster</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stn in all_OutReachs %}
+                <tr>
+                    <td>{{ stn.student_name }}</td>
+                    <td>{{ stn.OutReach_Programe_name }}</td>
+                    <td>{{ stn.OutReach_result }}</td>
+                    <td>{{ stn.OutReach_Conductor }}</td>
+                    <td>{{ stn.OutReach_date }}</td>
+                    <td>{{ stn.OutReach_discription }}</td>
+                    <td>{% if stn.OutReach_poster %}<img src="{{ stn.OutReach_poster.url }}">{% endif %}</td>
+                    <td>{{ stn.Total_OutReach|length }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- ACHIEVEMENTS -->
+        <h2 class="section-title">Achievements</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Achiever</th>
+                    <th>Title</th>
+                    <th>Result</th>
+                    <th>Conductor</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Poster</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stn in all_Achievements %}
+                <tr>
+                    <td>{{ stn.Achiever }}</td>
+                    <td>{{ stn.achieved_Title }}</td>
+                    <td>{{ stn.achiever_Result }}</td>
+                    <td>{{ stn.achieveMent_Conductor }}</td>
+                    <td>{{ stn.achieveMent_date }}</td>
+                    <td>{{ stn.achieveMent_discription }}</td>
+                    <td>{% if stn.achieveMent_poster %}<img src="{{ stn.achieveMent_poster.url }}">{% endif %}</td>
+                    <td>{{ stn.Total_Achievements|length }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- CREATIONS -->
+        <h2 class="section-title">Students Creations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Creator</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>File</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stn in all_Creations %}
+                <tr>
+                    <td>{{ stn.creator_Student }}</td>
+                    <td>{{ stn.Creation_Title }}</td>
+                    <td>{{ stn.Creation_Description }}</td>
+                    <td>{{ stn.Creation_Date }}</td>
+                    <td>{% if stn.Creation_File %}<img src="{{ stn.Creation_File.url }}">{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 </body>
 
