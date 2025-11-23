@@ -4,188 +4,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Upload_Result | {{request.user}}</title>
+    <title>Upload Result | {{ request.user }}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background: #f3f4f6;
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        .container {
-            background: #fff;
-            width: 95%;
-            max-width: 650px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #dce2f0, #eef3fa, #ffffff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 15px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 22px;
+            padding: 35px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            animation: fadeIn 0.7s ease;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+            border: 1px solid #d1d5db;
+            transition: .3s ease;
+        }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+            border-color: #cbd5e1;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
             text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 26px;
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
         }
 
         label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: block;
-            color: #444;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #374151;
         }
 
         input[type="text"],
-        input[type="email"],
-        input[type="date"],
-        input[type="file"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        select,
+        input[type="file"] {
+            padding: 13px 14px;
             font-size: 14px;
-            transition: 0.3s;
+            border-radius: 12px;
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            transition: .3s;
         }
 
         input:focus,
         select:focus {
             border-color: #4a90e2;
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
             outline: none;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .row .form-group {
-            flex: 1;
         }
 
         button {
             width: 100%;
-            padding: 12px;
-            background: #4a90e2;
+            padding: 15px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 14px;
             border: none;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
             color: white;
-            font-size: 16px;
-            border-radius: 8px;
             cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
+            transition: .3s;
         }
 
         button:hover {
-            background: #357abd;
+            background: linear-gradient(135deg, #357abd, #2e6bb0);
+        }
+
+        .error-box {
+            padding: 12px;
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #b91c1c;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
-        <h2>Upload_Result</h2>
+    <div class="card">
+
+        <h2>Upload Result</h2>
+
+        {% if messages %}
+        {% for msg in messages %}
+        <div class="error-box">
+            {{ msg }}
+        </div>
+        {% endfor %}
+        {% endif %}
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="row">
                 <div class="form-group">
-                    <label>Wing User (Login Account)</label>
-                    <input type="text" value="{{ request.user}}" readonly>
+                    <label>Wing User</label>
+                    <input type="text" value="{{ request.user }}" readonly>
                 </div>
+
                 <div class="form-group">
-                    <label>Programes List</label>
-                    <input type="text" name="" value="{{Selected_Programe.Program_name}}" readonly>
+                    <label>Selected Program</label>
+                    <input type="text" value="{{ Selected_Programe.id }}" readonly>
                 </div>
-                <!-- candidate  -->
             </div>
 
+            <!-- FIRST HOLDER -->
             <div class="row">
                 <div class="form-group">
                     <label>First Holder</label>
-                    <select name="Position_Holder1" id="">
+                    <select name="Position_Holder1">
                         {% for candidate in all_Candidates %}
-                        <option value="{{ candidate.id}}"> {{ candidate.Candidates_Name}}</option>
+                        <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label>Holder 1 Img (Optional)</label>
+                    <label>Holder 1 Image (Optional)</label>
                     {{ form.Position_Holder1_img }}
                 </div>
             </div>
-            <!-- Position Holde section  -->
 
+            <!-- SECOND HOLDER -->
             <div class="row">
                 <div class="form-group">
-                    <label>Second Holder (Optional)</label>
-                    <select name="Position_Holder2" id="">
+                    <label>Second Holder</label>
+                    <select name="Position_Holder2">
                         {% for candidate in all_Candidates %}
-                        <option value="{{ candidate.id}}"> {{ candidate.Candidates_Name}}</option>
+                        <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label>Holder 2 Img (Optional)</label>
+                    <label>Holder 2 Image (Optional)</label>
                     {{ form.Position_Holder2_img }}
                 </div>
             </div>
-            <!-- Position Holde section  -->
 
+            <!-- THIRD HOLDER -->
             <div class="row">
                 <div class="form-group">
                     <label>Third Holder</label>
-                    <select name="Position_Holder3" id="">
+                    <select name="Position_Holder3">
                         {% for candidate in all_Candidates %}
-                        <option value="{{ candidate.id}}"> {{ candidate.Candidates_Name}}</option>
+                        <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
                     </select>
                 </div>
+
                 <div class="form-group">
-                    <label>Holder 3 Img (Optional)</label>
+                    <label>Holder 3 Image (Optional)</label>
                     {{ form.Position_Holder3_img }}
                 </div>
             </div>
-            <!-- Position Holde section  -->
-            <div class="row">
 
+            <!-- BANNER + GRADE -->
+            <div class="row">
                 <div class="form-group">
-                    <label>Programe Baner (Optional)</label>
+                    <label>Program Banner</label>
                     {{ form.Result_Baner }}
                 </div>
+
                 <div class="form-group">
-                    <label>Grade Holder(Optional)</label>
-                    <select name="Grande_Holder" id="">
+                    <label>Grade Holder (Optional)</label>
+                    <select name="Grande_Holder">
                         <option value="A Grade">A Grade</option>
                         <option value="B Grade">B Grade</option>
                     </select>
                 </div>
             </div>
-            {% if messages %}
-            {% for msg in messages %}
-            <div class="radio-option">
-                <label for="">error</label>
-                {{ msg }}
+
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="form-group">
+                    <a href="{% url 'Wing_DashBoard' %}" class="back-btn">
+                        ⬅ Back to Dashboard
+                    </a>
+                </div>
             </div>
 
-            {% endfor %}
-            {% endif %}
             <button type="submit">Add Result</button>
 
         </form>
+
     </div>
 
 </body>

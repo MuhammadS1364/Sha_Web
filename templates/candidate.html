@@ -1,32 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Upload Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Program | Shaad Mate</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .login-card h4 {
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        select,
+        input {
+            height: 48px !important;
+            border-radius: 10px !important;
+        }
+
+        button {
+            height: 50px;
+            font-size: 18px;
+            border-radius: 50px !important;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #6a11cb;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+            color: #4d0fb5;
+        }
+
+        .error-box {
+            background: #ffe6e6;
+            color: #d60000;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 14px;
+            border-left: 4px solid #ff4d4d;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive fixes */
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 25px 20px;
+            }
+
+            h4 {
+                font-size: 20px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h2>Upload Result for: <span style="color:blue;">{{ Selected_Programe.Program_name }}</span></h2>
+    <div class="login-card">
 
-    <h3>Registered Candidates:</h3>
+        <h4>Select Program for Uploading Result</h4>
 
-    {% if all_Candidates %}
-    <ul>
-        {% for c in all_Candidates %}
-        <li>
-            {{ c.Candidates_Name }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p style="color:red;">No candidates registered for this program.</p>
-    {% endif %}
+        <form method="POST">
+            {% csrf_token %}
 
-    <hr>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Student User</label>
+                <input type="text" value="{{request.user}}" readonly class="form-control shadow-sm">
+            </div>
 
-    <!-- Your result upload form here -->
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Program List</label>
 
+                <select id="progSelector" class="form-select shadow-sm">
+                    <option selected disabled>Select Program</option>
+
+                    {% for programe in all_Programes %}
+                    {% if programe.is_Registration_Active%}
+                    <option value="{{programe.id}}">
+                        {{ programe.Program_name }}
+                    </option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+
+                <script>
+                    document.getElementById("progSelector").onchange = function () {
+                        window.location.href = this.value;
+                    }
+                </script>
+
+            </div>
+
+            <div class="mb-1">
+                <a href="{% url 'Wing_DashBoard' %}" class="back-link">← Back to Dashboard</a>
+            </div>
+
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="error-box">
+                {{ msg }}
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <button class="btn btn-primary w-100 mt-3">Continue</button>
+
+            <p class="text-center mt-3 text-muted" style="font-size: 14px;">© 2025 Shaad Mate</p>
+        </form>
+
+    </div>
+    <script>
+        document.getElementById("progSelector").onchange = function () {
+            window.location.href = this.value;
+        }
+    </script>
 </body>
 
 </html>
