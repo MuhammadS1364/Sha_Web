@@ -107,12 +107,8 @@ def Upload_Result(request):
 
         # Ready_To_Upload = None
 
-    
   
     context = {
-        # "Ready_To_Upload": Ready_To_Upload,
-        # "This_Candidate_List": This_Candidate_List,
-        # "form": Upload_Result_Form,
         "all_Programes" : all_Programes
     }
     return render(request, "UploadResult.html", context)
@@ -122,7 +118,7 @@ def Select_Programe_ForResult(request):
     wing_Ojt = Wing_Model.objects.get(wing_user = request.user)
     all_Programes = Program_Bank.objects.filter(Program_Created = wing_Ojt)
 
-    # if request.method == 'POST':
-
+    if request.method == 'POST':
+        return redirect("Upload_Result")
 
     return render(request, "Select_Programe.html", {"all_Programes": all_Programes})
