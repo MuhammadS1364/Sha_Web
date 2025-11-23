@@ -532,29 +532,29 @@
       {% for item in all_OutReach %}
       <div class="card outreach">
 
-        {% if item.programe_poster %}
-        <img src="{{ item.programe_poster.url }}" alt="{{ item.programe_name }}">
+        {% if item.OutReach_poster %}
+        <img src="{{ item.OutReach_poster.url }}" alt="{{ item.OutReach_Programe_name }}">
         {% endif %}
 
-        <div class="title">{{ item.programe_name }}</div>
+        <div class="title">{{ item.OutReach_Programe_name }}</div>
 
         <div class="sub">
           <i class="fas fa-chart-line"></i>
           <span class="label">Result:</span>
-          {{ item.result }}
+          {{ item.OutReach_result }}
         </div>
 
         <div class="sub">
           <i class="fas fa-user-tie"></i>
           <span class="label">Conducted By:</span>
-          {{ item.programe_Conductor }}
+          {{ item.OutReach_Conductor }}
         </div>
 
         <div class="date">
-          <i class="far fa-calendar-alt"></i> {{ item.programe_date }}
+          <i class="far fa-calendar-alt"></i> {{ item.OutReach_date }}
         </div>
 
-        <div class="desc">{{ item.programe_discription|truncatewords:25 }}</div>
+        <div class="desc">{{ item.OutReach_discription|truncatewords:25 }}</div>
       </div>
       {% endfor %}
       {% else %}

@@ -36,7 +36,7 @@ def add_OutReach(request):
 
             return redirect("Student_DashBoard")
         else:
-            return HttpResponse("OutReach Programe Not add .......")
+            return HttpResponse("OutReach Programe Not add, Validation Error .......")
     else:
         new_Objt = OutReach_Form()
 
@@ -50,8 +50,9 @@ def add_AchieveMents(request):
     
     if request.method == 'POST':
 
+        user_Objt = User.objects.get(username = request.user)
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
-        student_Obj = Student_Model.objects.get(user_Stn = request.user)
+        student_Obj = Student_Model.objects.get(user_Stn = user_Objt)
 
         # SubMitting the OutReach Form 
         new_Objt = Achievements_Form(request.POST, request.FILES)
@@ -64,7 +65,7 @@ def add_AchieveMents(request):
 
             return redirect("Student_DashBoard")
         else:
-            return HttpResponse("Achievement Programe Not add .......")
+            return HttpResponse("Achievement Programe Not add, Validation Error .......")
     else:
         new_Objt = Achievements_Form()
 

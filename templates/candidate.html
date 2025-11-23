@@ -1,137 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Candidate</title>
-
-    <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background: #f3f4f6;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            background: #fff;
-            width: 95%;
-            max-width: 650px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 26px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: block;
-            color: #444;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="file"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        input:focus,
-        select:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
-            outline: none;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #4a90e2;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #357abd;
-        }
-    </style>
+    <title>Upload Result</title>
 </head>
 
 <body>
 
-    <div class="container">
-        <h2>Register Candidate</h2>
-        {% if messages %}
-        {% for msg in messages %}
-        <div class="radio-option">
-            <label for="">error</label>
-            {{ msg }}
-        </div>
+    <h2>Upload Result for: <span style="color:blue;">{{ Selected_Programe.Program_name }}</span></h2>
 
+    <h3>Registered Candidates:</h3>
+
+    {% if all_Candidates %}
+    <ul>
+        {% for c in all_Candidates %}
+        <li>
+            {{ c.Candidates_Name }}
+        </li>
         {% endfor %}
-        {% endif %}
+    </ul>
+    {% else %}
+    <p style="color:red;">No candidates registered for this program.</p>
+    {% endif %}
 
+    <hr>
 
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="row">
-                <div class="form-group">
-                    <label>Program </label>
-                    <select name="program">
-                        {% for pro in all_Programes %}
-                        {% if pro.is_Registration_Active %}
-                        <option value="{{ pro.id }}">{{ pro.Program_name }}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Candidate Name (User)</label>
-                <input type="text" name="Candidates_Name" value="{{request.user}}" readonly>
-            </div>
-
-            <button type="submit">Register Candidate</button>
-        </form>
-
-    </div>
+    <!-- Your result upload form here -->
 
 </body>
 

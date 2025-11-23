@@ -69,6 +69,7 @@ class Upload_Result(models.Model):
 
     Position_Holder3_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
 
+    Grande_Holder = models.CharField(blank=True, null=True, default="No Grade")
     Result_Baner = models.FileField(upload_to="Results/", blank=True, null=True)
 
     def __str__(self):

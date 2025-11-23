@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 from admin_panel.models import *
 
@@ -19,7 +19,7 @@ class OutReach_Model(models.Model):
     OutReach_discription = models.TextField(max_length=600)
 
 
-    Total_OutReach = models.IntegerField(default=0)
+    Total_OutReach = models.IntegerField(default=0, blank=True, null=True)
     
     def __str__(self):
         return f"{self.student_name} {self.OutReach_Programe_name} {self.OutReach_result}"
@@ -44,7 +44,7 @@ class Achievements_Model(models.Model):
     Total_Achievements = models.IntegerField(default=0, null=True,blank=True)
     
     def __str__(self):
-        return f"{self.Achiever} {self.achieved_Title} {self.achieveMent_poster}"
+        return f"{self.Achiever} {self.achieved_Title} {self.achiever_Result}"
 
 
 # Self Creation Program Bank Model

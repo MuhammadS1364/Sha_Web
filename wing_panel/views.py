@@ -98,27 +98,61 @@ def Register_StudentToPrograme(request):
     })
 
 
-def Upload_Result(request):
+# def Upload_Result(request,programe_id):
 
-    wing_Ojt = Wing_Model.objects.get(wing_user = request.user)
-    all_Programes = Program_Bank.objects.filter(Program_Created = wing_Ojt)
+#     wing_Ojt = Wing_Model.objects.get(wing_user = request.user)
+#     Selected_Programe = Program_Bank.objects.get(id= programe_id)
 
-    all_Candidates = Candidates_Registration_Model.objects.all()
+#     all_Candidates = Candidates_Registration_Model.objects.filter(
+#         Registered_Programe = Selected_Programe
+#     )
 
-        # Ready_To_Upload = None
+#         # Ready_To_Upload = None
 
   
+#     context = {
+#         "all_Programes" : Selected_Programe,
+#         "all_Candidates" : all_Candidates
+#     }
+#     return render(request, "UploadResult.html", context)
+
+def Upload_Result(request, programe_id):
+    wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
+    Selected_Programe = Program_Bank.objects.get(id=programe_id)
+
+    all_Candidates = Candidates_Registration_Model.objects.filter(
+        Registered_Programe=Selected_Programe
+    )
+    
+    if request.method == 'POST':
+        Result_Objt = Upload_Result_Form(request.POST, request.FILES)
+
+        if Result_Objt.is_valid():
+            pass
+    else:
+        Result_Objt = Upload_Result_Form()
     context = {
-        "all_Programes" : all_Programes
+        "Selected_Programe": Selected_Programe,
+        "all_Candidates": all_Candidates,
+        "form"  : Result_Objt
     }
     return render(request, "UploadResult.html", context)
 
+
+# def Select_Programe_ForResult(request):
+
+#     wing_Ojt = Wing_Model.objects.get(wing_user = request.user)
+#     all_Programes = Program_Bank.objects.filter(Program_Created = wing_Ojt)
+
+#     if request.method == 'POST':
+#         return redirect("Upload_Result")
+
+#     return render(request, "Select_Programe.html", {"all_Programes": all_Programes})
+
+
+
 def Select_Programe_ForResult(request):
-
-    wing_Ojt = Wing_Model.objects.get(wing_user = request.user)
-    all_Programes = Program_Bank.objects.filter(Program_Created = wing_Ojt)
-
-    if request.method == 'POST':
-        return redirect("Upload_Result")
+    wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
+    all_Programes = Program_Bank.objects.filter(Program_Created=wing_Ojt)
 
     return render(request, "Select_Programe.html", {"all_Programes": all_Programes})

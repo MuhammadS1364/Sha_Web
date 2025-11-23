@@ -23,7 +23,7 @@ class Upload_Result_Form(forms.ModelForm):
     class Meta:
         model = Upload_Result
         # exclude = ["Result_Uploaded_By", "Result_Programe"]
-        fields = ["Position_Holder1_img", "Position_Holder2_img", "Position_Holder3_img", "Result_Baner"]
+        fields = ["Position_Holder1_img", "Position_Holder2_img", "Position_Holder3_img", "Result_Baner", "Grande_Holder"]
         widgets = {
             "Result_Baner": forms.ClearableFileInput(attrs={'class': 'form-control'}),
             "Position_Holder1_img": forms.ClearableFileInput(attrs={'class': 'form-control'}),
