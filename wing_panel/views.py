@@ -51,51 +51,95 @@ def Add_Programes(request):
 
 
 
+# def Register_StudentToPrograme(request):
+#     all_Programes = Program_Bank.objects.all()
+#     all_Students = Student_Model.objects.all()
+#     if request.method == 'POST':
+
+#         newRegistration = Candidate_Registration_Form(request.POST)
+#         program_id = request.POST.get("Selected_Programe")
+
+#         stn_Objt = Student_Model.objects.get(user_Stn=request.user)
+#         To_Reg_Programe = Program_Bank.objects.get(id = program_id)
+
+#         # secure the doubble registration , a student can not register for the same program twice
+#         if Candidates_Registration_Model.objects.filter(
+#             Candidates_Name= stn_Objt,
+#             Registered_Programe= To_Reg_Programe
+#         ).exists():
+#             messages.error(request, "You are already registered for an active program.")
+#             return render(request, 'candidate.html', {
+#         "form": newRegistration,
+#         "all_Programes": all_Programes,
+#         "all_Students" : all_Students,
+#         })
+
+        
+#         if newRegistration.is_valid():
+#             Registered = newRegistration.save(commit=False)
+#             Registered.Candidates_Name = stn_Objt
+#             Registered.Registered_Programe = To_Reg_Programe
+#             Registered.save()
+
+#             # students save karna:
+#             Registered.save()
+
+#             return redirect("Student_DashBoard")
+#         else:
+#             messages.error("Candidate Not Registered.......")
+#             return render(request, 'candidate.html', {
+#         "form": newRegistration,
+#         "all_Programes": all_Programes,
+#         "all_Programes" : all_Programes
+#         })
+#     else:
+#         newRegistration = Candidate_Registration_Form()
+
+#     return render(request, 'candidate.html', {
+#         "form": newRegistration,
+#         "all_Programes": all_Programes,
+#         "all_Students" : all_Students,
+#     })
+
+
 def Register_StudentToPrograme(request):
     all_Programes = Program_Bank.objects.all()
     all_Students = Student_Model.objects.all()
+
     if request.method == 'POST':
+
         newRegistration = Candidate_Registration_Form(request.POST)
         program_id = request.POST.get("program")
 
-        # secure the doubble registration , a student can not register for the same program twice
-        if Candidates_Registration_Model.objects.filter(
-            Candidates_Name=request.user,
-            Registered_Programe= program_id
-        ).exists():
-            messages.error(request, "You are already registered for an active program.")
-            return render(request, 'candidate.html', {
-        "form": newRegistration,
-        "all_Programes": all_Programes,
-        "all_Students" : all_Students,
-    })
-        # Filter active programs
-
-        
-        To_Reg_Programe = Program_Bank.objects.get(id = program_id)
-
-        if all_Programes.filter(id=program_id).exists():
-            messages.success(request, "You are registered for the program.")
         stn_Objt = Student_Model.objects.get(user_Stn=request.user)
-        
+        To_Reg_Programe = Program_Bank.objects.get(id=program_id)
+
+        # Prevent double registration
+        if Candidates_Registration_Model.objects.filter(
+            Candidates_Name=stn_Objt,
+            Registered_Programe=program_id
+        ).exists():
+            messages.error(request, "You are already registered for this program.")
+            return render(request, 'candidate.html', {
+                "form": newRegistration,
+                "all_Programes": all_Programes,
+                "all_Students": all_Students,
+            })
+
         if newRegistration.is_valid():
             Registered = newRegistration.save(commit=False)
             Registered.Candidates_Name = stn_Objt
             Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
 
-            # students save karna:
-            newRegistration.save()
-
             return redirect("Student_DashBoard")
         else:
-            messages.error("Candidate Not Registered.......")
+            messages.error(request, "Candidate Not Registered.......")
             return render(request, 'candidate.html', {
-        "form": newRegistration,
-        "all_Programes": all_Programes,
-        "all_Programes" : all_Programes
-        })
-
+                "form": newRegistration,
+                "all_Programes": all_Programes,
+                "all_Students": all_Students,
+            })
 
     else:
         newRegistration = Candidate_Registration_Form()
@@ -103,8 +147,10 @@ def Register_StudentToPrograme(request):
     return render(request, 'candidate.html', {
         "form": newRegistration,
         "all_Programes": all_Programes,
-        "all_Students" : all_Students,
+        "all_Students": all_Students,
     })
+
+
 
 
 def Upload_Result(request, programe_id):
