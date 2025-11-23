@@ -64,7 +64,11 @@ def Register_StudentToPrograme(request):
             Registered_Programe= program_id
         ).exists():
             messages.error(request, "You are already registered for an active program.")
-            return redirect("Student_DashBoard")
+            return render(request, 'candidate.html', {
+        "form": newRegistration,
+        "all_Programes": all_Programes,
+        "all_Students" : all_Students,
+    })
         # Filter active programs
 
         
