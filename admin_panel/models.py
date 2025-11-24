@@ -8,7 +8,6 @@ class Student_Model(models.Model):
     user_Stn = models.OneToOneField(User, on_delete=models.CASCADE)  # link with login user
     Student_Add_no = models.CharField(max_length=50, unique=True)
     Student_Name = models.CharField(max_length=250)
-    Student_Email = models.EmailField(unique=True)
     Student_Phone = models.CharField(max_length=15)
 
     Student_Position = models.CharField(max_length=100)
@@ -21,11 +20,9 @@ class Student_Model(models.Model):
 
     # Student OverAll Status
     
-    Total_Achievements = models.IntegerField(default=0, blank=True,null=True)
     Total_OutReachs = models.IntegerField(default=0, blank=True,null=True)
-    ShaadMaan_Total = models.IntegerField(default=0, blank=True,null=True)
-    Total_Anjuman = models.IntegerField(default=0,blank=True,null=True)
-
+    Total_Class_Anjuman = models.IntegerField(default=0,blank=True,null=True)
+    Tatal_Points = models.IntegerField(default=0, null=True,blank=True)
 
 
     def __str__(self):
@@ -39,7 +36,6 @@ class Wing_Model(models.Model):
     wing_user = models.OneToOneField(User, on_delete=models.CASCADE)  # link with login user
     Wing_Code = models.CharField(max_length=50, unique=True)
     Wing_Name = models.CharField(max_length=250, unique=True)
-    Wing_Email = models.EmailField(unique=True)
 
     Chair_Person = models.ForeignKey(
         Student_Model, on_delete=models.CASCADE,
@@ -54,9 +50,17 @@ class Wing_Model(models.Model):
 
     Total_Registered = models.IntegerField(default=0, blank=True,null=True)
     Total_ReSulted = models.IntegerField(default=0, blank=True,null=True)
+    Total_Programed = models.IntegerField(default=0, null=True,blank=True)
 
     def __str__(self):
         return f"{self.Wing_Name}"
     
 
 
+class Grallery_Model(models.Model):
+    Grallery_Title = models.CharField(max_length=300)
+    Grallery_Files = models.ImageField(upload_to="Gallery/", null=True,blank=True)
+    Grallery_Vedio = models.FileField(upload_to="Vedio/", null=True,blank=True)
+
+    def __str__(self):
+        return f"{self.Grallery_Title}"

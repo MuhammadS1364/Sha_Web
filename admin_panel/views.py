@@ -269,6 +269,9 @@ def Wing_DashBoard(request):
     return render(request, "wing_dashboard.html", context)
 
 
+from django.db.models import Q
+
+
 # Student DashBoard
 @login_required
 def Student_DashBoard(request):
@@ -298,11 +301,22 @@ def Student_DashBoard(request):
     except Candidates_Registration_Model.DoesNotExist:
         all_Registered = None
 
+    # All for that he secured in Upload Result model 
+
+
+    all_Results_Objts = Upload_Result.objects.filter(
+    Q(Position_Holder1=act_stn) |
+    Q(Position_Holder2=act_stn) |
+    Q(Position_Holder3=act_stn) |
+    Q(Grade_Holder=act_stn)
+)    
+
     context = {
         "act_stn" : act_stn,
         "all_OutReach" : all_OutReach,
         "all_Achievements" : all_Achievements,
-        "all_Registered" : all_Registered
+        "all_Registered" : all_Registered,
+        "all_Results_Objts" : all_Results_Objts
     }
     return render(request, "student_dashboard.html", context)
 

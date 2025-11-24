@@ -17,13 +17,12 @@ class Program_Bank(models.Model):
    Program_poster = models.ImageField(upload_to="Programs/", blank=True, null=True)
 
     # Program Status
-   is_Registration_Active = models.BooleanField(default=True, blank=True, null=True)
+   is_Registration = models.BooleanField(default=True, blank=True, null=True)
    is_Resulted = models.BooleanField(default=False, blank=True, null=True)            
-   Total_Programes = models.IntegerField(default=0, blank=True, null=True)        
 
 
    def __str__(self):
-       return f"{self.Program_name} {self.Program_Created}"
+       return f"{self.Program_name}"
 
 class Candidates_Registration_Model(models.Model):
     Candidates_Name = models.ForeignKey(Student_Model,on_delete = models.CASCADE)  
@@ -34,7 +33,7 @@ class Candidates_Registration_Model(models.Model):
 
 # Result upload Model
 
-class Upload_Result(models.Model):
+class Result_Bank_Model(models.Model):
     
     Result_Uploaded_By = models.ForeignKey(Wing_Model, on_delete=models.CASCADE)
 
@@ -69,9 +68,9 @@ class Upload_Result(models.Model):
 
     Position_Holder3_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
 
-    Grande_Holder = models.CharField(blank=True, null=True)
+    Grande_Holder = models.ForeignKey(Candidates_Registration_Model,blank=True, null=True, on_delete=models.CASCADE, related_name="Grande_Holder")
     Secure_Grade = models.CharField(blank=True,null=True, default='No Grade')
     Result_Baner = models.FileField(upload_to="Results/", blank=True, null=True)
 
     def __str__(self):
-        return f"Result for {self.Result_Programe} First is {self.Position_Holder1}"
+        return f"Result for {self.Result_Programe}"

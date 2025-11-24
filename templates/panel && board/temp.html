@@ -9,6 +9,206 @@
 
 <body>
 
+    <header>
+        <h1>Welcome to the Admin Panel</h1>
+
+        <div class="in-out-btns">
+            <a href="{% url 'login_view' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'logout_view' %}" class="btn btn-secondary">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="overAllStatus">
+            <h2>Overall Status</h2>
+            <div class="status-cards">
+                <div class="card">
+                    <h3>Total Users</h3>
+                    <p>{{ total_users }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total Students</h3>
+                    <p>{{ total_students }}</p>
+                </div>
+                <div class="card">
+                    <h3>Total Wings</h3>
+                    <p>{{ total_wings }}</p>
+                </div>
+            </div>
+        </section>
+        <!-- overAllStatus over here -->
+        <section id="recentActivities">
+            <h2>Recent Activities</h2>
+            <ul class="activity-list">
+                {% for activity in recent_activities %}
+                <li>{{ activity }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <!-- recentActivities over here -->
+
+        <section id="sideBar">
+            <h2>Side Bar</h2>
+            <ul class="sidebar-links">
+                <li><a href="{% url 'add_wing' %}">Add Wing</a></li>
+                <li><a href="{% url 'add_student' %}">Add Student</a></li>
+                <li><a href="{% url 'view_users' %}">View Users</a></li>
+                <li><a href="{% url 'view_students' %}">View Students</a></li>
+                <li><a href="{% url 'view_wings' %}">View Wings</a></li>
+            </ul>
+        </section>
+        <!-- sideBar over here -->
+
+        <section id="frontSlide">
+            <h2>Front Slide</h2>
+            <div class="front-slide">
+                <p>Welcome to the Admin Panel. Here you can manage users, students, and wings.</p>
+                <img src="{% static 'images/admin_panel_slide.jpg' %}" alt="Admin Panel Slide">
+            </div>
+        </section>
+        <!-- frontSlide over here -->
+
+        <!-- All Programe List -->
+        <section id="secondSlide">
+            <h2>Second Slide</h2>
+
+            <div class="allPrograme-card">
+                <div class="card-heard">
+                    <h3>All Programs</h3>
+                    <p>8 Total Programes</p>
+                </div>
+                <!-- if Programe is Aviable table will shown  -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Program id</th>
+                            <th>Wing Name</th>
+                            <th>Program Name</th>
+                            <th>Program Vanue</th>
+                            <th>Program Date</th>
+                            <th>Result Status</th>
+                            <th>Registration Status</th>
+                            <th>Program Poster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" name="Program.id" id=""></td>
+                            <td>Tech Mate</td>
+                            <td>Poster Designing</td>
+                            <td>Computer Lab</td>
+                            <td>Nov. 19, 2025</td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-warning">Result Pending</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-success">Registration Open</span>
+                                </a>
+                            </td>
+                            <td>
+                                <img class="logo" src="" alt="Program Poster" width="150px">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- if Not  -->
+
+                <div class="noInfo-box">
+                    <h3>No Programs Available</h3>
+                    <p>Currently, there are no programs available. Please check back later.</p>
+                    <a href="#">Register Prograe</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- All Candidated Registered Programe and Reday to Publish Result, List -->
+        <section id="secondSlide">
+            <h2>Second Slide</h2>
+
+            <div class="allPrograme-card">
+
+                <div class="card-heard">
+                    <div class="somInfo">
+                        <h3>All Programs</h3>
+                        <h4>Candidated Registered and Reday to Publish Result,</h4>
+                    </div>
+                    <p>5 Registered Programes</p>
+                </div>
+
+                <!-- if Programe is Aviable table will shown  -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Program id</th>
+                            <th>Wing Name</th>
+                            <th>Program Name</th>
+                            <th>Program Vanue</th>
+                            <th>Program Date</th>
+                            <th>Result Status</th>
+                            <th>Registration Status</th>
+                            <th>Program Poster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" name="Program.id" id=""></td>
+                            <td>Tech Mate</td>
+                            <td>Poster Designing</td>
+                            <td>Computer Lab</td>
+                            <td>Nov. 19, 2025</td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-warning">Result Pending</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">
+                                    <span class="badge badge-success">Registration Open</span>
+                                </a>
+                            </td>
+                            <td>
+                                <img class="logo" src="" alt="Program Poster" width="150px">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- if Not  -->
+
+                <div class="noInfo-box">
+                    <h3>No Programs Registered, Available</h3>
+                    <p>Currently, there are no programs available. Please check back later.</p>
+                    <a href="#">Add Result</a>
+                </div>
+            </div>
+        </section>
+        <!-- All Candidated Registered Programe and Reday to Publish Result, List -->
+
+        <footer>
+            <div class="aboutShaad">
+                <h2>About Shaad</h2>
+                <p>Shaad is a platform designed to facilitate the management of programs, users, and students in an
+                    educational environment. It aims to streamline administrative tasks and enhance communication within
+                    the institution.</p>
+            </div>
+            <div class="contactInfo">
+                <h2>Contact Information</h2>
+                <p>Email: <a href="mailto:shafeealam1364@gmail.com"></a>
+            </div>
+            <div class="socialMedia">
+                <h2>Follow Us</h2>
+                <ul>
+                    <li><a href="https://www.facebook.com/shafeealam1364">Facebook</a></li>
+                    <li><a href="https://www.twitter.com/shafeealam1364">Twitter</a></li>
+                    <li><a href="https://www.instagram.com/shafeealam1364">Instagram</a></li>
+                </ul>
+            </div>
+        </footer>
+    </main>
 </body>
 
 </html>

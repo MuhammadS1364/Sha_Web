@@ -606,6 +606,49 @@
       </div>
       {% endif %}
 
+
+      {% if all_Results_Objts %}
+      {% for item in all_Results_Objts %}
+      <div class="card achievement">
+
+        {% if item.achieveMent_poster %}
+        <img src="{{ item.achieveMent_poster.url }}" alt="{{ item.achieved_Title }}">
+        {% endif %}
+
+        <div class="title">{{ item.achieved_Title }}</div>
+
+        <div class="sub">
+          <i class="fas fa-medal"></i>
+          <span class="label">Result:</span>
+          {{ item.resulted }}
+        </div>
+
+        <div class="sub">
+          <i class="fas fa-user-tie"></i>
+          <span class="label">Conducted By:</span>
+          {{ item.achieveMent_Conductor }}
+        </div>
+
+        <div class="date">
+          <i class="far fa-calendar-alt"></i> {{ item.achieveMent_date }}
+        </div>
+
+        <div class="desc">{{ item.achieveMent_discription|truncatewords:25 }}</div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if not all_Achievements and not all_OutReach %}
+      <div class="empty-state">
+        <i class="fas fa-trophy"></i>
+        <h3>No Achievements Yet</h3>
+        <p>You haven't added any achievements yet.</p>
+        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
+          <i class="fas fa-plus-circle"></i> Add Your First Achievement
+        </a>
+      </div>
+      {% endif %}
+
     </div>
   </div>
 </body>
