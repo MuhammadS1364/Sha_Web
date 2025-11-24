@@ -222,7 +222,7 @@ def add_wing(request):
 
 
 # Admin Dash Board
-
+@login_required
 def Admin_DashBoard(request):
 
     # Rendering All The Data to Admin DashBoard
@@ -247,7 +247,7 @@ def Admin_DashBoard(request):
     return render(request, "admin_dashboard.html", context)
 
 # Wing Dash Board
-
+@login_required
 def Wing_DashBoard(request):
     act_wing = Wing_Model.objects.get(wing_user = request.user)
 
