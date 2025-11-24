@@ -155,7 +155,7 @@ def Register_StudentToPrograme(request):
 
 def Upload_Result(request, programe_id):
     wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
-    Selected_Programe = Program_Bank.objects.get(id=programe_id)
+    Selected_Programe = Program_Bank.objects.get(Program_name =programe_id)
 
     all_Candidates = Candidates_Registration_Model.objects.filter(
         Registered_Programe=Selected_Programe
@@ -164,8 +164,26 @@ def Upload_Result(request, programe_id):
     if request.method == 'POST':
 
         wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
-        Selected_Programe = Program_Bank.objects.get(id=programe_id)
+        Selected_Programe = Program_Bank.objects.get(Program_name=programe_id)
         Result_Objt = Upload_Result_Form(request.POST, request.FILES)
+
+        # StudentS name 
+        student_Objt = Student_Model.objects.all()
+
+        # Candidate Position Holders
+        Position_Holder1_id = request.POST.get("Position_Holder1")
+        Position_Holder2_id = request.POST.get("Position_Holder2")
+        Position_Holder3_id = request.POST.get("Position_Holder3")
+
+        # Candidate img 
+        Position_Holder1_img = request.FILES.get("Position_Holder1_img")
+        Position_Holder2_img = request.FILES.get("Position_Holder2_img")
+        Position_Holder3_img = request.FILES.get("Position_Holder3_img")
+            
+        Grande_Holder_id = request.POST.get("Grande_Holder")
+        Secure_Grade = request.POST.get("Secure_Grade")
+        Result_Baner = request.FILES.get("Result_Baner")
+        
 
         if Result_Objt.is_valid():
 
@@ -174,31 +192,29 @@ def Upload_Result(request, programe_id):
             Result_Objt.Result_Uploaded_By = wing_Ojt
             Result_Objt.Result_Programe = Selected_Programe
 
-            # Candidate Position Holders
-            Position_Holder1_id = request.POST.get("Position_Holder1")
-            Position_Holder2_id = request.POST.get("Position_Holder2")
-            Position_Holder3_id = request.POST.get("Position_Holder3")
+            # Assign Candidate Objects
+            Result_Objt.Position_Holder1 = Candidates_Registration_Model.objects.get(id = Position_Holder1_id)
+            Result_Objt.Position_Holder2 = Candidates_Registration_Model.objects.get(id = Position_Holder2_id)
+            Result_Objt.Position_Holder3 = Candidates_Registration_Model.objects.get(id = Position_Holder3_id)
 
-            # Candidate img 
-            Position_Holder1_img = request.FILES.get("Position_Holder1_img")
-            Position_Holder2_img = request.FILES.get("Position_Holder2_img")
-            Position_Holder3_img = request.FILES.get("Position_Holder3_img")
-            
-            Grande_Holder = request.POST.get("Grande_Holder")
+            # Grade Assign
+            if Grande_Holder_id:
+                Result_Objt.Grande_Holder = Candidates_Registration_Model.objects.get(id = Grande_Holder_id)
+                Result_Objt.Secure_Grade = Secure_Grade
 
-            # setting the position holders
-            Result_Objt.Position_Holder1 = Position_Holder1_id
-            Result_Objt.Position_Holder2 = Position_Holder2_id
-            Result_Objt.Position_Holder3 = Position_Holder3_id
+            # img assign
+            if Position_Holder1_img: Result_Objt.Position_Holder1_img = Position_Holder1_img
+            if Position_Holder2_img: Result_Objt.Position_Holder2_img = Position_Holder2_img
+            if Position_Holder3_img: Result_Objt.Position_Holder3_img = Position_Holder3_img
 
-            # setting the position holder images
-            Result_Objt.Position_Holder1_img = Position_Holder1_img
-            Result_Objt.Position_Holder2_img = Position_Holder2_img
-            Result_Objt.Position_Holder3_img = Position_Holder3_img
 
-            # setting the Grande Holder
-            Result_Objt.Grande_Holder = Grande_Holder
             Result_Objt.save()
+            
+            # Some Validation After Result
+            Selected_Programe.is_Registration_Active = False
+            Selected_Programe.is_Resulted = True
+            Selected_Programe.save()
+
             messages.success(request, "Result Uploaded Successfully!")
             return redirect("Wing_DashBoard")
 

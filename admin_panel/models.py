@@ -29,7 +29,7 @@ class Student_Model(models.Model):
 
 
     def __str__(self):
-        return f"{self.Student_Add_no} - {self.Student_Name}"
+        return f"{self.Student_Name}"
 
 
 # Second for wing holder info model

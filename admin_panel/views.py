@@ -233,12 +233,17 @@ def Wing_DashBoard(request):
     # Try to check Is the user have any prgrame
     try:
         all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
+        all_Resulted_Programes = Upload_Result.objects.filter(Result_Uploaded_By = act_wing)
+        print(f"programe registrations status: {Program_Bank.is_Registration_Active}")
+        print(f"programe registrations status: {Program_Bank.is_Resulted}")
     except Program_Bank.DoesNotExist:
         all_Programe = None
+        all_Resulted_Programes = None
 
     context = {
         "act_wing" : act_wing,
-        "all_Programe" : all_Programe
+        "all_Programe" : all_Programe,
+        "all_Resulted_Programes" : all_Resulted_Programes
     }
     return render(request, "wing_dashboard.html", context)
 

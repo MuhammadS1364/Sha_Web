@@ -119,7 +119,7 @@
                     <option selected disabled>Select Program</option>
 
                     {% for programe in all_Programes %}
-                    <option value="{% url 'Upload_Result' programe.id %}">
+                    <option value="{% url 'Upload_Result' programe.Program_name %}">
                         {{ programe.Program_name }}
                     </option>
                     {% endfor %}
