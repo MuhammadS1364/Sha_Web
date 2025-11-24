@@ -58,6 +58,10 @@ class Wing_Model(models.Model):
 
 
 class Grallery_Model(models.Model):
+    Created_by = models.ForeignKey(
+        Student_Model,
+        on_delete=models.CASCADE, default=None
+        )
     Grallery_Title = models.CharField(max_length=300)
     Grallery_Files = models.ImageField(upload_to="Gallery/", null=True,blank=True)
     Grallery_Vedio = models.FileField(upload_to="Vedio/", null=True,blank=True)

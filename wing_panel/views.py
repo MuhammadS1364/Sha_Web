@@ -47,7 +47,7 @@ def Add_Programes(request):
         else:
             Programe_Objt = Add_Program_Form()
 
-            messages.error("Programe Not Registered .......")
+            messages.error(request ,"Programe Not Registered .......")
             return render(request, "addProg.html", {"form" : Programe_Objt})
 
     else:

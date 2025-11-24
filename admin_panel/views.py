@@ -154,8 +154,9 @@ def add_student(request):
             new_Student.save()
 
             messages.success(request, "Student Added Successfully")
-            login(request, newStn_Obj)
-            return redirect("Student_DashBoard")
+            # login(request, newStn_Obj)
+
+            return redirect("newUser")
         else:
             messages.error(request, "This Form is not Valid Form , plz check.")
             return render(request, 'addStudent.html', {
@@ -202,9 +203,9 @@ def add_wing(request):
             new_Wing.wing_user = newWing_Obj
             new_Wing.save()
 
-            login(request, newWing_Obj)
+            # login(request, newWing_Obj)
             # Return their data to the DashBoard 
-            return redirect("Wing_DashBoard")
+            return redirect("newUser")
         else:
             messages.error(request ,"Validation Problem.........")
             return render(request, 'addWing.html', {
@@ -254,8 +255,8 @@ def Wing_DashBoard(request):
     # Try to check Is the user have any prgrame
     try:
         all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
-        all_Resulted_Programes = Upload_Result.objects.filter(Result_Uploaded_By = act_wing)
-        print(f"programe registrations status: {Program_Bank.is_Registration_Active}")
+        all_Resulted_Programes = Result_Bank_Model.objects.filter(Result_Uploaded_By = act_wing)
+        print(f"programe registrations status: {Program_Bank.is_Registration}")
         print(f"programe registrations status: {Program_Bank.is_Resulted}")
     except Program_Bank.DoesNotExist:
         all_Programe = None
@@ -304,19 +305,19 @@ def Student_DashBoard(request):
     # All for that he secured in Upload Result model 
 
 
-    all_Results_Objts = Upload_Result.objects.filter(
-    Q(Position_Holder1=act_stn) |
-    Q(Position_Holder2=act_stn) |
-    Q(Position_Holder3=act_stn) |
-    Q(Grade_Holder=act_stn)
-)    
+#     all_Results_Objts = Result_Bank_Model.objects.filter(
+#     Q(Position_Holder1=act_stn) |
+#     Q(Position_Holder2=act_stn) |
+#     Q(Position_Holder3=act_stn) |
+#     Q(Grade_Holder=act_stn)
+# )    
 
     context = {
         "act_stn" : act_stn,
         "all_OutReach" : all_OutReach,
         "all_Achievements" : all_Achievements,
-        "all_Registered" : all_Registered,
-        "all_Results_Objts" : all_Results_Objts
+        # "all_Registered" : all_Registered,
+        # "all_Results_Objts" : all_Results_Objts
     }
     return render(request, "student_dashboard.html", context)
 

@@ -123,8 +123,14 @@
                     {{ form.Program_name }}
                 </div>
                 <div class="form-group">
-                    <label>Program Venue</label>
-                    {{ form.Program_Venue }}
+                    <label>Program Venue Program_Venue</label>
+                    <select name="Program_Venue">
+                        <option value="" disabled selected>Select Venue</option>
+                        <option value="Computer Lab">Computer Lab</option>
+                        <option value="Reading Room">Reading Room (Niics)</option>
+                        <option value="Administrtive Center">Shaad Administrtive Center (U5)</option>
+                        <option value="CHS Ground">CHS Ground</option>
+                    </select>
                 </div>
             </div>
 

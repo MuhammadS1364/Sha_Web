@@ -327,7 +327,7 @@
                     <td>{{ wing.wing_user }}</td>
                     <td>{{ wing.Wing_Code }}</td>
                     <td>{{ wing.Wing_Name }}</td>
-                    <td>{{ wing.Wing_Email }}</td>
+                    <td>{{ wing.wing_user.email}}</td>
                     <td>{{ wing.Chair_Person }}</td>
                     <td>{{ wing.Assist_Person }}</td>
                     <td><img src="{{ wing.wing_logo.url }}" /></td>
@@ -355,7 +355,7 @@
                 <tr>
                     <td>{{ stn.Student_Add_no }}</td>
                     <td>{{ stn.Student_Name }}</td>
-                    <td>{{ stn.Student_Email }}</td>
+                    <td>{{ stn.user_Stn.email}}</td>
                     <td>{{ stn.Student_Phone }}</td>
                     <td>{{ stn.Student_Position }}</td>
                     <td>{{ stn.Student_Dob }}</td>

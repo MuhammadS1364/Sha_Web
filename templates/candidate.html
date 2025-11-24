@@ -119,7 +119,7 @@
                     <option selected disabled>Select Program</option>
 
                     {% for programe in all_Programes %}
-                    {% if programe.is_Registration_Active%}
+                    {% if programe.is_Registration%}
                     <option value="{{programe.id}}">
                         {{ programe.Program_name }}
                     </option>
