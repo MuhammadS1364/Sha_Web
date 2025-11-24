@@ -59,6 +59,8 @@ def newUser (request):
             logout(request)
             messages.error(request, "You have not Access to Add New User, Student and Wing..")
             return redirect("login_view")
+
+
     #    form = User(request.POST, request.FILES)
        userName = request.POST.get('userName')
        userEmail = request.POST.get('userEmail')
@@ -117,10 +119,17 @@ def newUser (request):
         
     return render(request, "addUser.html", {"form":form})
 
-
+@login_required
 def add_student(request):
     # Sending All User objects
     all_User = User.objects.all()
+
+        #    
+    if not request.user.is_superuser:
+        logout(request)
+        messages.error(request, "You have not Access to Add New User, Student and Wing..")
+        return redirect("login_view")
+
 
     if request.method == 'POST':
 
@@ -165,9 +174,16 @@ def add_student(request):
 
 
 # Add New Wing
-
+@login_required
 def add_wing(request):
     all_Users = User.objects.all()
+
+        #    
+    if not request.user.is_superuser:
+        logout(request)
+        messages.error(request, "You have not Access to Add New User, Student and Wing..")
+        return redirect("login_view")
+
     if request.method == 'POST':
 
         newWing_Form = Wing_form(request.POST,request.FILES )
@@ -254,7 +270,7 @@ def Wing_DashBoard(request):
 
 
 # Student DashBoard
-
+@login_required
 def Student_DashBoard(request):
     act_stn = Student_Model.objects.get(user_Stn = request.user)
 
@@ -294,7 +310,7 @@ def Student_DashBoard(request):
 
 
 # edite functions 
-
+@login_required
 def editePassword(request):
     if request.method == 'POST':
         userName = request.POST.get("userName")

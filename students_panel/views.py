@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib import messages
 
 # Create your views here.
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -14,8 +16,15 @@ from .forms import *
 
 
 # function for Creating A Outreach Model
-
+@login_required
 def add_OutReach(request):
+
+    # Preventing for other User except of Students
+    if request.user.is_superuser or  request.user.is_staff:
+        messages.error(request, "You are a Student User, It is Only for Students's Users... ")
+        logout(request)
+        return redirect("login_view")
+
     if request.method == 'POST':
 
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
@@ -45,9 +54,16 @@ def add_OutReach(request):
 
 
 # function for Creating A Outreach Model
-
+@login_required
 def add_AchieveMents(request):
     
+    # Preventing for other User except of Students
+    if request.user.is_superuser or  request.user.is_staff:
+        messages.error(request, "You are a Student User, It is Only for Students's Users... ")
+        logout(request)
+        return redirect("login_view")
+
+
     if request.method == 'POST':
 
         user_Objt = User.objects.get(username = request.user)

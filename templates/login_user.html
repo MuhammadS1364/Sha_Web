@@ -47,6 +47,11 @@
             border-radius: 50px;
         }
 
+        /* Messages */
+        .messages {
+            margin-bottom: 25px;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -80,13 +85,15 @@
             </div>
 
             {% if messages %}
-            {% for msg in messages %}
-            <div class="radio-option">
-                <label for="">error</label>
-                {{ msg }}
+            <div class="messages">
+                {% for msg in messages %}
+                <div class="message {% if msg.tags %}{{ msg.tags }}{% else %}error{% endif %}">
+                    <i
+                        class="fas fa-{% if msg.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                    <div>{{ msg }}</div>
+                </div>
+                {% endfor %}
             </div>
-
-            {% endfor %}
             {% endif %}
 
             <button class="btn btn-primary w-100 mb-2">Login</button>

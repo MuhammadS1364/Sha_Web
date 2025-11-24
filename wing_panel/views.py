@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 # Create your views here.
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 
@@ -19,9 +20,15 @@ from .forms import *
 
 
 # function for Creating A Outreach Model
-
+@login_required
 def Add_Programes(request):
-    
+
+    if not request.user.is_staff:
+        messages.error(request, "You have not Access this, It is Only for Wing's Users... ")
+        logout(request)
+        return redirect("login_view")
+
+
     if request.method == 'POST':
 
         # Geting the UserName(Linked-in ot User) who is Posting the Programes
@@ -101,10 +108,18 @@ def Add_Programes(request):
 #         "all_Students" : all_Students,
 #     })
 
-
+@login_required
 def Register_StudentToPrograme(request):
+
     all_Programes = Program_Bank.objects.all()
     all_Students = Student_Model.objects.all()
+
+     # Preventing for other User except of Students
+    if request.user.is_superuser or  request.user.is_staff:
+        messages.error(request, "You are a Student User, It is Only for Students's Users... ")
+        logout(request)
+        return redirect("login_view")
+
 
     if request.method == 'POST':
 
@@ -153,7 +168,7 @@ def Register_StudentToPrograme(request):
 
 
 
-
+@login_required
 def Upload_Result(request, programe_id):
     wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
     Selected_Programe = Program_Bank.objects.get(Program_name =programe_id)
@@ -162,6 +177,11 @@ def Upload_Result(request, programe_id):
         Registered_Programe=Selected_Programe
     )
     
+    if not request.user.is_staff:
+        messages.error(request, "You have not Access this, It is Only for Wing's Users... ")
+        logout(request)
+        return redirect("login_view")
+        
     if request.method == 'POST':
 
         wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
