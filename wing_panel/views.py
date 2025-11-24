@@ -132,6 +132,7 @@ def Register_StudentToPrograme(request):
             Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
 
+            messages.success(request, "Your Registration SuccessFully Done...")
             return redirect("Student_DashBoard")
         else:
             messages.error(request, "Candidate Not Registered.......")

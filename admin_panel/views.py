@@ -49,11 +49,16 @@ def logout_view(request):
 
 
 # Creating New User for Administration 
-
+@login_required
 def newUser (request):
 
     if request.method == 'POST':
-
+       
+    #    
+       if not request.user.is_superuser:
+            logout(request)
+            messages.error(request, "You have not Access to Add New User, Student and Wing..")
+            return redirect("login_view")
     #    form = User(request.POST, request.FILES)
        userName = request.POST.get('userName')
        userEmail = request.POST.get('userEmail')
