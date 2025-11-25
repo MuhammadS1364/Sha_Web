@@ -302,19 +302,18 @@ def Student_DashBoard(request):
 
     # All for that he secured in Upload Result model 
 
-
-#     all_Results_Objts = Result_Bank_Model.objects.filter(
-#     Q(Position_Holder1=act_stn) |
-#     Q(Position_Holder2=act_stn) |
-#     Q(Position_Holder3=act_stn) |
-#     Q(Grade_Holder=act_stn)
-# )    
+    # all_Results_Objts = Result_Bank_Model.objects.filter(
+    #     Q(Position_Holder1=act_stn) |
+    #     Q(Position_Holder2=act_stn) |
+    #     Q(Position_Holder3=act_stn) |
+    #     Q(Grande_Holder=act_stn)
+    # )
 
     context = {
         "act_stn" : act_stn,
         "all_OutReach" : all_OutReach,
         "all_Achievements" : all_Achievements,
-        # "all_Registered" : all_Registered,
+        "all_Registered" : all_Registered,
         # "all_Results_Objts" : all_Results_Objts
     }
     return render(request, "student_dashboard.html", context)
@@ -351,3 +350,75 @@ def editePassword(request):
 
 
 # error pages 
+
+
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+from wing_panel.models import Result_Bank_Model
+from wing_panel.models import *
+
+
+
+def export_result_excel(request):
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Result Data"
+
+    # Header
+    ws.append([
+        "ID",
+        "Uploaded By",
+        "Program",
+        "1st Position",
+        "2nd Position",
+        "3rd Position",
+        "Grande Holder",
+        "Secure Grade"
+    ])
+
+    all_results = Result_Bank_Model.objects.select_related(
+        "Result_Uploaded_By",
+        "Result_Programe",
+        "Position_Holder1",
+        "Position_Holder2",
+        "Position_Holder3",
+        "Grande_Holder",
+        "Position_Holder1__Candidates_Name",
+        "Position_Holder2__Candidates_Name",
+        "Position_Holder3__Candidates_Name",
+        "Grande_Holder__Candidates_Name",
+    ).all()
+
+    # Helper for name
+    def get_student_name(reg_obj):
+        if not reg_obj:
+            return ""
+        try:
+            return reg_obj.Candidates_Name.Student_Name     # <-- Student name field
+        except:
+            return str(reg_obj.Candidates_Name)
+
+    for r in all_results:
+
+        ws.append([
+            r.id,
+            str(r.Result_Uploaded_By),
+            str(r.Result_Programe),
+
+            get_student_name(r.Position_Holder1),
+            get_student_name(r.Position_Holder2),
+            get_student_name(r.Position_Holder3),
+            get_student_name(r.Grande_Holder),
+
+            r.Secure_Grade,
+        ])
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response["Content-Disposition"] = 'attachment; filename=\"Result_Data.xlsx\"'
+
+    wb.save(response)
+    return response

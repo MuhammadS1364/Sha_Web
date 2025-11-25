@@ -326,6 +326,63 @@
       font-size: 1.2rem;
     }
 
+    /* for result card  */
+
+    .result-card {
+      border-radius: 18px;
+      background: #ffffff;
+      transition: 0.3s;
+    }
+
+    .result-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .winner-img {
+      width: 85px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .position-box {
+      padding: 12px;
+      border-radius: 16px;
+      background: #f7f7f7;
+      transition: 0.3s;
+    }
+
+    .position-box:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Medal Colors */
+    .gold {
+      background: #fff6d1;
+      border: 2px solid #e6c200;
+    }
+
+    .silver {
+      background: #eef1f5;
+      border: 2px solid #9fa6b2;
+    }
+
+    .bronze {
+      background: #f8e2d0;
+      border: 2px solid #c47b38;
+    }
+
+    .grade {
+      background: #d9f7ff;
+      border: 2px solid #2cb4d6;
+    }
+
+    /* result over  */
+
+
     /* ---------------------- MOBILE RESPONSIVE ---------------------- */
     @media (max-width: 1024px) {
       .card-container {
@@ -607,36 +664,67 @@
       {% endif %}
 
 
-      {% if all_Results_Objts %}
-      {% for item in all_Results_Objts %}
-      <div class="card achievement">
-
-        {% if item.achieveMent_poster %}
-        <img src="{{ item.achieveMent_poster.url }}" alt="{{ item.achieved_Title }}">
-        {% endif %}
-
-        <div class="title">{{ item.achieved_Title }}</div>
-
-        <div class="sub">
-          <i class="fas fa-medal"></i>
-          <span class="label">Result:</span>
-          {{ item.resulted }}
+      <!-- All Result For A Student var is(all_Results_Objts)  -->
+      <!-- Crate ClipBox for this Resut shownignn  -->
+      {% for r in all_Results_Objts %}
+      <div class="card shadow-lg border-0 p-3 mb-4 result-card">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h4 class="fw-bold text-primary">{{ r.Result_Programe }}</h4>
+          <span class="badge bg-success p-2 px-3">Result Published</span>
         </div>
 
-        <div class="sub">
-          <i class="fas fa-user-tie"></i>
-          <span class="label">Conducted By:</span>
-          {{ item.achieveMent_Conductor }}
-        </div>
+        <div class="row">
 
-        <div class="date">
-          <i class="far fa-calendar-alt"></i> {{ item.achieveMent_date }}
-        </div>
+          <!-- 1st Position -->
+          <div class="col-md-3 text-center">
+            <div class="position-box gold">
+              {% if r.Position_Holder1_img %}
+              <img src="{{ r.Position_Holder1_img.url }}" class="winner-img">
+              {% endif %}
+              <h5 class="mt-2 fw-bold">1st Position</h5>
+              <p class="mb-1">{{ r.Position_Holder1.Candidates_Name }}</p>
+            </div>
+          </div>
 
-        <div class="desc">{{ item.achieveMent_discription|truncatewords:25 }}</div>
+          <!-- 2nd Position -->
+          <div class="col-md-3 text-center">
+            <div class="position-box silver">
+              {% if r.Position_Holder2_img %}
+              <img src="{{ r.Position_Holder2_img.url }}" class="winner-img">
+              {% endif %}
+              <h5 class="mt-2 fw-bold">2nd Position</h5>
+              <p class="mb-1">{{ r.Position_Holder2.Candidates_Name }}</p>
+            </div>
+          </div>
+
+          <!-- 3rd Position -->
+          <div class="col-md-3 text-center">
+            <div class="position-box bronze">
+              {% if r.Position_Holder3_img %}
+              <img src="{{ r.Position_Holder3_img.url }}" class="winner-img">
+              {% endif %}
+              <h5 class="mt-2 fw-bold">3rd Position</h5>
+              <p class="mb-1">{{ r.Position_Holder3.Candidates_Name }}</p>
+            </div>
+          </div>
+
+          <!-- Grade Holder -->
+          <div class="col-md-3 text-center">
+            <div class="position-box grade">
+              {% if r.Grade_holder_img %}
+              <img src="{{ r.Grade_holder_img.url }}" class="winner-img">
+              {% endif %}
+              <h5 class="mt-2 fw-bold">Grade Holder</h5>
+              <p class="mb-1">{{ r.Grande_Holder.Candidates_Name }}</p>
+              <span class="badge bg-info">{{ r.Secure_Grade }}</span>
+            </div>
+          </div>
+
+        </div>
       </div>
       {% endfor %}
-      {% endif %}
+
+      <!-- result section  -->
 
       {% if not all_Achievements and not all_OutReach %}
       <div class="empty-state">

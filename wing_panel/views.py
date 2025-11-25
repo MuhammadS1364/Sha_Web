@@ -290,7 +290,7 @@ def Registrations_On_Off(request):
         return redirect("Wing_DashBoard")
     else:
         messages.error(request, "Progrme Registration Not Closed....")
-    return render(request, "form.html", context)
+    return render(request, "Select_Programe.html", context)
 
 
 

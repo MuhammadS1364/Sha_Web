@@ -49,6 +49,9 @@ urlpatterns = [
 
     # edite functions 
     path('pass/', views.editePassword, name="editePassword"),
+    # path('pass/', views.editePassword, name="editePassword"),
+    path('print-reults/', views.export_result_excel, name="export_result_excel"),
+
 
 
 ]
