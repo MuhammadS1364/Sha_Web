@@ -232,7 +232,7 @@ def Upload_Result(request, programe_id):
             Result_Objt.save()
             
             # Some Validation After Result
-            Selected_Programe.is_Registration_Active = False
+            Selected_Programe.is_Registration = False
             Selected_Programe.is_Resulted = True
             Selected_Programe.save()
 
@@ -259,39 +259,39 @@ def Select_Programe_ForResult(request):
 
     return render(request, "Select_Programe.html", {"all_Programes": all_Programes})
 
+@login_required
+def Registrations_On_Off(request, programe_id):
 
-def Registrations_On_Off(request):
-    # Preventing for other User except of Students
+    # Allow only staff users
     if not request.user.is_staff:
-        messages.error(request, "You Have not Access to On || Off Registration A Programe, It is Only for Wings's Users... ")
+        messages.error(request, "You Have no access...")
         logout(request)
         return redirect("login_view")
 
-    wing_Objt = Wing_Model.objects.get(wing_user = request.user)
-    context = {
-        "all_Programes"  : Program_Bank.objects.filter(Program_Created = wing_Objt)
-    }
-    if request.method == 'POST':
+    # Get program
+    program = Program_Bank.objects.get(id=programe_id)
 
-        programe_name = request.POST.get("programe_name")
-        # Search the Programe  in Programe Bank
-        print(programe_name)
-        oFF_On_programe = Program_Bank.objects.get( Program_name = programe_name )
-
-        if oFF_On_programe.is_Registration == True:
-            oFF_On_programe.is_Registration = False
-        else:
-            oFF_On_programe.is_Registration = True
-
-        oFF_On_programe.save()
-        print(f"programe regis: {oFF_On_programe.is_Registration}")
-        
-        messages.success(request, "Progrme Registration Closed....")
-        return redirect("Wing_DashBoard")
+    # Toggle ON/OFF
+    if program.is_Registration:
+        program.is_Registration = False
     else:
-        messages.error(request, "Progrme Registration Not Closed....")
-    return render(request, "Select_Programe.html", context)
+        program.is_Registration = True
+
+    program.save()
 
 
+    # Message
+    if program.is_Registration:
+        messages.success(request, "Registration OPEN kar diya!")
+    else:
+        messages.success(request, "Registration CLOSE kar diya!")
 
+    return redirect("Wing_DashBoard")
+
+
+def Direct_To_Upload_Result(request, programe_id):
+    wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
+    Selected_Programe = Program_Bank.objects.get(id=programe_id)
+
+    return redirect("Upload_Result", programe_id=Selected_Programe.Program_name)
 

@@ -51,6 +51,7 @@ urlpatterns = [
     path('pass/', views.editePassword, name="editePassword"),
     # path('pass/', views.editePassword, name="editePassword"),
     path('print-reults/', views.export_result_excel, name="export_result_excel"),
+    path('print-programes/', views.Export_Programes, name="Export_Programes"),
 
 
 

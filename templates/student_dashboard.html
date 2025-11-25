@@ -1,745 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShaadMaan | {{request.user}}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --primary: #4361ee;
-      --primary-dark: #3a56d4;
-      --secondary: #7209b7;
-      --accent: #f72585;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --gray: #6c757d;
-      --light-gray: #e9ecef;
-      --success: #4cc9f0;
-      --warning: #f8961e;
-      --danger: #e63946;
-      --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-      --hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
-      --border-radius: 12px;
-      --transition: all 0.3s ease;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-      color: var(--dark);
-      line-height: 1.6;
-      padding: 0;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    header {
-      text-align: center;
-      padding: 30px 20px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      color: white;
-      border-radius: var(--border-radius);
-      margin-bottom: 30px;
-      box-shadow: var(--card-shadow);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    h2 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin: 30px 0 20px;
-      color: var(--primary);
-      position: relative;
-      padding-left: 15px;
-    }
-
-    h2::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 5px;
-      background: var(--accent);
-      border-radius: 5px;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      opacity: 0.9;
-      position: relative;
-      z-index: 1;
-    }
-
-    .welcome-text {
-      font-size: 1.1rem;
-      margin-bottom: 25px;
-      color: var(--light);
-      position: relative;
-      z-index: 1;
-    }
-
-    .links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin: 30px 0;
-    }
-
-    .links a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: white;
-      color: var(--primary);
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 500;
-      transition: var(--transition);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .links a:hover {
-      background: var(--primary);
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    .links a i {
-      font-size: 1.1rem;
-    }
-
-    .table-box {
-      background: white;
-      border-radius: var(--border-radius);
-      padding: 25px;
-      box-shadow: var(--card-shadow);
-      margin-bottom: 30px;
-      transition: var(--transition);
-    }
-
-    .table-box:hover {
-      box-shadow: var(--hover-shadow);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 800px;
-    }
-
-    th {
-      background: linear-gradient(to right, var(--primary), var(--primary-dark));
-      padding: 15px 12px;
-      color: white;
-      font-weight: 600;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    td {
-      padding: 14px 12px;
-      border-bottom: 1px solid var(--light-gray);
-      vertical-align: top;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background-color: rgba(67, 97, 238, 0.05);
-    }
-
-    img {
-      border-radius: 10px;
-      width: 80px;
-      height: auto;
-      object-fit: cover;
-      border: 2px solid var(--light-gray);
-    }
-
-    /* Card Styles */
-    .card-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--card-shadow);
-      padding: 20px;
-      overflow: hidden;
-      transition: var(--transition);
-      position: relative;
-      border-top: 4px solid var(--primary);
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--hover-shadow);
-    }
-
-    .card.achievement {
-      border-top-color: var(--success);
-    }
-
-    .card.outreach {
-      border-top-color: var(--warning);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    .title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--dark);
-      line-height: 1.3;
-    }
-
-    .sub {
-      font-size: 0.95rem;
-      color: var(--gray);
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .label {
-      font-weight: 500;
-      color: var(--dark);
-    }
-
-    .desc {
-      margin-top: 12px;
-      font-size: 0.95rem;
-      color: var(--gray);
-      line-height: 1.5;
-    }
-
-    .date {
-      font-size: 0.9rem;
-      color: var(--gray);
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--gray);
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--card-shadow);
-      margin: 20px 0;
-    }
-
-    .empty-state i {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: var(--light-gray);
-    }
-
-    .empty-state h3 {
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
-
-    /* Messages */
-    .messages {
-      margin-bottom: 25px;
-    }
-
-    .message {
-      padding: 15px;
-      border-radius: var(--border-radius);
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .message.error {
-      background: rgba(230, 57, 70, 0.1);
-      color: var(--danger);
-      border-left: 4px solid var(--danger);
-    }
-
-    .message.success {
-      background: rgba(76, 201, 240, 0.1);
-      color: var(--success);
-      border-left: 4px solid var(--success);
-    }
-
-    .message i {
-      font-size: 1.2rem;
-    }
-
-    /* for result card  */
-
-    .result-card {
-      border-radius: 18px;
-      background: #ffffff;
-      transition: 0.3s;
-    }
-
-    .result-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .winner-img {
-      width: 85px;
-      height: 85px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .position-box {
-      padding: 12px;
-      border-radius: 16px;
-      background: #f7f7f7;
-      transition: 0.3s;
-    }
-
-    .position-box:hover {
-      transform: translateY(-4px);
-    }
-
-    /* Medal Colors */
-    .gold {
-      background: #fff6d1;
-      border: 2px solid #e6c200;
-    }
-
-    .silver {
-      background: #eef1f5;
-      border: 2px solid #9fa6b2;
-    }
-
-    .bronze {
-      background: #f8e2d0;
-      border: 2px solid #c47b38;
-    }
-
-    .grade {
-      background: #d9f7ff;
-      border: 2px solid #2cb4d6;
-    }
-
-    /* result over  */
-
-
-    /* ---------------------- MOBILE RESPONSIVE ---------------------- */
-    @media (max-width: 1024px) {
-      .card-container {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      .table-box {
-        padding: 15px;
-      }
-
-      table {
-        display: none;
-      }
-
-      .mobile-card {
-        display: block;
-        background: white;
-        padding: 20px;
-        border-radius: var(--border-radius);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        margin-bottom: 20px;
-      }
-
-      .mobile-card p {
-        margin: 8px 0;
-        font-size: 15px;
-        border-bottom: 1px solid var(--light-gray);
-        padding-bottom: 8px;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .mobile-card p:last-child {
-        border-bottom: none;
-      }
-
-      .mobile-card strong {
-        color: var(--primary);
-        min-width: 120px;
-        display: inline-block;
-      }
-
-      .mobile-card img {
-        margin-top: 15px;
-        width: 100%;
-        max-width: 250px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 10px;
-      }
-
-      .links {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .links a {
-        width: 100%;
-        max-width: 280px;
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 15px;
-      }
-
-      header {
-        padding: 20px 15px;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-      }
-
-      .card-container {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 15px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --error: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Messages */
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .message.success {
+            background-color: rgba(76, 201, 240, 0.15);
+            border-left: 4px solid var(--success);
+            color: #0a6c7c;
+        }
+
+        .message.error {
+            background-color: rgba(230, 57, 70, 0.15);
+            border-left: 4px solid var(--error);
+            color: #a61e2a;
+        }
+
+        .message i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        header h3 {
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        /* Links */
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .links a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background-color: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .links a:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Table Box */
+        .table-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .table-box h2 {
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            display: table;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        th {
+            background-color: var(--primary-light);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        table img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Mobile Card */
+        .mobile-card {
+            display: none;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-card p {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .mobile-card p:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .mobile-card img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: var(--border-radius);
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Card Container */
+        h2 {
+            margin: 30px 0 20px;
+            color: var(--primary-dark);
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card > div:not(.date) {
+            padding: 15px 20px;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+
+        .sub {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--gray);
+        }
+
+        .sub i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .label {
+            font-weight: 500;
+            margin-right: 5px;
+        }
+
+        .date {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--gray-light);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .date i {
+            margin-right: 8px;
+        }
+
+        .desc {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray-light);
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        /* Result Cards */
+        .result-card {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-card h4 {
+            color: var(--primary);
+        }
+
+        .position-box {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            height: 100%;
+            transition: var(--transition);
+        }
+
+        .position-box:hover {
+            transform: scale(1.03);
+        }
+
+        .gold {
+            background: linear-gradient(135deg, #ffd700, #ffec8b);
+            color: #8b7500;
+        }
+
+        .silver {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            color: #696969;
+        }
+
+        .bronze {
+            background: linear-gradient(135deg, #cd7f32, #e8c4a2);
+            color: #8b4513;
+        }
+
+        .grade {
+            background: linear-gradient(135deg, #4361ee, #4cc9f0);
+            color: white;
+        }
+
+        .winner-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .card-container {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .links a {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            table {
+                display: none;
+            }
+            
+            .mobile-card {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .position-box {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+            
+            .table-box, .card {
+                padding: 20px 15px;
+            }
+            
+            .result-card .row {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="container">
-    {% if messages %}
-    <div class="messages">
-      {% for msg in messages %}
-      <div class="message {% if msg.tags %}{{ msg.tags }}{% else %}error{% endif %}">
-        <i class="fas fa-{% if msg.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
-        <div>{{ msg }}</div>
-      </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    <header>
-      <h1>Welcome to Student Dashboard</h1>
-      <div class="welcome-text">Welcome back, {{ request.user.username }}!</div>
-      <h3>Manage your profile, achievements, and outreach activities</h3>
-    </header>
-
-    <div class="links">
-      <a href="{% url 'add_OutReach' %}">
-        <i class="fas fa-plus-circle"></i> Add OutReach
-      </a>
-
-      <a href="{% url 'Register_StudentToPrograme' %}">
-        <i class="fas fa-plus-circle"></i> Register Program
-      </a>
-
-      <a href="{% url 'add_AchieveMents' %}">
-        <i class="fas fa-trophy"></i> Add Achievement
-      </a>
-
-      <a href="{% url 'logout_view' %}">
-        <i class="fas fa-sign-out-alt"></i> Log Out
-      </a>
-    </div>
-
-    <div class="table-box">
-      <h2>Student Profile</h2>
-
-      <table>
-        <tr>
-          <th>User</th>
-          <th>Admission No</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Position</th>
-          <th>Goal</th>
-          <th>DOB</th>
-          <th>Father Name</th>
-          <th>Address</th>
-          <th>Image</th>
-        </tr>
-
-        {% if act_stn %}
-        <tr>
-          <td>{{ act_stn.user_Stn }}</td>
-          <td>{{ act_stn.Student_Add_no }}</td>
-          <td>{{ act_stn.Student_Name }}</td>
-          <td>{{ act_stn.Student_Email }}</td>
-          <td>{{ act_stn.Student_Phone }}</td>
-          <td>{{ act_stn.Student_Position }}</td>
-          <td>{{ act_stn.Student_Goal }}</td>
-          <td>{{ act_stn.Student_Dob }}</td>
-          <td>{{ act_stn.Student_Father }}</td>
-          <td>{{ act_stn.Student_Address }}</td>
-          <td><img src="{{ act_stn.Student_Img.url }}"></td>
-        </tr>
-        {% else %}
-        <tr>
-          <td colspan="11" style="text-align: center; color: var(--gray); padding: 20px 0;">
-            No student profile found. Please contact the administrator.
-          </td>
-        </tr>
-        {% endif %}
-      </table>
-
-      {% if act_stn %}
-      <div class="mobile-card">
-        <p><strong>User:</strong> {{ act_stn.user_Stn }}</p>
-        <p><strong>Admission No:</strong> {{ act_stn.Student_Add_no }}</p>
-        <p><strong>Name:</strong> {{ act_stn.Student_Name }}</p>
-        <p><strong>Email:</strong> {{ act_stn.Student_Email }}</p>
-        <p><strong>Phone:</strong> {{ act_stn.Student_Phone }}</p>
-        <p><strong>Position:</strong> {{ act_stn.Student_Position }}</p>
-        <p><strong>Goal:</strong> {{ act_stn.Student_Goal }}</p>
-        <p><strong>DOB:</strong> {{ act_stn.Student_Dob }}</p>
-        <p><strong>Father Name:</strong> {{ act_stn.Student_Father }}</p>
-        <p><strong>Address:</strong> {{ act_stn.Student_Address }}</p>
-
-        <img src="{{ act_stn.Student_Img.url }}">
-      </div>
-      {% endif %}
-    </div>
-
-    <h2>Your Records</h2>
-
-    <div class="card-container">
-
-      {% if all_OutReach %}
-      {% for item in all_OutReach %}
-      <div class="card outreach">
-
-        {% if item.OutReach_poster %}
-        <img src="{{ item.OutReach_poster.url }}" alt="{{ item.OutReach_Programe_name }}">
-        {% endif %}
-
-        <div class="title">{{ item.OutReach_Programe_name }}</div>
-
-        <div class="sub">
-          <i class="fas fa-chart-line"></i>
-          <span class="label">Result:</span>
-          {{ item.OutReach_result }}
-        </div>
-
-        <div class="sub">
-          <i class="fas fa-user-tie"></i>
-          <span class="label">Conducted By:</span>
-          {{ item.OutReach_Conductor }}
-        </div>
-
-        <div class="date">
-          <i class="far fa-calendar-alt"></i> {{ item.OutReach_date }}
-        </div>
-
-        <div class="desc">{{ item.OutReach_discription|truncatewords:25 }}</div>
-      </div>
-      {% endfor %}
-      {% else %}
-      <div class="empty-state">
-        <i class="fas fa-inbox"></i>
-        <h3>No Outreach Activities</h3>
-        <p>You haven't added any outreach activities yet.</p>
-        <a href="{% url 'add_OutReach' %}" class="links" style="margin-top: 15px; display: inline-block;">
-          <i class="fas fa-plus-circle"></i> Add Your First Outreach
-        </a>
-      </div>
-      {% endif %}
-
-      {% if all_Achievements %}
-      {% for item in all_Achievements %}
-      <div class="card achievement">
-
-        {% if item.achieveMent_poster %}
-        <img src="{{ item.achieveMent_poster.url }}" alt="{{ item.achieved_Title }}">
-        {% endif %}
-
-        <div class="title">{{ item.achieved_Title }}</div>
-
-        <div class="sub">
-          <i class="fas fa-medal"></i>
-          <span class="label">Result:</span>
-          {{ item.resulted }}
-        </div>
-
-        <div class="sub">
-          <i class="fas fa-user-tie"></i>
-          <span class="label">Conducted By:</span>
-          {{ item.achieveMent_Conductor }}
-        </div>
-
-        <div class="date">
-          <i class="far fa-calendar-alt"></i> {{ item.achieveMent_date }}
-        </div>
-
-        <div class="desc">{{ item.achieveMent_discription|truncatewords:25 }}</div>
-      </div>
-      {% endfor %}
-      {% endif %}
-
-      {% if not all_Achievements and not all_OutReach %}
-      <div class="empty-state">
-        <i class="fas fa-trophy"></i>
-        <h3>No Achievements Yet</h3>
-        <p>You haven't added any achievements yet.</p>
-        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
-          <i class="fas fa-plus-circle"></i> Add Your First Achievement
-        </a>
-      </div>
-      {% endif %}
-
-
-      <!-- All Result For A Student var is(all_Results_Objts)  -->
-      <!-- Crate ClipBox for this Resut shownignn  -->
-      {% for r in all_Results_Objts %}
-      <div class="card shadow-lg border-0 p-3 mb-4 result-card">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h4 class="fw-bold text-primary">{{ r.Result_Programe }}</h4>
-          <span class="badge bg-success p-2 px-3">Result Published</span>
-        </div>
-
-        <div class="row">
-
-          <!-- 1st Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box gold">
-              {% if r.Position_Holder1_img %}
-              <img src="{{ r.Position_Holder1_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">1st Position</h5>
-              <p class="mb-1">{{ r.Position_Holder1.Candidates_Name }}</p>
+    <div class="container">
+        <!-- Messages -->
+        <div class="messages">
+            <div class="message success">
+                <i class="fas fa-check-circle"></i>
+                <div>Your profile has been updated successfully!</div>
             </div>
-          </div>
-
-          <!-- 2nd Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box silver">
-              {% if r.Position_Holder2_img %}
-              <img src="{{ r.Position_Holder2_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">2nd Position</h5>
-              <p class="mb-1">{{ r.Position_Holder2.Candidates_Name }}</p>
-            </div>
-          </div>
-
-          <!-- 3rd Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box bronze">
-              {% if r.Position_Holder3_img %}
-              <img src="{{ r.Position_Holder3_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">3rd Position</h5>
-              <p class="mb-1">{{ r.Position_Holder3.Candidates_Name }}</p>
-            </div>
-          </div>
-
-          <!-- Grade Holder -->
-          <div class="col-md-3 text-center">
-            <div class="position-box grade">
-              {% if r.Grade_holder_img %}
-              <img src="{{ r.Grade_holder_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">Grade Holder</h5>
-              <p class="mb-1">{{ r.Grande_Holder.Candidates_Name }}</p>
-              <span class="badge bg-info">{{ r.Secure_Grade }}</span>
-            </div>
-          </div>
-
         </div>
-      </div>
-      {% endfor %}
 
-      <!-- result section  -->
+        <!-- Header -->
+        <header>
+            <h1>Welcome to Student Dashboard</h1>
+            <div class="welcome-text">Welcome back, John Doe!</div>
+            <h3>Manage your profile, achievements, and outreach activities</h3>
+        </header>
 
-      {% if not all_Achievements and not all_OutReach %}
-      <div class="empty-state">
-        <i class="fas fa-trophy"></i>
-        <h3>No Achievements Yet</h3>
-        <p>You haven't added any achievements yet.</p>
-        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
-          <i class="fas fa-plus-circle"></i> Add Your First Achievement
-        </a>
-      </div>
-      {% endif %}
+        <!-- Links -->
+        <div class="links">
+            <a href="#">
+                <i class="fas fa-plus-circle"></i> Add OutReach
+            </a>
 
+            <a href="#">
+                <i class="fas fa-plus-circle"></i> Register Program
+            </a>
+
+            <a href="#">
+                <i class="fas fa-trophy"></i> Add Achievement
+            </a>
+
+            <a href="#">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+            </a>
+        </div>
+
+        <!-- Student Profile -->
+        <div class="table-box">
+            <h2>Student Profile</h2>
+
+            <table>
+                <tr>
+                    <th>User</th>
+                    <th>Admission No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Position</th>
+                    <th>Goal</th>
+                    <th>DOB</th>
+                    <th>Father Name</th>
+                    <th>Address</th>
+                    <th>Image</th>
+                </tr>
+                <tr>
+                    <td>john_doe</td>
+                    <td>AD2023001</td>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>+1 234 567 890</td>
+                    <td>Student</td>
+                    <td>Become a Software Engineer</td>
+                    <td>15-05-2000</td>
+                    <td>Robert Doe</td>
+                    <td>123 Main St, New York, NY</td>
+                    <td><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Student Image"></td>
+                </tr>
+            </table>
+
+            <div class="mobile-card">
+                <p><strong>User:</strong> john_doe</p>
+                <p><strong>Admission No:</strong> AD2023001</p>
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Email:</strong> john.doe@example.com</p>
+                <p><strong>Phone:</strong> +1 234 567 890</p>
+                <p><strong>Position:</strong> Student</p>
+                <p><strong>Goal:</strong> Become a Software Engineer</p>
+                <p><strong>DOB:</strong> 15-05-2000</p>
+                <p><strong>Father Name:</strong> Robert Doe</p>
+                <p><strong>Address:</strong> 123 Main St, New York, NY</p>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Student Image">
+            </div>
+        </div>
+
+        <h2>Your Records</h2>
+
+        <div class="card-container">
+            <!-- Outreach Cards -->
+            <div class="card outreach">
+                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Community Outreach">
+                <div class="title">Community Outreach Program</div>
+                <div class="sub">
+                    <i class="fas fa-chart-line"></i>
+                    <span class="label">Result:</span>
+                    Excellent
+                </div>
+                <div class="sub">
+                    <i class="fas fa-user-tie"></i>
+                    <span class="label">Conducted By:</span>
+                    Local Community Center
+                </div>
+                <div class="date">
+                    <i class="far fa-calendar-alt"></i> 15 June, 2023
+                </div>
+                <div class="desc">Organized and participated in a community outreach program focused on environmental awareness and sustainability practices.</div>
+            </div>
+
+            <!-- Achievement Cards -->
+            <div class="card achievement">
+                <img src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Coding Competition">
+                <div class="title">National Coding Competition</div>
+                <div class="sub">
+                    <i class="fas fa-medal"></i>
+                    <span class="label">Result:</span>
+                    2nd Place
+                </div>
+                <div class="sub">
+                    <i class="fas fa-user-tie"></i>
+                    <span class="label">Conducted By:</span>
+                    Tech University
+                </div>
+                <div class="date">
+                    <i class="far fa-calendar-alt"></i> 10 May, 2023
+                </div>
+                <div class="desc">Secured 2nd position in the National Coding Competition among 500+ participants from various universities.</div>
+            </div>
+
+            <!-- Results Card -->
+            <div class="card shadow-lg border-0 p-3 mb-4 result-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h4 class="fw-bold text-primary">Annual Science Fair 2023</h4>
+                    <span class="badge bg-success p-2 px-3">Result Published</span>
+                </div>
+
+                <div class="row">
+                    <!-- 1st Position -->
+                    <div class="col-md-3 text-center">
+                        <div class="position-box gold">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="winner-img">
+                            <h5 class="mt-2 fw-bold">1st Position</h5>
+                            <p class="mb-1">John Doe</p>
+                        </div>
+                    </div>
+
+                    <!-- 2nd Position -->
+                    <div class="col-md-3 text-center">
+                        <div class="position-box silver">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="winner-img">
+                            <h5 class="mt-2 fw-bold">2nd Position</h5>
+                            <p class="mb-1">Sarah Johnson</p>
+                        </div>
+                    </div>
+
+                    <!-- 3rd Position -->
+                    <div class="col-md-3 text-center">
+                        <div class="position-box bronze">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="winner-img">
+                            <h5 class="mt-2 fw-bold">3rd Position</h5>
+                            <p class="mb-1">Michael Chen</p>
+                        </div>
+                    </div>
+
+                    <!-- Grade Holder -->
+                    <div class="col-md-3 text-center">
+                        <div class="position-box grade">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" class="winner-img">
+                            <h5 class="mt-2 fw-bold">Grade Holder</h5>
+                            <p class="mb-1">John Doe</p>
+                            <span class="badge bg-info">A+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script>
+        // Simple animation for cards on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
-
-
 </html>

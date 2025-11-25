@@ -422,3 +422,45 @@ def export_result_excel(request):
 
     wb.save(response)
     return response
+
+
+# Print All the Registered Programe
+
+def Export_Programes(request):
+
+    # Create WorkBook
+    workBook = Workbook()
+    workSheet = workBook.active
+
+    # Give the Title 
+    workSheet.title = "All_Programes"
+
+    # ---- HEADER ROW ----
+    headers = ["ID", "WING NAME", "PROGRAME NAME", "PROGRAME VENUE", "PROGRAME DATE", "TOTAL REGISTRATIONS"]
+
+    # append to workSheet 
+
+    workSheet.append(headers)
+
+    # Data inserting to the Worksheet
+
+    all_Programes = Program_Bank.objects.all()
+
+    for programe in all_Programes:
+        workSheet.append([
+            programe.id,
+            str(programe.Program_Created.Wing_Name) if programe.Program_Created else "N/A",
+            programe.Program_name,
+            programe.Program_Venue,
+            programe.Program_date.strftime("%d-%m-%Y") if programe.Program_date else "N/A",
+            programe.Tatal_Registrations if programe.Tatal_Registrations is not None else "N/A"
+        ])
+
+    # Create HTTP Response
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response["Content-Disposition"] = 'attachment; filename="All_Programes.xlsx"'
+    workBook.save(response)
+    return response
+# Error Handlers
