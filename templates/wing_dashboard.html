@@ -4,93 +4,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShaadMaan Wing Dashboard</title>
+    <title>ShaadMaan | {{request.user}}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #4361ee;
-            --secondary: #3f37c9;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
             --success: #4cc9f0;
-            --warning: #f72585;
-            --danger: #e63946;
-            --dark: #1d3557;
             --light: #f8f9fa;
+            --dark: #212529;
             --gray: #6c757d;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
+            --light-gray: #e9ecef;
+            --danger: #e63946;
+            --warning: #fca311;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #f5f7fb;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 95%;
+            max-width: 1200px;
+            margin: 20px auto;
             padding: 20px;
         }
 
-        /* Messages */
-        .message-container {
-            margin-bottom: 20px;
-        }
-
-        .message {
-            padding: 12px 16px;
-            border-radius: 8px;
-            background-color: #fff3cd;
-            color: #856404;
-            border-left: 4px solid #ffc107;
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .message i {
-            margin-right: 10px;
-        }
-
-        /* Header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            color: white;
-            box-shadow: var(--card-shadow);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        .header h1 {
-            font-size: 1.8rem;
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 5px;
         }
 
-        .header h3 {
-            font-weight: 400;
+        h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
             opacity: 0.9;
         }
 
-        .user-info .badge {
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Stats Overview */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        table tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--light-gray);
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid var(--light-gray);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-primary {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(252, 163, 17, 0.1);
+            color: var(--warning);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #6511a0;
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .message-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #fff3cd;
+            border-left: 4px solid var(--warning);
+            color: #856404;
+        }
+
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -100,16 +268,29 @@
 
         .stat-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 20px;
             text-align: center;
             box-shadow: var(--card-shadow);
-            transition: var(--transition);
+            transition: transform 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .icon-circle {
@@ -120,215 +301,46 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
-            color: white;
-            font-size: 1.5rem;
+            font-size: 24px;
         }
 
         .icon-primary {
-            background-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
         }
 
         .icon-secondary {
-            background-color: var(--secondary);
+            background: rgba(114, 9, 183, 0.1);
+            color: var(--secondary);
         }
 
         .icon-success {
-            background-color: var(--success);
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
         }
 
         .icon-warning {
-            background-color: var(--warning);
+            background: rgba(252, 163, 17, 0.1);
+            color: var(--warning);
         }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* Cards */
-        .card {
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: var(--card-shadow);
-            overflow: hidden;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .card-header h2 {
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .card-header h2 i {
-            margin-right: 10px;
-            color: var(--primary);
-        }
-
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .badge-primary {
-            background-color: #e3f2fd;
-            color: var(--primary);
-        }
-
-        .badge-success {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .badge-warning {
-            background-color: #fff3e0;
-            color: #ef6c00;
-        }
-
-        .badge-danger {
-            background-color: #ffebee;
-            color: var(--danger);
-        }
-
-        /* Tables */
-        .table-container {
-            overflow-x: auto;
-            padding: 0 20px 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        /* Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn i {
-            margin-right: 8px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary);
-        }
-
-        .btn-secondary {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #38b2d6;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c1121f;
-        }
-
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.85rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 992px) {
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
             .header {
                 flex-direction: column;
-                text-align: center;
-                gap: 15px;
+                align-items: flex-start;
             }
 
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
+            h1 {
+                font-size: 24px;
             }
 
-            .stats-container {
-                grid-template-columns: 1fr;
+            h2 {
+                font-size: 20px;
+            }
+
+            .card {
+                padding: 20px;
             }
 
             .action-buttons {
@@ -336,29 +348,34 @@
             }
 
             .btn {
+                width: 100%;
                 justify-content: center;
             }
 
-            .card-header {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
+            .stats-container {
+                grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 576px) {
-            .header h1 {
-                font-size: 1.5rem;
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
             }
 
-            .stat-value {
-                font-size: 1.6rem;
+            .welcome-section {
+                padding: 20px;
             }
 
-            .icon-circle {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .card {
+                padding: 15px;
             }
         }
     </style>
@@ -367,17 +384,21 @@
 <body>
     <div class="container">
         <!-- Messages -->
+        {% if messages %}
         <div class="message-container">
+            {% for msg in messages %}
             <div class="message">
-                <i class="fas fa-exclamation-circle"></i> Welcome to your dashboard! Here's an important update.
+                <i class="fas fa-exclamation-circle"></i> {{ msg }}
             </div>
+            {% endfor %}
         </div>
+        {% endif %}
 
         <!-- Header -->
         <div class="header">
             <div>
                 <h1>ShaadMaan Wing Dashboard</h1>
-                <h3>Welcome back, Admin User!</h3>
+                <h3>Welcome back, {{request.user.username}}!</h3>
             </div>
             <div class="user-info">
                 <span class="badge badge-primary"><i class="fas fa-user"></i> Wing Panel</span>
@@ -397,7 +418,7 @@
                 <div class="icon-circle icon-secondary">
                     <i class="fas fa-calendar-alt"></i>
                 </div>
-                <div class="stat-value">5</div>
+                <div class="stat-value">{{ all_Programe|length }}</div>
                 <div class="stat-label">Total Programs</div>
             </div>
             <div class="stat-card">
@@ -436,17 +457,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if not act_wing == None %}
                         <tr>
-                            <td>wing_user_001</td>
-                            <td>WNG-2023-001</td>
-                            <td>Main Wing</td>
-                            <td>wing@example.com</td>
-                            <td>John Doe</td>
-                            <td>Jane Smith</td>
+                            <td>{{act_wing.wing_user}}</td>
+                            <td>{{act_wing.Wing_Code}}</td>
+                            <td>{{act_wing.Wing_Name}}</td>
+                            <td>{{act_wing.Wing_Email}}</td>
+                            <td>{{act_wing.Chair_Person}}</td>
+                            <td>{{act_wing.Assist_Person}}</td>
                             <td>
-                                <img class="logo" src="https://via.placeholder.com/40" alt="Wing Logo">
+                                <img class="logo" src="{{act_wing.wing_logo.url}}" alt="Wing Logo">
                             </td>
                         </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--gray);">
+                                No active wing information available.
+                            </td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -456,7 +485,7 @@
         <div class="card">
             <div class="card-header">
                 <h2><i class="fas fa-calendar-check"></i> Programs</h2>
-                <span class="badge badge-primary">5 Programs</span>
+                <span class="badge badge-primary">{{ all_Programe|length }} Programs</span>
             </div>
             <div class="table-container">
                 <table>
@@ -473,28 +502,52 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% if not all_Programes == None%}
+                        {% for item in all_Programes %}
                         <tr>
-                            <td>2023-10-15</td>
-                            <td>Annual Conference</td>
-                            <td>Main Hall</td>
-                            <td>2023-11-20</td>
-                            <td><span class="badge badge-success">Published</span></td>
-                            <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
-                            <td><a href="#"><span class="badge badge-success">Registration On</span></a></td>
-                            <td><a href="#" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Upload
-                                    Result</a></td>
+                            <td>{{item.Program_Created}}</td>
+                            <td>{{item.Program_name}}</td>
+                            <td>{{item.Program_Venue}}</td>
+                            <td>{{item.Program_date}}</td>
+
+                            <td>
+                                {% if item.is_Resulted %}
+                                <span class="badge badge-success">Published</span>
+                                {% else %}
+                                <span class="badge badge-warning">Active</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <img class="logo" src="{{item.Program_poster.url}}" alt="Program Poster">
+                            </td>
+                            <td>
+                                {% if item.is_Registration%}
+                                <a href="{% url 'Registrations_On_Off' item.id%}">
+                                    <span class="badge badge-success">Registration On</span>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'Registrations_On_Off' item.id%}">
+                                    <span class="badge badge-warning">Registration Off</span>
+                                </a>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <!-- small size -->
+                                <a href="{% url 'Direct_To_Upload_Result' item.id %}" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-upload"></i> Upload Result
+                                </a>
+                            </td>
+
                         </tr>
+                        {% endfor %}
+                        {% else %}
                         <tr>
-                            <td>2023-09-10</td>
-                            <td>Workshop Series</td>
-                            <td>Training Room</td>
-                            <td>2023-10-25</td>
-                            <td><span class="badge badge-warning">Active</span></td>
-                            <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
-                            <td><a href="#"><span class="badge badge-warning">Registration Off</span></a></td>
-                            <td><a href="#" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Upload
-                                    Result</a></td>
+                            <td colspan="6" style="text-align: center; color: var(--gray);">
+                                No program information available. ye
+                            </td>
                         </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
@@ -502,19 +555,21 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="#" class="btn btn-secondary">
+
+            <a href="{% url 'Add_Programes' %}" class="btn btn-secondary">
                 <i class="fas fa-plus-circle"></i> Register Program
             </a>
-            <a href="#" class="btn btn-outline">
-                <i class="fas fa-user-plus"></i> Select Program Upload Result
+            <a href="{% url 'Select_Programe_ForResult'%}" class="btn btn-outline">
+                <i class="fas fa-user-plus"></i> Select Programe Upload Result
             </a>
-            <a href="#" class="btn btn-danger">
+            <a href="{% url 'logout_view' %}" class="btn btn-danger">
                 <i class="fas fa-sign-out-alt"></i> Log Out
             </a>
         </div>
     </div>
 
     <script>
+        // Add some interactive elements
         document.addEventListener('DOMContentLoaded', function () {
             // Add animation to cards on scroll
             const cards = document.querySelectorAll('.card, .stat-card');
@@ -534,6 +589,13 @@
                 card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 observer.observe(card);
             });
+
+            // window url change for program selection
+            const progSelector = document.getElementById("progSelector");
+            progSelector.addEventListener("change", function () {
+                window.location.href = this.value;
+            })
+
         });
     </script>
 </body>
