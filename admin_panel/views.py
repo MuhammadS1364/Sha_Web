@@ -256,8 +256,6 @@ def Wing_DashBoard(request):
     try:
         all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
         all_Resulted_Programes = Result_Bank_Model.objects.filter(Result_Uploaded_By = act_wing)
-        print(f"programe registrations status: {Program_Bank.is_Registration}")
-        print(f"programe registrations status: {Program_Bank.is_Resulted}")
     except Program_Bank.DoesNotExist:
         all_Programe = None
         all_Resulted_Programes = None

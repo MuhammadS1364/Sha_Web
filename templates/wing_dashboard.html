@@ -509,13 +509,16 @@
                             <td>{{item.Program_Venue}}</td>
                             <td>{{item.Program_date}}</td>
 
-                            {% if item.is_Registration_Active%}
-                            <td><span class="badge badge-success">Registration Open</span></td>
+                            {% if item.is_Registration%}
+                            <td>
+                                <span class="badge badge-success">Registration Close</span>
+                            </td>
                             {% else %}
-                            <td><span class="badge badge-warning">Registration Closed</span></td>
-                            {% endif %}
+                            <td>
+                                <span class="badge badge-success">Registration Open</span>
+                                {% endif %}
 
-                            {% if item.is_Resulted%}
+                                {% if item.is_Resulted%}
                             <td><span class="badge badge-success">Result Uploaded</span></td>
                             {% else %}
                             <td><span class="badge badge-warning">Result Pending</span></td>
@@ -543,6 +546,7 @@
             <a href="{% url 'Add_Programes' %}" class="btn btn-secondary">
                 <i class="fas fa-plus-circle"></i> Register Program
             </a>
+            <a href="{% url 'Registrations_On_Off'%}">Registrations_On_Off</a>
             <a href="{% url 'Select_Programe_ForResult'%}" class="btn btn-outline">
                 <i class="fas fa-user-plus"></i> Select Programe Upload Result
             </a>

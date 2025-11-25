@@ -258,3 +258,40 @@ def Select_Programe_ForResult(request):
     all_Programes = Program_Bank.objects.filter(Program_Created=wing_Ojt)
 
     return render(request, "Select_Programe.html", {"all_Programes": all_Programes})
+
+
+def Registrations_On_Off(request):
+    # Preventing for other User except of Students
+    if not request.user.is_staff:
+        messages.error(request, "You Have not Access to On || Off Registration A Programe, It is Only for Wings's Users... ")
+        logout(request)
+        return redirect("login_view")
+
+    wing_Objt = Wing_Model.objects.get(wing_user = request.user)
+    context = {
+        "all_Programes"  : Program_Bank.objects.filter(Program_Created = wing_Objt)
+    }
+    if request.method == 'POST':
+
+        programe_name = request.POST.get("programe_name")
+        # Search the Programe  in Programe Bank
+        print(programe_name)
+        oFF_On_programe = Program_Bank.objects.get( Program_name = programe_name )
+
+        if oFF_On_programe.is_Registration == True:
+            oFF_On_programe.is_Registration = False
+        else:
+            oFF_On_programe.is_Registration = True
+
+        oFF_On_programe.save()
+        print(f"programe regis: {oFF_On_programe.is_Registration}")
+        
+        messages.success(request, "Progrme Registration Closed....")
+        return redirect("Wing_DashBoard")
+    else:
+        messages.error(request, "Progrme Registration Not Closed....")
+    return render(request, "form.html", context)
+
+
+
+
