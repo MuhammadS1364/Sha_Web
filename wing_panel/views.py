@@ -83,7 +83,7 @@ def Register_StudentToPrograme(request):
         # Prevent double registration
         if Candidates_Registration_Model.objects.filter(
             Candidates_Name=stn_Objt,
-            Registered_Programe=program_id
+            Registered_Programe=To_Reg_Programe
         ).exists():
             messages.error(request, "You are already registered for this program.")
             return render(request, 'candidate.html', {
@@ -92,11 +92,29 @@ def Register_StudentToPrograme(request):
                 "all_Students": all_Students,
             })
 
+        # Updating total registrations in Program_Bank
+        if To_Reg_Programe.Tatal_Registrations is None:
+            To_Reg_Programe.Tatal_Registrations = 0
+            To_Reg_Programe.save()
+
+        #  error for Off Registration
+        if not To_Reg_Programe.is_Registration:
+            messages.error(request, "Registration is closed for this program.")
+            return render(request, 'candidate.html', {
+                "form": newRegistration,
+                "all_Programes": all_Programes,
+                "all_Students": all_Students,
+            })
+        
         if newRegistration.is_valid():
             Registered = newRegistration.save(commit=False)
             Registered.Candidates_Name = stn_Objt
             Registered.Registered_Programe = To_Reg_Programe
             Registered.save()
+
+
+            To_Reg_Programe.Tatal_Registrations += 1
+            To_Reg_Programe.save()
 
             messages.success(request, "Your Registration SuccessFully Done...")
             return redirect("Student_DashBoard")
@@ -178,6 +196,7 @@ def Upload_Result(request, programe_id):
             if Position_Holder1_img: Result_Objt.Position_Holder1_img = Position_Holder1_img
             if Position_Holder2_img: Result_Objt.Position_Holder2_img = Position_Holder2_img
             if Position_Holder3_img: Result_Objt.Position_Holder3_img = Position_Holder3_img
+            if Result_Baner: Result_Objt.Result_Baner = Result_Baner
 
 
             Result_Objt.save()
@@ -203,7 +222,7 @@ def Upload_Result(request, programe_id):
     }
     return render(request, "UploadResult.html", context)
 
-
+@login_required
 def Select_Programe_ForResult(request):
     wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
     all_Programes = Program_Bank.objects.filter(Program_Created=wing_Ojt)

@@ -491,12 +491,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Created</th>
-                            <th>Program Name</th>
-                            <th>Program Venue</th>
-                            <th>Program Date</th>
-                            <th>Program Status</th>
-                            <th>Program Logo</th>
+                            <th>Registrations</th>
+                            <th>Name</th>
+                            <th>Venue</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Logo</th>
                             <th>Registration</th>
                             <th>Publish Result</th>
                         </tr>
@@ -505,7 +505,7 @@
                         {% if not all_Programe == None%}
                         {% for item in all_Programe %}
                         <tr>
-                            <td>{{item.Program_Created}}</td>
+                            <td>{{item.Tatal_Registrations}}</td>
                             <td>{{item.Program_name}}</td>
                             <td>{{item.Program_Venue}}</td>
                             <td>{{item.Program_date}}</td>

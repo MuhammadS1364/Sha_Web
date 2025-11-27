@@ -24,6 +24,9 @@ def add_OutReach(request):
         messages.error(request, "You are a Student User, It is Only for Students's Users... ")
         logout(request)
         return redirect("login_view")
+    
+    
+
 
     if request.method == 'POST':
 
@@ -33,7 +36,10 @@ def add_OutReach(request):
         if not student_Obj:
             return HttpResponse("Error: You are not registered as a Student!")
 
-
+        if student_Obj.Total_OutReachs is None:
+            student_Obj.Total_OutReachs = 0
+            student_Obj.save()
+        
         # SubMitting the OutReach Form 
         new_Objt = OutReach_Form(request.POST, request.FILES)
 
@@ -43,6 +49,9 @@ def add_OutReach(request):
             newOutReach_Obj.student_name = student_Obj
             newOutReach_Obj.save()
 
+            # Updating total OutReach in Student_Model
+            student_Obj.Total_OutReachs += 1
+            student_Obj.save()
             return redirect("Student_DashBoard")
         else:
             return HttpResponse("OutReach Programe Not add, Validation Error .......")
