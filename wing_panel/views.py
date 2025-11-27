@@ -139,6 +139,12 @@ def Register_StudentToPrograme(request):
 
 @login_required
 def Upload_Result(request, programe_id):
+    if request.user.is_superuser or not request.user.is_staff:
+        messages.error(request, "You have no access, it is only for Wing Users...")
+        logout(request)
+        return redirect("login_view")
+
+        
     wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
     Selected_Programe = Program_Bank.objects.get(Program_name =programe_id)
 
@@ -146,11 +152,6 @@ def Upload_Result(request, programe_id):
         Registered_Programe=Selected_Programe
     )
     
-    if not request.user.is_staff:
-        messages.error(request, "You have not Access this, It is Only for Wing's Users... ")
-        logout(request)
-        return redirect("login_view")
-        
     if request.method == 'POST':
 
         wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
@@ -256,7 +257,12 @@ def Registrations_On_Off(request, programe_id):
     else:
         messages.success(request, "Registration CLOSE!")
 
-    return redirect("Wing_DashBoard")
+        # if Admin close the Registration then to admin dashboard
+    
+    if request.user.is_superuser:
+        return redirect("Admin_DashBoard")
+    else:
+        return redirect("Wing_DashBoard")
 
 @login_required
 def Direct_To_Upload_Result(request, programe_id):

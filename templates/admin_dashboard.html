@@ -510,21 +510,21 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Created</th>
-                        <th>Program Name</th>
-                        <th>Program Venue</th>
-                        <th>Program Date</th>
-                        <th>Program Status</th>
-                        <th>Program Logo</th>
+                        <th>Registrations</th>
+                        <th>Name</th>
+                        <th>Venue</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Logo</th>
                         <th>Registration</th>
                         <th>Publish Result</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if not all_Programe == None%}
-                    {% for item in all_Programe %}
+                    {% if not all_Programes == None%}
+                    {% for item in all_Programes %}
                     <tr>
-                        <td>{{item.Program_Created}}</td>
+                        <td>{{item.Tatal_Registrations}}</td>
                         <td>{{item.Program_name}}</td>
                         <td>{{item.Program_Venue}}</td>
                         <td>{{item.Program_date}}</td>
@@ -552,16 +552,23 @@
                         </td>
 
                         <td>
+                            {% if not item.is_Resulted %}
                             <a href="{% url 'Direct_To_Upload_Result' item.id %}" class="btn btn-primary btn-sm">
                                 <i class="fas fa-upload"></i> Upload Result
                             </a>
+                            {% else %}
+                            <a href="{% url 'View_Programe_Results' item.id %}" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-eye"></i> View Results
+                            </a>
+                            {% endif %}
                         </td>
+
                     </tr>
                     {% endfor %}
                     {% else %}
                     <tr>
                         <td colspan="6" style="text-align: center; color: var(--gray);">
-                            No program information available.
+                            No program information available. ye
                         </td>
                     </tr>
                     {% endif %}
