@@ -58,55 +58,6 @@ def Add_Programes(request):
 
 
 
-# def Register_StudentToPrograme(request):
-#     all_Programes = Program_Bank.objects.all()
-#     all_Students = Student_Model.objects.all()
-#     if request.method == 'POST':
-
-#         newRegistration = Candidate_Registration_Form(request.POST)
-#         program_id = request.POST.get("Selected_Programe")
-
-#         stn_Objt = Student_Model.objects.get(user_Stn=request.user)
-#         To_Reg_Programe = Program_Bank.objects.get(id = program_id)
-
-#         # secure the doubble registration , a student can not register for the same program twice
-#         if Candidates_Registration_Model.objects.filter(
-#             Candidates_Name= stn_Objt,
-#             Registered_Programe= To_Reg_Programe
-#         ).exists():
-#             messages.error(request, "You are already registered for an active program.")
-#             return render(request, 'candidate.html', {
-#         "form": newRegistration,
-#         "all_Programes": all_Programes,
-#         "all_Students" : all_Students,
-#         })
-
-        
-#         if newRegistration.is_valid():
-#             Registered = newRegistration.save(commit=False)
-#             Registered.Candidates_Name = stn_Objt
-#             Registered.Registered_Programe = To_Reg_Programe
-#             Registered.save()
-
-#             # students save karna:
-#             Registered.save()
-
-#             return redirect("Student_DashBoard")
-#         else:
-#             messages.error("Candidate Not Registered.......")
-#             return render(request, 'candidate.html', {
-#         "form": newRegistration,
-#         "all_Programes": all_Programes,
-#         "all_Programes" : all_Programes
-#         })
-#     else:
-#         newRegistration = Candidate_Registration_Form()
-
-#     return render(request, 'candidate.html', {
-#         "form": newRegistration,
-#         "all_Programes": all_Programes,
-#         "all_Students" : all_Students,
-#     })
 
 @login_required
 def Register_StudentToPrograme(request):
@@ -282,16 +233,31 @@ def Registrations_On_Off(request, programe_id):
 
     # Message
     if program.is_Registration:
-        messages.success(request, "Registration OPEN kar diya!")
+        messages.success(request, "Registration OPEN!")
     else:
-        messages.success(request, "Registration CLOSE kar diya!")
+        messages.success(request, "Registration CLOSE!")
 
     return redirect("Wing_DashBoard")
 
-
+@login_required
 def Direct_To_Upload_Result(request, programe_id):
     wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
     Selected_Programe = Program_Bank.objects.get(id=programe_id)
 
     return redirect("Upload_Result", programe_id=Selected_Programe.Program_name)
 
+@login_required
+def View_Programe_Results(request, programe_id):
+    wing_Ojt = Wing_Model.objects.get(wing_user=request.user)
+    Selected_Programe = Program_Bank.objects.get(id=programe_id)
+
+    Result_Objt = Result_Bank_Model.objects.filter(
+        Result_Programe=Selected_Programe
+    ).first()
+
+    context = {
+        "Selected_Programe": Selected_Programe,
+        "Result_Objt": Result_Objt
+    }
+
+    return render(request, "ViewResults.html", context)

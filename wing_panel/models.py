@@ -46,7 +46,7 @@ class Result_Bank_Model(models.Model):
         related_name='position_holder_1',
         blank=True,
         null=True
-        )
+        )   
     Position_Holder1_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
 
     Position_Holder2 = models.ForeignKey(

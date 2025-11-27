@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Result</title>
+
+    <style>
+        /* ---------- GLOBAL STYLES ---------- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        /* ---------- INFO BOX ---------- */
+        .info-box {
+            margin-bottom: 20px;
+            padding: 18px;
+            background: #f8f9fa;
+            border-left: 5px solid #007bff;
+            border-radius: 8px;
+        }
+
+        .info-box p {
+            margin: 6px 0;
+            font-size: 17px;
+        }
+
+        /* ---------- POSITIONS GRID ---------- */
+        .positions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #e3e3e3;
+            text-align: center;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .card p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* ---------- BANNER IMAGE ---------- */
+        .banner {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .banner img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            border: 3px solid #ddd;
+        }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-btn a {
+            text-decoration: none;
+            background: #007bff;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s ease;
+        }
+
+        .back-btn a:hover {
+            background: #0056b3;
+            transform: scale(1.03);
+        }
+
+        /* ---------- RESPONSIVE SMALL MOBILE ---------- */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .info-box p,
+            .card p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>View Result Panel</h1>
+
+        <!-- Program Info -->
+        <div class="info-box">
+            <p><strong>Program Name:</strong> {{ Selected_Programe.Program_name }}</p>
+        </div>
+
+        <!-- Position Holders -->
+        <div class="positions">
+            <div class="card">
+                <div class="card-title">1st Position</div>
+                <p>{{ Result_Objt.Position_Holder1.Candidates_Name.Student_Name }}</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">2nd Position</div>
+                <p>{{ Result_Objt.Position_Holder2.Candidates_Name.Student_Name }}</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">3rd Position</div>
+                <p>{{ Result_Objt.Position_Holder3.Candidates_Name.Student_Name }}</p>
+            </div>
+        </div>
+
+        <!-- Grade Holder -->
+        {% if Result_Objt.Grande_Holder %}
+        <div class="positions">
+            <div class="card">
+                <div class="card-title">Grade Holder</div>
+                <p>{{ Result_Objt.Grande_Holder.Candidates_Name.Student_Name }}</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Secure Grade</div>
+                <p>{{ Result_Objt.Secure_Grade }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="info-box">
+            <p>No Grade Holder</p>
+        </div>
+        {% endif %}
+
+        <!-- Banner -->
+        <div class="banner">
+            <h3>Result Banner</h3>
+
+            {% if Result_Objt.Result_Baner %}
+            <img src="{{ Result_Objt.Result_Baner.url }}" alt="Result Banner">
+            {% else %}
+            <p>No Banner Uploaded</p>
+            {% endif %}
+        </div>
+        <!-- Back Button -->
+        <div class="back-btn">
+            <a href="{% url 'Wing_DashBoard' %}">⬅ Back To Dashboard</a>
+        </div>
+
+    </div>
+</body>
+
+</html>
