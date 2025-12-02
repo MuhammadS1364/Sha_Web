@@ -103,6 +103,28 @@
         button:hover {
             background: #357ABD;
         }
+
+        .back-btn {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-btn a {
+            text-decoration: none;
+            background: #007bff;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.3s ease;
+        }
+
+        .back-btn a:hover {
+            background: #0056b3;
+            transform: scale(1.03);
+        }
     </style>
 </head>
 
@@ -159,7 +181,9 @@
                 {% endfor %}
                 {% endif %}
             </div>
-
+            <div class="back-btn">
+                <a href="{% url 'Admin_DashBoard' %}">⬅ Back To Dashboard</a>
+            </div>
             <button type="submit">Submit</button>
         </form>
     </div>

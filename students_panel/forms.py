@@ -25,25 +25,13 @@ class OutReach_Form (forms.ModelForm):
             }),
         }
 
-        def clean_OutReach_date(self):
-            date = self.cleaned_data.get("OutReach_date")
-            if date > timezone.now().date():
-                raise ValidationError(_("The date cannot be in the future."))
-            return date
-
-        def clean_OutReach_poster(self):
-            poster = self.cleaned_data.get("OutReach_poster")
-            if poster:
-                if poster.endswith('.jpg') or poster.endswith('.png') or poster.endswith('.jpeg'):
-                    raise ValidationError(_("Invalid file extention Only jpg, png ,jpeg allowed ."))
-            return poster
 
 # Achievements Programes Form
-class Achievements_Form (forms.ModelForm):
+class Ajnumame_Huda_Form (forms.ModelForm):
     class Meta:
-        model = Achievements_Model
+        model = Ajnumame_Huda_Model
         # fields = "__all__"
-        exclude = ["Achiever"]
+        exclude = ["Achiever","Total_Achievements"]
         widgets = {
              "achieveMent_date": forms.DateInput(attrs={
                 "type": "date",

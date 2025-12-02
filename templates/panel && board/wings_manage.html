@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wing Manager Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --danger: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #adb5bd;
+            --sidebar-width: 260px;
+            --sidebar-collapsed: 70px;
+            --header-height: 80px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .menu-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: none;
+        }
+
+        .menu-toggle:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-logo {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            border-left-color: white;
+        }
+
+        .menu-item i {
+            width: 25px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .menu-item a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .menu-item:hover a {
+            color: var(--light);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .welcome h1 span {
+            color: var(--primary);
+        }
+
+        .welcome p {
+            color: var(--gray);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .user-details h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Messages */
+        .messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            color: white;
+            animation: slideIn 0.5s ease;
+            transition: var(--transition);
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+        }
+
+        .message.error {
+            background: linear-gradient(135deg, #f72585, #e63946);
+        }
+
+        .message i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Dashboard Widgets */
+        .dashboard-widgets {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .widget:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .widget-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .icon-bg-1 {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+        }
+
+        .icon-bg-2 {
+            background: linear-gradient(135deg, #f72585, #7209b7);
+        }
+
+        .icon-bg-3 {
+            background: linear-gradient(135deg, #ff9e00, #ff5400);
+        }
+
+        .widget-content {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .widget-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .trend-up {
+            color: #4cc9f0;
+            font-weight: 600;
+        }
+
+        /* Action Cards */
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Programs Table */
+        .programs-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .programs-header {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .programs-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .programs-header h2 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: rgba(76, 201, 240, 0.1);
+            color: #4cc9f0;
+        }
+
+        .badge-warning {
+            background: rgba(247, 37, 133, 0.1);
+            color: #f72585;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+        }
+
+        th {
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tbody tr {
+            transition: var(--transition);
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #6510a0;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-warning:hover {
+            background: #e01a6f;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: var(--sidebar-collapsed);
+            }
+
+            .sidebar-header h2,
+            .menu-item span {
+                display: none;
+            }
+
+            .sidebar-logo {
+                margin-right: 0;
+            }
+
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .menu-item i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: var(--sidebar-collapsed);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                width: var(--sidebar-width);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .sidebar-header h2,
+            .menu-item span {
+                display: block;
+            }
+
+            .menu-item {
+                justify-content: flex-start;
+                padding: 15px 25px;
+            }
+
+            .menu-item i {
+                margin-right: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-info {
+                margin-top: 15px;
+            }
+
+            .dashboard-widgets,
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 15px;
+            }
+
+            .welcome h1 {
+                font-size: 24px;
+            }
+
+            .widget-content {
+                font-size: 28px;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .programs-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .programs-header .badge {
+                margin-top: 10px;
+            }
+
+            th,
+            td {
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .messages {
+                max-width: calc(100% - 40px);
+            }
+
+            .user-info {
+                width: 100%;
+            }
+
+            .widget {
+                padding: 20px;
+            }
+
+            .card-header,
+            .card-body {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Messages Section -->
+    <div class="messages">
+        <div class="message success">
+            <i class="fas fa-check-circle"></i>
+            <div>Program successfully registered!</div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-feather-alt"></i>
+            </div>
+            <h2>Wing Manager</h2>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="menu-item active">
+                <i class="fas fa-home"></i>
+                <span><a href="#">Dashboard</a></span>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-plus-circle"></i> Register Program
+                    </a>
+                </span>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-user-plus"></i> Select Programe Upload Result
+                    </a>
+                </span>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-chart-bar"></i>
+                <span><a href="#">Results</a></span>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-cog"></i>
+                <span>
+                    <a href="#" class="btn btn-danger">
+                        <i class="fas fa-sign-out-alt"></i> Log Out
+                    </a>
+                </span>
+            </div>
+
+            <div class="menu-item">
+                <i class="fas fa-question-circle"></i>
+                <span><a href="#">Help & Support</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="welcome">
+                <h1>Welcome, <span>Wing Username</span>!</h1>
+                <p>Manage your programmes and results efficiently</p>
+            </div>
+
+            <div class="user-info">
+                <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="User">
+                <div class="user-details">
+                    <h3>Wing Username</h3>
+                    <p>Wing Panel</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Widgets -->
+        <div class="dashboard-widgets">
+            <a href="#">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">Total Programmes</h3>
+                        <div class="widget-icon icon-bg-1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                    <div class="widget-content">42</div>
+                    <div class="widget-footer">
+                        <span>Active Programmes</span>
+                        <span class="trend-up">+5 this month</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">Participants</h3>
+                        <div class="widget-icon icon-bg-2">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="widget-content">1,248</div>
+                    <div class="widget-footer">
+                        <span>Registered Users</span>
+                        <span class="trend-up">+120 this week</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3 class="widget-title">Results Published</h3>
+                        <div class="widget-icon icon-bg-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="widget-content">87%</div>
+                    <div class="widget-footer">
+                        <span>Completion Rate</span>
+                        <span class="trend-up">+12% this quarter</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="action-cards">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Programme Registry</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h4 class="card-title">Register New Programmes</h4>
+                    <p class="card-text">Create and manage new programmes with detailed information including schedules,
+                        participants, and resources.</p>
+                    <button class="btn">Register Programme</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Results Publishing</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h4 class="card-title">Publish & Manage Results</h4>
+                    <p class="card-text">Publish programme results, manage visibility, and export data for reporting and
+                        analysis purposes.</p>
+                    <button class="btn btn-warning">Publish Results</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programs Information -->
+        <section id="All_Programes">
+            <div class="programs-card">
+                <div class="programs-header">
+                    <h2><i class="fas fa-calendar-check"></i>All Programs</h2>
+                    <span class="badge badge-primary">5 Programs</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Registrations</th>
+                                <th>Name</th>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Logo</th>
+                                <th>Registration</th>
+                                <th>Publish Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>120</td>
+                                <td>Annual Sports Day</td>
+                                <td>Main Stadium</td>
+                                <td>2023-10-15</td>
+                                <td><span class="badge badge-success">Published</span></td>
+                                <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
+                                <td><a href="#"><span class="badge badge-success">Registration On</span></a></td>
+                                <td><a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> View
+                                        Results</a></td>
+                            </tr>
+                            <tr>
+                                <td>85</td>
+                                <td>Science Exhibition</td>
+                                <td>Science Block</td>
+                                <td>2023-11-05</td>
+                                <td><span class="badge badge-warning">Active</span></td>
+                                <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
+                                <td><a href="#"><span class="badge badge-warning">Registration Off</span></a></td>
+                                <td><a href="#" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Upload
+                                        Result</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2023 Wing Manager Dashboard | Designed for Efficient Programme Management</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.querySelector('.menu-toggle').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('active');
+        });
+
+        // Add hover effect to menu items
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function () {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Button animations
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                message.style.opacity = '0';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 300);
+            });
+        }, 5000);
+    </script>
+</body>
+
+</html>

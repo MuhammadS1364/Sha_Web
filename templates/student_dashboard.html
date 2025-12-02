@@ -518,6 +518,56 @@
       </a>
     </div>
 
+
+    <div class="table-container">
+      <h2>Over View Participations</h2>
+
+      <table>
+        <tr>
+          <th>Total_OutReachs</th>
+          <th>Total_Anjuman_e_Huda and Achievements </th>
+          <th>Total_Self_Creations</th>
+          <th>Total_Registered</th>
+          <th>Total_ReSulted</th>
+        </tr>
+        <tr>
+          <td>{{ act_stn.Total_OutReachs }}</td>
+          <td>{{ act_stn.Total_Anjuman_e_Huda }}</td>
+          <td>{{ act_stn.Total_Self_Creations }}</td>
+          <td>{{ act_stn.Total_Registered }}</td>
+          <td>{{ act_stn.Total_ReSulted }}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div class="table-container">
+      <h2>Over View Results Points</h2>
+
+      <table>
+        <tr>
+          <th>Tatal_Points</th>
+          <th>Total_OutReachPoints</th>
+          <th>Total_SelfCreationPoints</th>
+          <th>Total_ClassProgramesPoints</th>
+          <th>Total_AnjumanHudaPoints</th>
+        </tr>
+        <tr>
+          <td>{{ act_stn.Tatal_Points }}</td>
+          <td>{{ act_stn.Total_OutReachPoints }}</td>
+          <td>{{ act_stn.Total_SelfCreationPoints }}</td>
+          <td>{{ act_stn.Total_ClassProgramesPoints }}</td>
+
+          <td>{{ act_stn.Total_AnjumanHudaPoints }}</td>
+
+        </tr>
+      </table>
+
+    </div>
+
+
+
+
     <div class="table-box">
       <h2>Student Profile</h2>
 
@@ -593,6 +643,24 @@
         </div>
 
         <div class="desc">{{ item.OutReach_discription|truncatewords:25 }}</div>
+
+        <div class="row">
+
+          <div class="edite-programe">
+            <a href="">
+              <i class="fas fa-edite"></i>
+              <span class="badge badge-primary">Edite Info</span>
+            </a>
+          </div>
+
+          <div class="delete-programe">
+            <a href="">
+              <i class="fas fa-delete"></i>
+              <span class="badge badge-primary">Delete</span>
+            </a>
+          </div>
+
+        </div>
       </div>
       {% endfor %}
       {% else %}
@@ -619,7 +687,7 @@
         <div class="sub">
           <i class="fas fa-medal"></i>
           <span class="label">Result:</span>
-          {{ item.resulted }}
+          {{ item.achiever_Result }}
         </div>
 
         <div class="sub">
@@ -633,6 +701,24 @@
         </div>
 
         <div class="desc">{{ item.achieveMent_discription|truncatewords:25 }}</div>
+
+        <div class="row">
+
+          <div class="edite-programe">
+            <a href="">
+              <i class="fas fa-edite"></i>
+              <span class="badge badge-primary">Edite Info</span>
+            </a>
+          </div>
+
+          <div class="delete-programe">
+            <a href="">
+              <i class="fas fa-delete"></i>
+              <span class="badge badge-primary">Delete</span>
+            </a>
+          </div>
+
+        </div>
       </div>
       {% endfor %}
       {% endif %}

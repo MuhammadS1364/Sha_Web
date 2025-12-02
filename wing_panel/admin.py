@@ -5,7 +5,7 @@ from django.contrib import admin
 from .models import *
 
 class Programe_Admin(admin.ModelAdmin):
-    list_display = ["Program_Created", "Program_name", "Tatal_Registrations"]
+    list_display = ["Program_Created", "Program_name", "Tatal_Registrations","is_Registration", "is_Resulted"]
 
 admin.site.register(Program_Bank, Programe_Admin)
 

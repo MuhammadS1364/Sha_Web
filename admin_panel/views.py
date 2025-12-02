@@ -35,7 +35,7 @@ def login_view (request):
                 return redirect("Student_DashBoard")
 
         else:
-            messages.error(request,f"Login Failed. {request.user}, technical issu")
+            messages.error(request,f"Login Failed, technical issue")
             return render(request, "login_user.html")
 
 
@@ -179,7 +179,7 @@ def add_student(request):
 def add_wing(request):
     all_Users = User.objects.all()
 
-        #    
+    
     if not request.user.is_superuser:
         logout(request)
         messages.error(request, "You have not Access to Add New User, Student and Wing..")
@@ -191,6 +191,17 @@ def add_wing(request):
 
         wing_user = request.POST.get("wing_user")
 
+        # preventing two name clashing
+        Chair_Person = request.POST.get("Chair_Person")
+        Assist_Person = request.POST.get("Assist_Person")
+
+        if Chair_Person == Assist_Person:
+            messages.error(request, "One Student Cannot in Both Fields......")
+            return render(request, 'addWing.html', {
+        "form": newWing_Form,
+        "all_Users" :all_Users
+        })
+        
         if newWing_Form.is_valid():
 
             # Getting the New User Object
@@ -233,7 +244,7 @@ def Admin_DashBoard(request):
     all_Wings = Wing_Model.objects.all()
     all_Programes = Program_Bank.objects.all()
     all_OutReachs = OutReach_Model.objects.all()
-    all_Achievements = Achievements_Model.objects.all()
+    all_Achievements = Ajnumame_Huda_Model.objects.all()
     all_Creations = Self_Creations_Bank.objects.all()
 
     context = {
@@ -290,8 +301,8 @@ def Student_DashBoard(request):
 
     # Getting All Achievements
     try:
-        all_Achievements = Achievements_Model.objects.filter(Achiever = act_stn)
-    except Achievements_Model.DoesNotExist:
+        all_Achievements = Ajnumame_Huda_Model.objects.filter(Achiever = act_stn)
+    except Ajnumame_Huda_Model.DoesNotExist:
         all_Achievements = None
 
     # All Registered Programes
@@ -300,20 +311,18 @@ def Student_DashBoard(request):
     except Candidates_Registration_Model.DoesNotExist:
         all_Registered = None
 
-    # All for that he secured in Upload Result model 
-
-    # all_Results_Objts = Result_Bank_Model.objects.filter(
-    #     Q(Position_Holder1=act_stn) |
-    #     Q(Position_Holder2=act_stn) |
-    #     Q(Position_Holder3=act_stn) |
-    #     Q(Grande_Holder=act_stn)
-    # )
+    all_Programes = Program_Bank.objects.all()
+    all_Results_Objts = Result_Bank_Model.objects.filter(
+        # it may be position 1,or 2 ,3 or grade holde , 
+        # how to filter porgrem for this student 
+    )
 
     context = {
         "act_stn" : act_stn,
         "all_OutReach" : all_OutReach,
         "all_Achievements" : all_Achievements,
         "all_Registered" : all_Registered,
+        "all_Programes" : all_Programes,
         # "all_Results_Objts" : all_Results_Objts
     }
     return render(request, "student_dashboard.html", context)
@@ -334,7 +343,9 @@ def editePassword(request):
         if userName:
 
             if userPass1 != userPass2:
-                return messages.error("Password 2 doesnto Matched.........")
+                messages.error(request,"Password 2 doesnto Matched.........")
+                return render(request, "forgot.html")
+
 
             toChange = User.objects.get(username = userName)
 
@@ -343,7 +354,7 @@ def editePassword(request):
 
             return redirect("login_view")
         else:
-            return messages.error("Username not received from form!")
+            messages.error(request,"Username not received from form!")
 
 
     return render(request, "forgot.html")
@@ -464,3 +475,100 @@ def Export_Programes(request):
     workBook.save(response)
     return response
 # Error Handlers
+
+
+
+
+
+
+# Testing Area for templates 
+
+
+# Admin Dash Board
+def Admin_TestBoard(request):
+
+    # Rendering All The Data to Admin DashBoard
+
+    all_Users = User.objects.all()
+    all_students = Student_Model.objects.all()
+    all_Wings = Wing_Model.objects.all()
+    all_Programes = Program_Bank.objects.all()
+    all_OutReachs = OutReach_Model.objects.all()
+    all_Achievements = Ajnumame_Huda_Model.objects.all()
+    all_Creations = Self_Creations_Bank.objects.all()
+
+    context = {
+       "all_Users" :  all_Users,
+       "all_students" :  all_students,
+       "all_Wings" : all_Wings ,
+       "all_Programes" :  all_Programes,
+       "all_OutReachs" :  all_OutReachs,
+       "all_Achievements" :  all_Achievements,
+       "all_Creations" :  all_Creations,
+    }
+    return render(request, "admin_dashboard.html", context)
+
+# Wing Dash Board
+def Wing_TestBoard(request):
+    act_wing = Wing_Model.objects.get(wing_user = request.user)
+
+    # Try to check Is the user have any prgrame
+    try:
+        all_Programe = Program_Bank.objects.filter(Program_Created = act_wing)
+        all_Resulted_Programes = Result_Bank_Model.objects.filter(Result_Uploaded_By = act_wing)
+    except Program_Bank.DoesNotExist:
+        all_Programe = None
+        all_Resulted_Programes = None
+
+    context = {
+        "act_wing" : act_wing,
+        "all_Programe" : all_Programe,
+        "all_Resulted_Programes" : all_Resulted_Programes
+    }
+    return render(request, "panel && board/wings_manage.html", context)
+
+
+from django.db.models import Q
+
+
+# Student DashBoard
+def Student_TestBoard(request):
+    act_stn = Student_Model.objects.get(user_Stn = request.user)
+
+    # checking Is student info exist
+    try:
+        act_stn = Student_Model.objects.get(user_Stn = request.user)
+    except Student_Model.DoesNotExist:
+        act_stn = None
+    
+    # Getting All OutReach
+    try:
+        all_OutReach = OutReach_Model.objects.filter(student_name = act_stn)
+    except OutReach_Model.DoesNotExist:
+        all_OutReach = None
+
+    # Getting All Achievements
+    try:
+        all_Achievements = Ajnumame_Huda_Model.objects.filter(Achiever = act_stn)
+    except Ajnumame_Huda_Model.DoesNotExist:
+        all_Achievements = None
+
+    # All Registered Programes
+    try:
+        all_Registered = Candidates_Registration_Model.objects.filter(Candidates_Name = act_stn)
+    except Candidates_Registration_Model.DoesNotExist:
+        all_Registered = None
+
+    all_Programes = Program_Bank.objects.all()
+
+    context = {
+        "act_stn" : act_stn,
+        "all_OutReach" : all_OutReach,
+        "all_Achievements" : all_Achievements,
+        "all_Registered" : all_Registered,
+        'all_Programes' : all_Programes
+        # "all_Results_Objts" : all_Results_Objts
+    }
+    return render(request, "panel && board/stn.html", context)
+
+

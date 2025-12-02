@@ -143,16 +143,23 @@
         <div class="positions">
             <div class="card">
                 <div class="card-title">1st Position</div>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder1_Grade}}</span>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder1_Mark}}</span>
                 <p>{{ Result_Objt.Position_Holder1.Candidates_Name.Student_Name }}</p>
             </div>
 
             <div class="card">
                 <div class="card-title">2nd Position</div>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder2_Grade}}</span>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder2_Mark}}</span>
+
                 <p>{{ Result_Objt.Position_Holder2.Candidates_Name.Student_Name }}</p>
             </div>
 
             <div class="card">
                 <div class="card-title">3rd Position</div>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder2_Grade}}</span>
+                <span class="badge badge-success">{{Result_Objt.Position_Holder2_Mark}}</span>
                 <p>{{ Result_Objt.Position_Holder3.Candidates_Name.Student_Name }}</p>
             </div>
         </div>
@@ -180,8 +187,8 @@
         <div class="banner">
             <h3>Result Banner</h3>
 
-            {% if Result_Objt.Result_Baner %}
-            <img src="{{ Result_Objt.Result_Baner.url }}" alt="Result Banner">
+            {% if Selected_Programe.Program_poster %}
+            <img src="{{ Result_Objt.Program_poster.url }}" alt="Result Banner">
             {% else %}
             <p>No Banner Uploaded</p>
             {% endif %}

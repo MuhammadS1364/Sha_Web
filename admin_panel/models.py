@@ -17,13 +17,23 @@ class Student_Model(models.Model):
     Student_Father = models.CharField(max_length=250)
     Student_Address = models.CharField(max_length=250)
     Student_Img = models.ImageField(upload_to='student_Box/')
-
-    # Student OverAll Status
+    is_Controller = models.BooleanField(null=True, blank=True, default=False)
     
-    Total_OutReachs = models.IntegerField(default=0, blank=True,null=True)
-    Total_Class_Anjuman = models.IntegerField(default=0,blank=True,null=True)
-    Tatal_Points = models.IntegerField(default=0, null=True,blank=True)
+    # Student OverAll Status
+    Total_OutReachs = models.IntegerField(default=0)
+    Total_Anjuman_e_Huda = models.IntegerField(default=0)
+    Total_Self_Creations = models.IntegerField(default=0)
+    Total_ClassProgrames = models.IntegerField(default=0)
 
+    # TOTAL Registrations and Resulted 
+    Total_Registered = models.IntegerField(default=0)
+    Total_ReSulted = models.IntegerField(default=0)
+    # POINTS TABLE
+    Tatal_Points = models.IntegerField(default=0)
+    Total_OutReachPoints = models.IntegerField(default=0)
+    Total_SelfCreationPoints = models.IntegerField(default=0)
+    Total_ClassProgramesPoints = models.IntegerField(default=0)
+    Total_AnjumanHudaPoints = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.Student_Name}"
@@ -48,23 +58,24 @@ class Wing_Model(models.Model):
     )
     wing_logo = models.ImageField(upload_to='wing_Box/')
 
-    Total_Registered = models.IntegerField(default=0, blank=True,null=True)
-    Total_ReSulted = models.IntegerField(default=0, blank=True,null=True)
-    Total_Programed = models.IntegerField(default=0, null=True,blank=True)
+    Total_Registered = models.IntegerField(default=0)
+    Total_ReSulted = models.IntegerField(default=0)
+
 
     def __str__(self):
         return f"{self.Wing_Name}"
     
 
 
-class Grallery_Model(models.Model):
+class Gallery_Model(models.Model):
     Created_by = models.ForeignKey(
-        Student_Model,
+        Wing_Model,
         on_delete=models.CASCADE, default=None
         )
-    Grallery_Title = models.CharField(max_length=300)
-    Grallery_Files = models.ImageField(upload_to="Gallery/", null=True,blank=True)
-    Grallery_Vedio = models.FileField(upload_to="Vedio/", null=True,blank=True)
+    Gallery_Title = models.CharField(max_length=300)
+    Gallery_Files = models.ImageField(upload_to="Gallery/", null=True,blank=True)
+    Gallery_Vedio = models.FileField(upload_to="Vedio/", null=True,blank=True)
+    Gallery_Dic = models.TextField(max_length=500)
 
     def __str__(self):
-        return f"{self.Grallery_Title}"
+        return f"{self.Gallery_Title}"

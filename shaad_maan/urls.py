@@ -54,6 +54,12 @@ urlpatterns = [
     path('print-programes/', views.Export_Programes, name="Export_Programes"),
 
 
+    # Test Paths 
+    # path('admin-test-dash/', views.Admin_TestBoard, name="Admin_TestBoard"),
+    path('wing-test-dash/', views.Wing_TestBoard, name="Wing_TestBoard"),
+    # path('stn-dir/', views.new_Student, name="new_Student"),
+    path('student-test-dash/', views.Student_TestBoard, name="Student_TestBoard"),
+
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

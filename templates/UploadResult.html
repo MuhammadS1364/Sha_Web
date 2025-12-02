@@ -175,6 +175,7 @@
                 <div class="form-group">
                     <label>First Holder</label>
                     <select name="Position_Holder1">
+                        <option value="" disabled selected>Select the Winner Name</option>
                         {% for candidate in all_Candidates %}
                         <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
@@ -182,8 +183,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Holder 1 Image (Optional)</label>
-                    {{ form.Position_Holder1_img }}
+                    <label>Grade (Optional)</label>
+                    <select name="Position_Holder1_Grade" id="">
+                        <option value="" disabled selected>Select Grade </option>
+                        <option value="A Grade">A Grade</option>
+                        <option value="B Grade">B Grade</option>
+                    </select>
                 </div>
             </div>
 
@@ -192,6 +197,8 @@
                 <div class="form-group">
                     <label>Second Holder</label>
                     <select name="Position_Holder2">
+                        <option value="" disabled selected>Select the Winner Name</option>
+
                         {% for candidate in all_Candidates %}
                         <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
@@ -199,8 +206,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Holder 2 Image (Optional)</label>
-                    {{ form.Position_Holder2_img }}
+                    <label>Grade (Optional)</label>
+                    <select name="Position_Holder2_Grade" id="">
+                        <option value="" disabled selected>Select Grade </option>
+                        <option value="A Grade">A Grade</option>
+                        <option value="B Grade">B Grade</option>
+                    </select>
                 </div>
             </div>
 
@@ -209,6 +220,7 @@
                 <div class="form-group">
                     <label>Third Holder</label>
                     <select name="Position_Holder3">
+                        <option value="" disabled selected>Select the Winner Name</option>
                         {% for candidate in all_Candidates %}
                         <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
                         {% endfor %}
@@ -216,8 +228,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Holder 3 Image (Optional)</label>
-                    {{ form.Position_Holder3_img }}
+                    <label>Grade (Optional)</label>
+                    <select name="Position_Holder3_Grade" id="">
+                        <option value="" disabled selected>Select Grade</option>
+                        <option value="A Grade">A Grade</option>
+                        <option value="B Grade">B Grade</option>
+                    </select>
                 </div>
             </div>
 
@@ -226,6 +242,7 @@
                 <div class="form-group">
                     <label>Grade Holder Name (Optional)</label>
                     <select name="Grande_Holder">
+
                         <option value="" disabled selected>Grade Student</option>
                         {% for candidate in all_Candidates %}
                         <option value="{{ candidate.id }}">{{ candidate.Candidates_Name }}</option>
@@ -244,11 +261,6 @@
             </div>
 
             <div class="row" style="margin-bottom: 20px;">
-
-                <div class="form-group">
-                    <label>Program Banner</label>
-                    {{ form.Result_Baner }}
-                </div>
                 <div class="form-group">
                     <label for="">Back to Dashboard</label>
                     <a href="{% url 'Wing_DashBoard' %}" class="back-btn">

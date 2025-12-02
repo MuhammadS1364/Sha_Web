@@ -11,15 +11,16 @@ from wing_panel.models import *
 # Wing programe registration Model
 class Program_Bank(models.Model):
    Program_Created = models.ForeignKey(Wing_Model, on_delete=models.CASCADE)
+   Program_Code = models.CharField(max_length=100)
    Program_name = models.CharField(max_length=200)
    Program_Venue = models.CharField(max_length=250)
    Program_date = models.DateField(default=timezone.now)
    Program_poster = models.ImageField(upload_to="Programs/", blank=True, null=True)
 
-   Tatal_Registrations = models.IntegerField(default=0, blank=True, null=True)
+   Tatal_Registrations = models.IntegerField(default=0)
     # Program Status
-   is_Registration = models.BooleanField(default=True, blank=True, null=True)
-   is_Resulted = models.BooleanField(default=False, blank=True, null=True)            
+   is_Registration = models.BooleanField(default=True )
+   is_Resulted = models.BooleanField(default=False)            
 
 
    def __str__(self):
@@ -47,7 +48,8 @@ class Result_Bank_Model(models.Model):
         blank=True,
         null=True
         )   
-    Position_Holder1_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+    Position_Holder1_Grade = models.CharField(max_length=250, default="No Grade", null=True, blank=True)
+    Position_Holder1_Mark = models.IntegerField( default=0)
 
     Position_Holder2 = models.ForeignKey(
         Candidates_Registration_Model,
@@ -56,7 +58,8 @@ class Result_Bank_Model(models.Model):
         blank=True,
         null=True
         )
-    Position_Holder2_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+    Position_Holder2_Grade = models.CharField(max_length=250,default="No Grade", null=True, blank=True)
+    Position_Holder2_Mark = models.IntegerField(default=0)
 
 
     Position_Holder3 = models.ForeignKey(
@@ -67,11 +70,17 @@ class Result_Bank_Model(models.Model):
         null=True
         )
 
-    Position_Holder3_img = models.ImageField(upload_to="Resulted_img/", blank=True, null=True)
+    Position_Holder3_Grade = models.CharField(max_length=250,default="No Grade", null=True, blank=True)
+    Position_Holder3_Mark = models.IntegerField(default= 0)
 
-    Grande_Holder = models.ForeignKey(Candidates_Registration_Model,blank=True, null=True, on_delete=models.CASCADE, related_name="Grande_Holder")
-    Secure_Grade = models.CharField(blank=True,null=True, default='No Grade')
-    Result_Baner = models.FileField(upload_to="Results/", blank=True, null=True)
+    Grande_Holder = models.ForeignKey(
+        Candidates_Registration_Model,
+        blank=True, null=True,
+        on_delete=models.CASCADE, 
+        related_name="Grande_Holder"
+        )
+    Secure_Grade = models.CharField(default='No Grade',max_length=250)
+    Grande_Holder_Mark = models.IntegerField(default= 0)
 
     def __str__(self):
         return f"Result for {self.Result_Programe}"

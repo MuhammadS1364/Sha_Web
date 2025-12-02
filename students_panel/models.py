@@ -26,7 +26,7 @@ class OutReach_Model(models.Model):
 
 # Outreach Programes Model
 
-class Achievements_Model(models.Model):
+class Ajnumame_Huda_Model(models.Model):
     Achiever = models.ForeignKey(
         Student_Model,
         on_delete=models.CASCADE
@@ -39,7 +39,7 @@ class Achievements_Model(models.Model):
     achieveMent_discription = models.TextField(max_length=600)
 
     # Total Achiever Status 
-    Total_Achievements = models.IntegerField(default=0, null=True,blank=True)
+    Total_Achievements = models.IntegerField(default=0)
     
     def __str__(self):
         return f"{self.Achiever} {self.achieved_Title} {self.achiever_Result}"

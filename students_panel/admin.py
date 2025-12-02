@@ -12,4 +12,4 @@ admin.site.register(OutReach_Model, OutReach_Admin)
 class Achievements_Admin(admin.ModelAdmin):
     list_display = ["Achiever","achieved_Title","achiever_Result","achieveMent_Conductor","Total_Achievements"]
 
-admin.site.register(Achievements_Model)
+admin.site.register(Ajnumame_Huda_Model, Achievements_Admin)
