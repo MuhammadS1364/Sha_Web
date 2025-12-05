@@ -736,7 +736,7 @@
             <div class="menu-item">
                 <i class="fas fa-cog"></i>
                 <span>
-                    <a href="" class="btn btn-danger">
+                    <a href="#" class="btn btn-danger">
                         <i class="fas fa-sign-out-alt"></i> Log Out
                     </a>
                 </span>
@@ -817,6 +817,90 @@
             </a>
         </div>
 
+        <!-- Action Cards -->
+        <!-- <div class="action-cards">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Programme Registry</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h4 class="card-title">Register New Programmes</h4>
+                    <p class="card-text">Create and manage new programmes with detailed information including schedules,
+                        participants, and resources.</p>
+                    <button class="btn">Register Programme</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Results Publishing</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h4 class="card-title">Publish & Manage Results</h4>
+                    <p class="card-text">Publish programme results, manage visibility, and export data for reporting and
+                        analysis purposes.</p>
+                    <button class="btn btn-warning">Publish Results</button>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Programs Information -->
+        <!-- <section id="All_Programes">
+            <div class="programs-card">
+                <div class="programs-header">
+                    <h2><i class="fas fa-calendar-check"></i>All Programs</h2>
+                    <span class="badge badge-primary">5 Programs</span>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Registrations</th>
+                                <th>Name</th>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Logo</th>
+                                <th>Registration</th>
+                                <th>Publish Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>120</td>
+                                <td>Annual Sports Day</td>
+                                <td>Main Stadium</td>
+                                <td>2023-10-15</td>
+                                <td><span class="badge badge-success">Published</span></td>
+                                <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
+                                <td><a href="#"><span class="badge badge-success">Registration On</span></a></td>
+                                <td><a href="#" class="btn btn-secondary btn-sm"><i class="fas fa-eye"></i> View
+                                        Results</a></td>
+                            </tr>
+                            <tr>
+                                <td>85</td>
+                                <td>Science Exhibition</td>
+                                <td>Science Block</td>
+                                <td>2023-11-05</td>
+                                <td><span class="badge badge-warning">Active</span></td>
+                                <td><img class="logo" src="https://via.placeholder.com/40" alt="Program Poster"></td>
+                                <td><a href="#"><span class="badge badge-warning">Registration Off</span></a></td>
+                                <td><a href="#" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Upload
+                                        Result</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+
+
+        <!-- </section> -->
 
         <section id="Registered_Programe_List">
             <!-- Programs Information -->
@@ -888,13 +972,9 @@
                             {% endfor %}
                             {% else %}
                             <tr>
-
-                                <div>
-                                    <a href="{% url 'Add_Programes' %}" class="btn btn-secondary">
-                                        <i class="fas fa-plus-circle"></i> Register Program
-                                    </a>
-                                    <p>No program information available.</p>
-                                </div>
+                                <td colspan="6" style="text-align: center; color: var(--gray);">
+                                    No program information available. ye
+                                </td>
                             </tr>
                             {% endif %}
                         </tbody>

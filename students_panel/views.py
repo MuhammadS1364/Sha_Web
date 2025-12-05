@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 
 # Import All the Forms and Models
 from admin_panel.models import *
+from wing_panel.models import *
+from students_panel.models import *
 from .models import *
 from .forms import *
 
@@ -176,3 +178,28 @@ def OutReach_List (request):
     return render (request, "outreach_list.html", {"OutReach" : All_OutReach})
 
 
+
+
+# Edite OutReach programe
+
+def EditeOutReach(request, programe_id):
+
+    if request.method == 'POST':
+
+        act_student = Student_Model.objects.get(user_Stn = request.user)
+        to_Edite = OutReach_Model.objects.get(id = programe_id)
+
+        # form for editing Outreach Programe
+
+        form = OutReach_Form(request.POST, request.FILES)
+
+
+    else:
+        form = OutReach_Form()
+    
+
+    
+         
+        
+
+        

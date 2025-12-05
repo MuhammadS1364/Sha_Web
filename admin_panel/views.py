@@ -276,7 +276,7 @@ def Wing_DashBoard(request):
         "all_Programe" : all_Programe,
         "all_Resulted_Programes" : all_Resulted_Programes
     }
-    return render(request, "wing_dashboard.html", context)
+    return render(request, "panel && board/wings_manage.html", context)
 
 
 from django.db.models import Q
