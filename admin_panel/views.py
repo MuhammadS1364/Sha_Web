@@ -383,6 +383,7 @@ def export_result_excel(request):
         "Uploaded By",
         "Program",
         "1st Position",
+        "grade"
         "2nd Position",
         "3rd Position",
         "Grande Holder",
@@ -447,7 +448,7 @@ def Export_Programes(request):
     workSheet.title = "All_Programes"
 
     # ---- HEADER ROW ----
-    headers = ["ID", "WING NAME", "PROGRAME NAME", "PROGRAME VENUE", "PROGRAME DATE", "TOTAL REGISTRATIONS"]
+    headers = ["Programe ID", "WING NAME", "PROGRAME NAME", "PROGRAME VENUE", "PROGRAME DATE", "TOTAL REGISTRATIONS"]
 
     # append to workSheet 
 
