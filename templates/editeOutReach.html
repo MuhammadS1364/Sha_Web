@@ -5,92 +5,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add OutReach | {{request.user}}</title>
+<style>
+    /* ---------------------------------------
+   GLOBAL STYLING
+--------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    <style>
-        body {
-            font-family: "Poppins", sans-serif;
-            background: #f3f4f6;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+:root {
+    --primary: #4F46E5;
+    --primary-light: #7C74FF;
+    --gradient: linear-gradient(135deg, #4F46E5, #6A5AF9);
+    --bg: #f4f7ff;
+    --white: #ffffff;
+    --dark: #1f1f2e;
+    --shadow-1: 0px 8px 22px rgba(79, 70, 229, 0.15);
+    --shadow-soft: 0px 4px 16px rgba(0,0,0,0.08);
+    --radius: 14px;
+}
 
-        .container {
-            background: #fff;
-            width: 95%;
-            max-width: 650px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+}
 
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 26px;
-        }
+/* ---------------------------------------
+   CONTAINER
+--------------------------------------- */
+.container {
+    max-width: 580px;
+    margin: 50px auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+}
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+.container::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: var(--gradient);
+    filter: blur(90px);
+    opacity: 0.25;
+    top: -40px;
+    right: -40px;
+    z-index: -1;
+}
 
-        label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            display: block;
-            color: #444;
-        }
+.container h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        input[type="text"],
-        input[type="email"],
-        input[type="date"],
-        input[type="file"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.3s;
-        }
+/* ---------------------------------------
+   FORM INPUT WRAPPER
+--------------------------------------- */
+.form-group {
+    margin-bottom: 22px;
+    position: relative;
+}
 
-        input:focus,
-        select:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
-            outline: none;
-        }
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b4b5a;
+    display: block;
+    margin-bottom: 6px;
+}
 
-        .row {
-            display: flex;
-            gap: 15px;
-        }
+/* ---------------------------------------
+   FORM INPUTS
+--------------------------------------- */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 14px 14px;
+    border-radius: 10px;
+    border: 1.5px solid #d6d6e7;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+    background: #f8f9ff;
+}
 
-        .row .form-group {
-            flex: 1;
-        }
+/* Floating effect on focus */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary);
+    background: #ffffff;
+    box-shadow: 0px 0px 0px 4px rgba(79, 70, 229, 0.10);
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #4a90e2;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: 0.3s;
-        }
+/* ---------------------------------------
+   UPLOADED POSTER IMAGE PREVIEW
+--------------------------------------- */
+.form-group img {
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+}
 
-        button:hover {
-            background: #357abd;
-        }
-    </style>
+/* ---------------------------------------
+   BUTTON
+--------------------------------------- */
+.btn-success {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--gradient);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+    box-shadow: var(--shadow-1);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 12px 28px rgba(79, 70, 229, 0.32);
+}
+
+.btn-success:active {
+    transform: scale(0.97);
+}
+
+/* ---------------------------------------
+   ERROR MESSAGE STYLING
+--------------------------------------- */
+.radio-option {
+    background: #ffefef;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #c0392b;
+    font-weight: 500;
+}
+
+/* ---------------------------------------
+   BACK LINK
+--------------------------------------- */
+.container a {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.container a:hover {
+    color: #3b37c7;
+    text-decoration: underline;
+}
+
+/* ---------------------------------------
+   RESPONSIVE DESIGN
+--------------------------------------- */
+@media (max-width: 768px) {
+    .container {
+        margin: 25px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    .btn-success {
+        font-size: 15px;
+        padding: 12px;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -113,7 +219,8 @@
 
     <div class="form-group">
         <label for="id_OutReach_Programe_name">Program Name:</label>
-        {{ form.OutReach_Programe_name }}
+        <!-- {{ form.OutReach_Programe_name }} -->
+          <input type="text" value="{{all_OutReact.OutReach_Programe_name}}" id="" readonly>
     </div>
 
     <div class="form-group">
@@ -135,8 +242,14 @@
     </div>
 
     <div class="form-group">
-        <label for="id_OutReach_result">Result:</label>
-        {{ form.OutReach_result }}
+        <label for="">Result:</label>
+        <select name="OutReach_result" id="">
+            <option value="" disabled selected>Select Position</option>
+            <option value="First">First</option>
+            <option value="Second">Second</option>
+            <option value="Third">Third</option>
+        </select>
+        <!-- {{form.OutReach_result}} -->
     </div>
 
     <div class="form-group">

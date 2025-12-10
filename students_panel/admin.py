@@ -6,10 +6,10 @@ from .forms import *
 
 
 class OutReach_Admin(admin.ModelAdmin):
-    list_display = ["student_name","OutReach_Programe_name","OutReach_result","OutReach_Conductor",]
+    list_display = ["student_name","OutReach_Programe_name","OutReach_result","OutReach_Conductor","Point_ForThis"]
 admin.site.register(OutReach_Model, OutReach_Admin)
 
 class Achievements_Admin(admin.ModelAdmin):
-    list_display = ["Achiever","achieved_Title","achiever_Result","achieveMent_Conductor","Total_Achievements"]
+    list_display = ["Achiever","achieved_Title","achiever_Result","achieveMent_Conductor","Point_ForThis"]
 
 admin.site.register(Ajnumame_Huda_Model, Achievements_Admin)

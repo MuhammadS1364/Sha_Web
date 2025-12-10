@@ -184,28 +184,68 @@ def EditeOutReach(request, programe_id):
    
     to_Edite = OutReach_Model.objects.get(id = programe_id)
     act_student = Student_Model.objects.get(user_Stn = request.user)
+
+    # Before Point for this Object 
+    Pre_Point = to_Edite.Point_ForThis
+
     if request.method == 'POST':
 
 
         # form for editing Outreach Programe
 
-        form = OutReach_Form(request.POST, request.FILES,instance=to_Edite)
-
+        form = Edite_OutReach(request.POST, request.FILES,instance=to_Edite)
+        OutReach_result = request.POST.get("OutReach_result")
+        
         if form.is_valid():
             edited_OutReach = form.save(commit=False)
-            edited_OutReach.student_name = act_student
+
+            # Position Changing, Points changes
+
+
+            # if he have change in Position 
+            if OutReach_result == 'First':
+                act_student.Total_OutReachPoints += 10
+                act_student.Tatal_Points += 10
+                act_student.save()
+
+            elif OutReach_result == 'Second':
+                act_student.Total_OutReachPoints += 7
+                act_student.Tatal_Points += 7
+                act_student.save()
+
+            elif OutReach_result == 'Third':
+                act_student.Total_OutReachPoints += 5
+                act_student.Tatal_Points += 5
+                act_student.save()
+
+            else:
+                act_student.Total_OutReachPoints = Pre_Point
+                act_student.Tatal_Points = Pre_Point
+                act_student.save()
+
             edited_OutReach.save()
             return redirect("Student_DashBoard")
 
     else:
-        form = OutReach_Form(instance=to_Edite)
+        form = Edite_OutReach(instance=to_Edite)
     
     return render(request, 'editeOutReach.html', {
         "form" : form,
         "all_OutReact" : to_Edite
     })
     
-         
+
+    # to delect OutReach 
+
+def DeleteOutReach(request, programe_id):
+    programe = OutReach_Model.objects.get(id=programe_id)
+
+    Point_Programe = programe.Point_ForThis
+
+    print(f"it has :  {Point_Programe}")
+
+    return HttpResponse(f"it has {Point_Programe} or Zero , <a href = '/'>Back</a>")
+
         
 
         

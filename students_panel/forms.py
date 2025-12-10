@@ -11,7 +11,7 @@ class OutReach_Form (forms.ModelForm):
     class Meta:
         model = OutReach_Model
         # fields = "__all__"
-        exclude = ["student_name"]
+        exclude = ["student_name", "Point_ForThis"]
         widgets = {
             "OutReach_date" : forms.DateInput(attrs={
                 "type" : "date"
@@ -41,6 +41,24 @@ class Ajnumame_Huda_Form (forms.ModelForm):
                 'class': 'form-control',
             }),
             "achieveMent_discription": forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+            }),
+        }
+
+
+class Edite_OutReach(forms.ModelForm):
+    class Meta:
+        model = OutReach_Model
+        exclude = ["student_name","OutReach_Programe_name", "Point_ForThis"]
+        widgets = {
+            "OutReach_date" : forms.DateInput(attrs={
+                "type" : "date"
+            }),
+            "OutReach_poster": forms.ClearableFileInput(attrs={
+                'class': 'file-input',
+            }),
+            "OutReach_discription": forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 3,
             }),
