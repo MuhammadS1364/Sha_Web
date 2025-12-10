@@ -57,7 +57,6 @@ def add_OutReach(request):
             newOutReach_Obj = new_Objt.save(commit=False)
 
             newOutReach_Obj.student_name = student_Obj
-            newOutReach_Obj.save()
 
 
             # Updating total OutReach in Student_Model
@@ -67,18 +66,22 @@ def add_OutReach(request):
             if outReach_Position == 'First':
                 student_Obj.Total_OutReachPoints += 10
                 student_Obj.Tatal_Points += 10
+                newOutReach_Obj.Point_ForThis += 10
                 student_Obj.save()
 
             elif outReach_Position == 'Second':
                 student_Obj.Total_OutReachPoints += 7
                 student_Obj.Tatal_Points += 7
+                newOutReach_Obj.Point_ForThis += 7
                 student_Obj.save()
 
             else:
                 student_Obj.Total_OutReachPoints += 5
                 student_Obj.Tatal_Points += 5
+                newOutReach_Obj.Point_ForThis += 5
                 student_Obj.save()
 
+            newOutReach_Obj.save()
             
             student_Obj.save()
             print(f"Your total Outreach Point is: {student_Obj.Total_OutReachPoints} and total outReach Progrem is : {student_Obj.Total_OutReachs}")
@@ -138,12 +141,10 @@ def add_AchieveMents(request):
             newAchieve_Obj = new_Objt.save(commit=False)
 
             newAchieve_Obj.Achiever = student_Obj
-            newAchieve_Obj.save()
 
             # Updating total Achievements in Student_Model
             student_Obj.Total_Anjuman_e_Huda += 1
 
-            print(f"poisition is {request.POST.get("achiever_Result")}")
             # Points Format for position
             if newAchieve_Obj.achiever_Result == 'First':
                 points = 10
@@ -152,16 +153,21 @@ def add_AchieveMents(request):
             else:
                 points = 4
             
-
+                
+            newAchieve_Obj.Point_ForThis += points
             student_Obj.Tatal_Points += points
             student_Obj.Total_AnjumanHudaPoints += points
-        
+
+
+            newAchieve_Obj.save()
             student_Obj.save()
 
 
             return redirect("Student_DashBoard")
         else:
             return HttpResponse("Achievement Programe Not add, Validation Error .......")
+
+            
     else:
         new_Objt = Ajnumame_Huda_Form()
 
@@ -195,35 +201,43 @@ def EditeOutReach(request, programe_id):
 
         form = Edite_OutReach(request.POST, request.FILES,instance=to_Edite)
         OutReach_result = request.POST.get("OutReach_result")
-        
+
         if form.is_valid():
             edited_OutReach = form.save(commit=False)
 
             # Position Changing, Points changes
-
+            print(f"the ponti was is : {Pre_Point}")
+            to_Edite.Point_ForThis -= Pre_Point
+            act_student.Tatal_Points -= Pre_Point 
+            act_student.Total_OutReachPoints -= Pre_Point
 
             # if he have change in Position 
             if OutReach_result == 'First':
                 act_student.Total_OutReachPoints += 10
                 act_student.Tatal_Points += 10
+                to_Edite.Point_ForThis += 10
                 act_student.save()
 
             elif OutReach_result == 'Second':
                 act_student.Total_OutReachPoints += 7
                 act_student.Tatal_Points += 7
+                to_Edite.Point_ForThis += 7
                 act_student.save()
 
             elif OutReach_result == 'Third':
                 act_student.Total_OutReachPoints += 5
                 act_student.Tatal_Points += 5
+                to_Edite.Point_ForThis += 5
                 act_student.save()
 
             else:
                 act_student.Total_OutReachPoints = Pre_Point
                 act_student.Tatal_Points = Pre_Point
+                to_Edite.Point_ForThis = Pre_Point 
                 act_student.save()
 
             edited_OutReach.save()
+            print(f"After edited {edited_OutReach.Point_ForThis}")
             return redirect("Student_DashBoard")
 
     else:
@@ -235,16 +249,58 @@ def EditeOutReach(request, programe_id):
     })
     
 
+
+
     # to delect OutReach 
 
 def DeleteOutReach(request, programe_id):
-    programe = OutReach_Model.objects.get(id=programe_id)
+    toDel_Programe = OutReach_Model.objects.get(id=programe_id)
+    theStudent = Student_Model.objects.get(user_Stn = request.user)
 
-    Point_Programe = programe.Point_ForThis
+    Point_Programe = toDel_Programe.Point_ForThis
 
-    print(f"it has :  {Point_Programe}")
+    # subtract the uploaded markin model 
+    theStudent.Total_OutReachPoints -= Point_Programe
+    theStudent.Tatal_Points -= Point_Programe
+    theStudent.Total_OutReachs -= 1 
+    theStudent.save()
 
-    return HttpResponse(f"it has {Point_Programe} or Zero , <a href = '/'>Back</a>")
+    toDel_Programe.delete()
+    
+
+    messages.success(request, "Your OutReach Info Deleted........")
+    return redirect("Student_DashBoard")
+
+        
+
+
+def EditeAchievements(request,programe_id):
+    form = Ajnumame_Huda_Form()
+    return render(request, "addAchieve.html", {"form":form})
+
+
+
+
+
+def DeleteAchievements(request, programe_id):
+    toDel_Achieve = Ajnumame_Huda_Model.objects.get(id = programe_id)
+    theStudent = Student_Model.objects.get(user_Stn = request.user)
+
+    Point_Programe = toDel_Achieve.Point_ForThis
+
+    print(f"achievement point is: {Point_Programe}")
+    # subtract the uploaded markin model 
+    theStudent.Total_AnjumanHudaPoints -= Point_Programe
+    theStudent.Tatal_Points -= Point_Programe
+    theStudent.Total_Anjuman_e_Huda -= 1 
+
+
+    theStudent.save()
+    toDel_Achieve.delete()
+    
+
+    messages.success(request, "Your Achievement Info Deleted........")
+    return redirect("Student_DashBoard")
 
         
 

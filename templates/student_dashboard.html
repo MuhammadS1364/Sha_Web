@@ -616,6 +616,9 @@
 
     <div class="card-container">
 
+
+      <!-- it is the OutReach Box -->
+
       {% if all_OutReach %}
       {% for item in all_OutReach %}
       <div class="card outreach">
@@ -634,7 +637,7 @@
 
         <div class="sub">
           <i class="fas fa-user-tie"></i>
-          <span class="label">Conducted By:</span>
+          <span class="label">Conductor:</span>
           {{ item.OutReach_Conductor }}
         </div>
 
@@ -664,6 +667,7 @@
         </div>
       </div>
       {% endfor %}
+      
       {% else %}
       <div class="empty-state">
         <i class="fas fa-inbox"></i>
@@ -671,6 +675,68 @@
         <p>You haven't added any outreach activities yet.</p>
         <a href="{% url 'add_OutReach' %}" class="links" style="margin-top: 15px; display: inline-block;">
           <i class="fas fa-plus-circle"></i> Add Your First Outreach
+        </a>
+      </div>
+      {% endif %}
+      <!-- it is the OutReach Box -->
+
+
+      {% if all_Achievements %}
+      {% for Achieve in all_Achievements %}
+      <div class="card outreach">
+
+        {% if Achieve.achieveMent_poster %}
+        <img src="{{ Achieve.achieveMent_poster.url }}" alt="{{ Achieve.achieved_Title }}">
+        {% endif %}
+
+        <div class="title">{{ Achieve.achieved_Title }}</div>
+
+        <div class="sub">
+          <i class="fas fa-chart-line"></i>
+          <span class="label">Result:</span>
+          {{ Achieve.achiever_Result }}
+        </div>
+
+        <div class="sub">
+          <i class="fas fa-user-tie"></i>
+          <span class="label">Conductor:</span>
+          {{ Achieve.achieveMent_Conductor }}
+        </div>
+
+        <div class="date">
+          <i class="far fa-calendar-alt"></i> {{ Achieve.achieveMent_date }}
+        </div>
+
+        <div class="desc">{{ Achieve.achieveMent_discription|truncatewords:25 }}</div>
+
+        <div class="row">
+
+          <div class="edite-programe">
+            <a href="{% url 'EditeAchievements' Achieve.id  %}">
+              <i class="fas fa-edite"></i>
+              
+              <span class="badge badge-primary">Edite Achievement</span>
+            </a>
+          </div>
+
+          <div class="delete-programe">
+            <a href="{% url 'DeleteAchievements' Achieve.id %}">
+              <i class="fas fa-delete"></i>
+              <span class="badge badge-primary">Delete Achievement</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-trophy"></i>
+        <h3>No Achievements Yet</h3>
+        <p>You haven't added any achievements yet.</p>
+        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
+          <i class="fas fa-plus-circle"></i> Add Your First Achievement
         </a>
       </div>
       {% endif %}
@@ -737,14 +803,7 @@
       <!-- result section  -->
 
       {% if not all_Achievements and not all_OutReach %}
-      <div class="empty-state">
-        <i class="fas fa-trophy"></i>
-        <h3>No Achievements Yet</h3>
-        <p>You haven't added any achievements yet.</p>
-        <a href="{% url 'add_AchieveMents' %}" class="links" style="margin-top: 15px; display: inline-block;">
-          <i class="fas fa-plus-circle"></i> Add Your First Achievement
-        </a>
-      </div>
+      
       {% endif %}
 
     </div>

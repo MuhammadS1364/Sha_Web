@@ -31,7 +31,7 @@ class Ajnumame_Huda_Form (forms.ModelForm):
     class Meta:
         model = Ajnumame_Huda_Model
         # fields = "__all__"
-        exclude = ["Achiever","Total_Achievements"]
+        exclude = ["Achiever","Point_ForThis"]
         widgets = {
              "achieveMent_date": forms.DateInput(attrs={
                 "type": "date",

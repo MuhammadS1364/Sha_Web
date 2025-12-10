@@ -7,6 +7,12 @@ urlpatterns = [
     path('addOutReach/', views.add_OutReach, name="add_OutReach"),
     path('outReach-view/', views.OutReach_List, name="OutReach_List"),
     path('achieve-ment-view/', views.add_AchieveMents, name="add_AchieveMents"),
+
+    
     path('edite-outreach/<int:programe_id>', views.EditeOutReach, name="EditeOutReach"),
     path('delete-outreach/<int:programe_id>', views.DeleteOutReach, name="DeleteOutReach"),
+
+
+    path('edite-outreach/<int:programe_id>', views.EditeAchievements, name="EditeAchievements"),
+    path('delete-achievement/<int:programe_id>', views.DeleteAchievements, name="DeleteAchievements"),
 ]
