@@ -178,26 +178,32 @@ def OutReach_List (request):
     return render (request, "outreach_list.html", {"OutReach" : All_OutReach})
 
 
-
-
 # Edite OutReach programe
 
 def EditeOutReach(request, programe_id):
-
+   
+    to_Edite = OutReach_Model.objects.get(id = programe_id)
+    act_student = Student_Model.objects.get(user_Stn = request.user)
     if request.method == 'POST':
 
-        act_student = Student_Model.objects.get(user_Stn = request.user)
-        to_Edite = OutReach_Model.objects.get(id = programe_id)
 
         # form for editing Outreach Programe
 
-        form = OutReach_Form(request.POST, request.FILES)
+        form = OutReach_Form(request.POST, request.FILES,instance=to_Edite)
 
+        if form.is_valid():
+            edited_OutReach = form.save(commit=False)
+            edited_OutReach.student_name = act_student
+            edited_OutReach.save()
+            return redirect("Student_DashBoard")
 
     else:
-        form = OutReach_Form()
+        form = OutReach_Form(instance=to_Edite)
     
-
+    return render(request, 'editeOutReach.html', {
+        "form" : form,
+        "all_OutReact" : to_Edite
+    })
     
          
         

@@ -117,17 +117,39 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# # Static files (CSS, JavaScript, Images)
+# # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'main_static')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'main_static'),
+# ]
+
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# # Media files settings
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'man_media')
+
+# STATIC FILES
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'main_static')
+
+# For Development: this is where CSS/JS/Images live
+STATICFILES_DIRS = [
+    BASE_DIR / 'main_static',
+]
+
+# For Production: collectstatic output folder
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Whitenoise for production
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files settings
+
+# MEDIA FILES (User uploads)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'man_media')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
