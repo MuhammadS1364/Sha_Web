@@ -887,6 +887,7 @@
                         <th>Wing Email</th>
                         <th>ChairPerson</th>
                         <th>Assistant</th>
+                        <!-- <th>something</th> -->
                         <th>Logo</th>
                     </tr>
                 </thead>
@@ -895,15 +896,14 @@
                     {% if not all_Wings == None%}
                     {% for wing in all_Wings %}
                     <tr>
-                        <td>{{student.wing_user}}</td>
-                        <td>{{student.Wing_Code}}</td>
-                        <td>{{student.Wing_Name}}</td>
-                        <td>{{student.wing_user.email}}</td>
-                        <td>{{student.Chair_Person}}</td>
-                        <td>{{student.Assist_Person}}td>
-                        <td>{{student.wing_user}}td>
+                        <td>{{wing.wing_user}}</td>
+                        <td>{{wing.Wing_Code}}</td>
+                        <td>{{wing.Wing_Name}}</td>
+                        <td>{{wing.wing_user.email}}</td>
+                        <td>{{wing.Chair_Person}}</td>
+                        <td>{{wing.Assist_Person}}</tr>
                         <td>
-                            <img class="logo" src="{{student.wing_logo.url}}" alt="wing_logo">
+                            <img class="logo" src="{{wing.wing_logo.url}}" alt="wing_logo">
                         </td>
                     </tr>
                         <!-- end for loop  -->
@@ -988,17 +988,36 @@
                         <th>Date</th>
                         <th>Description</th>
                         <th>Poster</th>
-                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Django will populate data here -->
+                    {% if not all_OutReachs == None%}
+                    {% for OutReach in all_OutReachs %}
                     <tr>
-                        <td colspan="8" class="empty-table">
-                            <i class="fas fa-hands-helping"></i>
-                            <p>No outreach activities recorded yet.</p>
+                        <td>{{OutReach.student_name}}</td>
+                        <td>{{OutReach.OutReach_Programe_name}}</td>
+                        <td>{{OutReach.OutReach_result}}</td>
+                        <td>{{OutReach.OutReach_Conductor}}</td>
+                        <td>{{OutReach.OutReach_date}}</td>
+                        <td>{{OutReach.OutReach_discription}}</td>
+                       
+                        <td>
+                            <img class="logo" src="{{OutReach.OutReach_poster.url}}" alt="Student_Img">
                         </td>
                     </tr>
+                        <!-- end for loop  -->
+                        {% endfor %}
+
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="empty-table">
+                                <i class="fas fa-users"></i>
+                                <p>No wings registered yet.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    
                 </tbody>
             </table>
         </div>
@@ -1018,17 +1037,37 @@
                         <th>Date</th>
                         <th>Description</th>
                         <th>Poster</th>
-                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
+                    
                     <!-- Django will populate data here -->
+                    {% if not all_Achievements == None%}
+                    {% for Achieve in all_Achievements %}
                     <tr>
-                        <td colspan="8" class="empty-table">
-                            <i class="fas fa-trophy"></i>
-                            <p>No achievements recorded yet.</p>
+                        <td>{{Achieve.Achiever}}</td>
+                        <td>{{Achieve.achieved_Title}}</td>
+                        <td>{{Achieve.achiever_Result}}</td>
+                        <td>{{Achieve.achieveMent_Conductor}}</td>
+                        <td>{{Achieve.achieveMent_date}}</td>
+                        <td>{{Achieve.achieveMent_discription}}</td>
+
+                        <td>
+                            <img class="logo" src="{{Achieve.achieveMent_poster.url}}" alt="Student_Img">
                         </td>
                     </tr>
+                        <!-- end for loop  -->
+                        {% endfor %}
+
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="empty-table">
+                                <i class="fas fa-users"></i>
+                                <p>No wings registered yet.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    
                 </tbody>
             </table>
         </div>
