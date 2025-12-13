@@ -46,6 +46,26 @@ class Ajnumame_Huda_Form (forms.ModelForm):
             }),
         }
 
+# Edite Achievements Programes Form
+class Edite_Achieve_Form (forms.ModelForm):
+    class Meta:
+        model = Ajnumame_Huda_Model
+        # fields = "__all__"
+        exclude = ["Achiever","Point_ForThis", "achieved_Title"]
+        widgets = {
+             "achieveMent_date": forms.DateInput(attrs={
+                "type": "date",
+                "class": "form-control"
+            }),
+             "achieveMent_poster": forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+            }),
+            "achieveMent_discription": forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+            }),
+        }
+
 
 class Edite_OutReach(forms.ModelForm):
     class Meta:

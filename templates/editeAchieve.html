@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add OutReach | {{request.user}}</title>
+    <title>Edite Achievement | {{request.user}}</title>
 <style>
     /* ---------------------------------------
    GLOBAL STYLING
@@ -202,7 +202,7 @@ body {
 <body>
 
     <div class="container">
-        <h2>Edite Your OutReach</h2>
+           <h2>Edite Your Achievement</h2>
         {% if messages %}
         {% for msg in messages %}
         <div class="radio-option">
@@ -220,41 +220,41 @@ body {
     <div class="form-group">
         <label for="id_OutReach_Programe_name">Program Name:</label>
         <!-- {{ form.OutReach_Programe_name }} -->
-          <input type="text" value="{{all_OutReact.OutReach_Programe_name}}" id="" readonly>
+          <input type="text" value="{{toEditeAchieve.achieved_Title}}" id="" readonly>
     </div>
 
     <div class="form-group">
-        <label for="id_OutReach_discription">Description:</label>
-        {{ form.OutReach_discription }}
+        <label for="id_achieveMent_discription">Description:</label>
+        {{ form.achieveMent_discription }}
     </div>
 
     <div class="form-group">
-        <label for="id_OutReach_date">Date:</label>
-        {{ form.OutReach_date }}
+        <label for="id_achieveMent_date">Date:</label>
+        {{ form.achieveMent_date }}
     </div>
 
     <div class="form-group">
-        <label for="id_OutReach_poster">Poster:</label>
-        {{ form.OutReach_poster }}
-        {% if all_OutReact.OutReach_poster %}
-            <img src="{{ all_OutReact.OutReach_poster.url }}" alt="Poster" width="150">
+        <label for="id_achieveMent_poster">Poster:</label>
+        {{ form.achieveMent_poster }}
+        {% if toEditeAchieve.achieveMent_poster %}
+            <img src="{{ toEditeAchieve.achieveMent_poster.url }}" alt="Poster" width="150">
         {% endif %}
     </div>
 
     <div class="form-group">
         <label for="">Result:</label>
-        <select name="OutReach_result" id="">
+        <select name="achiever_Result" id="">
             <option value="" disabled selected>Select Position</option>
             <option value="First">First</option>
             <option value="Second">Second</option>
             <option value="Third">Third</option>
         </select>
-        <!-- {{form.OutReach_result}} -->
+        <!-- {{form.achiever_Result}} -->
     </div>
 
     <div class="form-group">
-        <label for="id_OutReach_Conductor">Conducted By:</label>
-        {{ form.OutReach_Conductor }}
+        <label for="id_achieveMent_Conductor">Conducted By:</label>
+        {{ form.achieveMent_Conductor }}
     </div>
 
     <button type="submit" class="btn btn-success">Save Changes</button>

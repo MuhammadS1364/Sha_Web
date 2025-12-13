@@ -13,6 +13,6 @@ urlpatterns = [
     path('delete-outreach/<int:programe_id>', views.DeleteOutReach, name="DeleteOutReach"),
 
 
-    path('edite-outreach/<int:programe_id>', views.EditeAchievements, name="EditeAchievements"),
+    path('edite-achievement/<int:programe_id>', views.EditeAchievements, name="EditeAchievements"),
     path('delete-achievement/<int:programe_id>', views.DeleteAchievements, name="DeleteAchievements"),
 ]

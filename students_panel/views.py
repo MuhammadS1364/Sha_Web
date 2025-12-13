@@ -206,7 +206,7 @@ def EditeOutReach(request, programe_id):
             edited_OutReach = form.save(commit=False)
 
             # Position Changing, Points changes
-            print(f"the ponti was is : {Pre_Point}")
+           
             to_Edite.Point_ForThis -= Pre_Point
             act_student.Tatal_Points -= Pre_Point 
             act_student.Total_OutReachPoints -= Pre_Point
@@ -275,11 +275,68 @@ def DeleteOutReach(request, programe_id):
 
 
 def EditeAchievements(request,programe_id):
-    form = Ajnumame_Huda_Form()
-    return render(request, "addAchieve.html", {"form":form})
+
+    toEditeAchieve = Ajnumame_Huda_Model.objects.get(id = programe_id)
+    theStudent = Student_Model.objects.get(user_Stn = request.user)
+    Pre_Point = toEditeAchieve.Point_ForThis
+
+    if request.method == 'POST':
+        form = Edite_Achieve_Form(request.POST, request.FILES , instance = toEditeAchieve )
+        changedResult = request.POST.get("achiever_Result")
+
+        if form.is_valid():
+            toEditeAchieve.Point_ForThis -= Pre_Point
+            theStudent.Tatal_Points -= Pre_Point 
+            theStudent.Total_OutReachPoints -= Pre_Point
+
+
+            editedAchievemt = form.save(commit=False)
+            # if he have change in Position 
+            if changedResult == 'First':
+                theStudent.Total_OutReachPoints += 10
+                theStudent.Tatal_Points += 10
+                toEditeAchieve.Point_ForThis += 10
+                theStudent.save()
+
+            elif changedResult == 'Second':
+                theStudent.Total_OutReachPoints += 7
+                theStudent.Tatal_Points += 7
+                toEditeAchieve.Point_ForThis += 7
+                theStudent.save()
+
+            elif changedResult == 'Third':
+                theStudent.Total_OutReachPoints += 5
+                theStudent.Tatal_Points += 5
+                toEditeAchieve.Point_ForThis += 5
+                theStudent.save()
+
+            else:
+                theStudent.Total_OutReachPoints = Pre_Point
+                theStudent.Tatal_Points = Pre_Point
+                toEditeAchieve.Point_ForThis = Pre_Point 
+                theStudent.save()
+
+            editedAchievemt.save()
+            print(f"After edited {editedAchievemt.Point_ForThis}")
 
 
 
+            return redirect("Student_DashBoard")
+        else:
+            messages.error(request, "Some Validation Error,.......")
+            return render(request, "editeAchieve.html", {
+                "toEditeAchieve" : toEditeAchieve,
+                "form" : form
+            })
+
+
+    else:
+        form = Edite_Achieve_Form(instance = toEditeAchieve)
+
+    return render(request, "editeAchieve.html", {
+        "toEditeAchieve" : toEditeAchieve,
+        "form" : form
+    })
 
 
 def DeleteAchievements(request, programe_id):

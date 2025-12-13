@@ -197,104 +197,223 @@
       border: 2px solid var(--light-gray);
     }
 
-    /* Card Styles */
-    .card-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
-    }
+    /* cards.css */
 
-    .card {
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--card-shadow);
-      padding: 20px;
-      overflow: hidden;
-      transition: var(--transition);
-      position: relative;
-      border-top: 4px solid var(--primary);
-    }
+/* Card container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
 
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--hover-shadow);
-    }
+/* Card style */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  border-top: 4px solid #4361ee; /* default primary color */
+}
 
-    .card.achievement {
-      border-top-color: var(--success);
-    }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
 
-    .card.outreach {
-      border-top-color: var(--warning);
-    }
+/* Achievement and Outreach cards different border colors */
+.card .achievement {
+  border-top-color: #4cc9f0; /* success */
+}
 
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
+.card .outreach {
+  border-top-color: #f8961e; /* warning */
+}
 
-    .title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--dark);
-      line-height: 1.3;
-    }
+/* Card image */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
 
-    .sub {
-      font-size: 0.95rem;
-      color: var(--gray);
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+/* Card title and description */
+.title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 8px;
+}
 
-    .label {
-      font-weight: 500;
-      color: var(--dark);
-    }
+.sub {
+  font-size: 0.95rem;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
 
-    .desc {
-      margin-top: 12px;
-      font-size: 0.95rem;
-      color: var(--gray);
-      line-height: 1.5;
-    }
+.label {
+  font-weight: 500;
+  color: #212529;
+}
 
-    .date {
-      font-size: 0.9rem;
-      color: var(--gray);
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+.desc {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #6c757d;
+  line-height: 1.5;
+}
 
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--gray);
-      background: white;
-      border-radius: var(--border-radius);
-      box-shadow: var(--card-shadow);
-      margin: 20px 0;
-    }
+.date {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
-    .empty-state i {
-      font-size: 3rem;
-      margin-bottom: 15px;
-      color: var(--light-gray);
-    }
+/* Row for edit/delete links */
+.row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
 
-    .empty-state h3 {
-      color: var(--gray);
-      margin-bottom: 10px;
-    }
+.row a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: #f1f3f5;
+  color: #212529;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.row a:hover {
+  background: #4361ee;
+  color: #fff;
+}
+
+.row a i {
+  font-size: 1rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  margin: 20px 0;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #e9ecef;
+}
+
+.empty-state h3 {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.empty-state a {
+  /* display: inline-block; */
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #4361ee;
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.empty-state a:hover {
+  background: #3a56d4;
+}
+
+
+/* 
+started here 
+/* Row actions */
+.row.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* Action buttons */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #212529;
+  background: #f1f3f5;
+}
+
+.action-btn i {
+  font-size: 1rem;
+}
+
+/* Hover effects */
+.action-btn.edit:hover {
+  background: #4cc9f0; /* success color */
+  color: #fff;
+}
+
+.action-btn.delete:hover {
+  background: #e63946; /* danger color */
+  color: #fff;
+}
+
+
+
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .card-container {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .card img {
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    grid-template-columns: 1fr;
+  }
+
+  .card img {
+    height: 160px;
+  }
+}
 
     /* Messages */
     .messages {
@@ -477,6 +596,11 @@
       .card {
         padding: 15px;
       }
+
+      .flex{
+        display: flex;
+
+      }
     }
   </style>
 </head>
@@ -613,7 +737,7 @@
     </div>
 
     <h2>Your Records</h2>
-
+<section id="CardClipbox">
     <div class="card-container">
 
 
@@ -650,16 +774,15 @@
         <div class="row">
 
           <div class="edite-programe">
-            <a href="{% url 'EditeOutReach' item.id  %}">
-              <i class="fas fa-edite"></i>
-              
+            <a href="{% url 'EditeOutReach' item.id  %}" class="action-btn edit">
+              <i class="fas fa-edit"></i>
               <span class="badge badge-primary">Edite OutReach</span>
             </a>
           </div>
 
           <div class="delete-programe">
-            <a href="{% url 'DeleteOutReach' item.id %}">
-              <i class="fas fa-delete"></i>
+            <a href="{% url 'DeleteOutReach' item.id %}" class="action-btn delete">
+              <i class="fas fa-trash-alt"></i>
               <span class="badge badge-primary">Delete OutReach</span>
             </a>
           </div>
@@ -709,24 +832,19 @@
 
         <div class="desc">{{ Achieve.achieveMent_discription|truncatewords:25 }}</div>
 
-        <div class="row">
-
-          <div class="edite-programe">
-            <a href="{% url 'EditeAchievements' Achieve.id  %}">
-              <i class="fas fa-edite"></i>
-              
-              <span class="badge badge-primary">Edite Achievement</span>
+        <div class="row actions">
+            <a href="{% url 'EditeAchievements' Achieve.id %}" class="action-btn edit">
+              <i class="fas fa-edit"></i>
+              <span>Edit Achievement</span>
             </a>
-          </div>
 
-          <div class="delete-programe">
-            <a href="{% url 'DeleteAchievements' Achieve.id %}">
-              <i class="fas fa-delete"></i>
-              <span class="badge badge-primary">Delete Achievement</span>
+            <a href="{% url 'DeleteAchievements' Achieve.id %}" class="action-btn delete">
+              <i class="fas fa-trash-alt"></i>
+              <span>Delete Achievement</span>
             </a>
-          </div>
-
         </div>
+
+
       </div>
       {% endfor %}
 
@@ -742,71 +860,11 @@
       {% endif %}
 
       <!-- Crate ClipBox for this Resut shownignn  -->
-      {% for r in all_Results_Objts %}
-      <div class="card shadow-lg border-0 p-3 mb-4 result-card">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-          <h4 class="fw-bold text-primary">{{ r.Result_Programe }}</h4>
-          <span class="badge bg-success p-2 px-3">Result Published</span>
-        </div>
-
-        <div class="row">
-
-          <!-- 1st Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box gold">
-              {% if r.Position_Holder1_img %}
-              <img src="{{ r.Position_Holder1_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">1st Position</h5>
-              <p class="mb-1">{{ r.Position_Holder1.Candidates_Name }}</p>
-            </div>
-          </div>
-
-          <!-- 2nd Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box silver">
-              {% if r.Position_Holder2_img %}
-              <img src="{{ r.Position_Holder2_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">2nd Position</h5>
-              <p class="mb-1">{{ r.Position_Holder2.Candidates_Name }}</p>
-            </div>
-          </div>
-
-          <!-- 3rd Position -->
-          <div class="col-md-3 text-center">
-            <div class="position-box bronze">
-              {% if r.Position_Holder3_img %}
-              <img src="{{ r.Position_Holder3_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">3rd Position</h5>
-              <p class="mb-1">{{ r.Position_Holder3.Candidates_Name }}</p>
-            </div>
-          </div>
-
-          <!-- Grade Holder -->
-          <div class="col-md-3 text-center">
-            <div class="position-box grade">
-              {% if r.Grade_holder_img %}
-              <img src="{{ r.Grade_holder_img.url }}" class="winner-img">
-              {% endif %}
-              <h5 class="mt-2 fw-bold">Grade Holder</h5>
-              <p class="mb-1">{{ r.Grande_Holder.Candidates_Name }}</p>
-              <span class="badge bg-info">{{ r.Secure_Grade }}</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      {% endfor %}
-
-      <!-- result section  -->
-
-      {% if not all_Achievements and not all_OutReach %}
       
-      {% endif %}
+      
 
     </div>
+    </section>
   </div>
 </body>
 
