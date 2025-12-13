@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Info Collector</title>
+    <style>
+        /*
+    Professional UI/UX Design for Program Report Form
+*/
+
+:root {
+    --primary-color: #007bff; /* Blue for primary actions */
+    --secondary-color: #6c757d; /* Gray for secondary actions */
+    --background-color: #f4f7f6; /* Light background */
+    --card-background: #ffffff; /* White card background */
+    --text-color: #333333;
+    --border-color: #ced4da;
+    --error-color: #dc3545; /* Red for errors */
+    --success-color: #28a745; /* Green for success */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 800px;
+    background: var(--card-background);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    padding: 40px;
+    margin: 20px 0;
+}
+
+/* --- Typography & Headers --- */
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h1 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+header p {
+    color: var(--secondary-color);
+}
+
+legend {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+/* --- Form Layout --- */
+fieldset {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    flex: 1; /* Allows boxes to share space equally */
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box.full-width {
+    flex: none;
+    width: 100%;
+}
+
+/* --- Input Fields & Labels --- */
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.required {
+    color: var(--error-color);
+    font-weight: 700;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* --- Buttons --- */
+.submit-area {
+    text-align: right;
+    padding-top: 20px;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+.secondary-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.secondary-btn:hover {
+    background-color: #5a6268;
+}
+
+/* --- Messages --- */
+.message-box {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error-box {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+    font-weight: 600;
+}
+
+.success-message {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.success-message h1 {
+    color: var(--success-color);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.success-message p {
+    margin-bottom: 20px;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 650px) {
+    .form-container {
+        padding: 20px;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .row .input-box {
+        margin-bottom: 20px; /* Space between inputs when stacked */
+    }
+
+    .row .input-box:last-child {
+        margin-bottom: 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Programe Info Collector Form</h1>   
+        <div class="error_Box">
+
+        </div>
+        <form action="https://sheetdb.io/api/v1/2ros94z4ggrb7" method="post" id="sheetdb-form">
+            <div class="row">
+
+                <div class="input_Box">
+                    <label for="Pro_Date">Programe Date</label>
+                    <input type="date" name="data[Date]" id="Pro_Date" placeholder="Programe Date..........">
+                </div>
+                
+                <div class="input_Box">
+                    <label for="Pro_Name">Programe Name</label>
+                    <input type="text" name="data[Pragrame Name]" id="Pro_Name" placeholder="Programe Name..........">
+                </div>
+                
+            </div>
+            
+            <div class="row">
+
+                <label for="Wing">Your Wing</label>
+                <select name="data[Wing_Name]" id="Wing">
+                    <option value="" disabled selected>Select Your Wing</option>
+                    <option value="Tech Wing">Tech Wing</option>
+                    <option value="Urdu Wing">Urdu Wing</option>
+                    <option value="Arabic Wing">Arabic Wing</option>
+                    <option value="English Wing">English Wing</option>
+                    <option value="Math & Science Wing">Math & Science Wing</option>
+                    <option value="General Knowledge Wing">General Knowledge Wing</option>
+                    <option value="Tazkiya Wing">Tazkiya Wing</option>
+                    <option value="Sport Club">Sport Club</option>
+                </select>
+            </div>
+
+            <div class="row">
+
+                <div class="input_Box">
+                    <label for="Pro_Dic">Programe Dic</label>
+                    <textarea name="data[Programe Discription]" id="Pro_Dic" cols="30" rows="10" placeholder="Programe Dic.........."></textarea>
+                </div>
+
+                <div class="input_Box">
+                    <label for="Res_Dic">Result Dic</label>
+                    <textarea name="data[Programe Discription]" id="Res_Dic" cols="30" rows="10" placeholder="Result Dic.........."></textarea>
+                </div>
+                
+            </div>
+            <button type="submit">Save Report</button>
+        </form>
+
+
+    </div>
+
+    <!-- <script>
+        const Inputs_Boxes = document.querySelectorAll("input");
+        const Submit_Btn = document.querySelector("button");
+
+        const MyForm = document.querySelector("form");
+        const ErrorBox = document.querySelector('.error_Box');
+
+        let isError = false;
+        let Programe_Date = document.querySelector('#Pro_Date');
+
+
+        // hide the errorBox while input putting
+
+        Inputs_Boxes.forEach((box)=>{
+            box.addEventListener("input", (e)=>{
+                ErrorBox.style.display = 'none'
+            })
+        })
+
+        MyForm.addEventListener("submit", (event) =>{
+            event.preventDefault()
+            let Date_Value = Programe_Date.value;
+            let thisDay = new Date().getDate();
+            // PREVENTING THE UNFILLED INPUT BOX
+            Inputs_Boxes.forEach((box) =>{
+                if (box.value == ''){
+                    ErrorBox.style.display = 'block'
+                    ErrorBox.innerHTML = "Plz fill all the boxes"
+                }
+            })
+
+            // preventing the Future Date
+            if (Date_Value > thisDay){
+                ErrorBox.innerHTML = Date_Value + "date is invalide..."
+            }
+
+
+            var form = document.getElementById('sheetdb-form');
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    fetch(form.action, {
+        method : "POST",
+        body: new FormData(document.getElementById("sheetdb-form")),
+    }).then(
+        response => response.json()
+    ).then((html) => {
+      // you can put any JS code here
+      alert('success')
+    });
+  });
+
+        })
+
+    </script> -->
+
+
+    <script>
+        const MyForm = document.querySelector("form");
+const ErrorBox = document.querySelector('.error_Box');
+// Select ALL required fields: input, select, and textarea
+const All_Form_Fields = document.querySelectorAll('input, select, textarea'); 
+
+const Programe_Date_Input = document.querySelector('#Pro_Date');
+
+// --- Helper Functions ---
+
+const showError = (message) => {
+    ErrorBox.innerHTML = `<p>${message}</p>`;
+    ErrorBox.style.display = 'block';
+};
+
+const hideError = () => {
+    ErrorBox.style.display = 'none';
+};
+
+// Hide errorBox while user is interacting with fields
+All_Form_Fields.forEach((field) => {
+    field.addEventListener("input", hideError);
+    field.addEventListener("change", hideError);
+});
+
+// --- Main Form Submission Handler ---
+
+MyForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // 1. Client-Side Validation
+    let isValid = true;
+
+    // Check all fields (input, select, textarea) for emptiness
+    All_Form_Fields.forEach((field) => {
+        // You might want to add a 'required' attribute to the HTML
+        // For simplicity here, we assume ALL are required except the button
+        if (!field.value.trim()) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        showError("Please fill all the boxes (Program Name, Date, Wing, Descriptions).");
+        return; // Stop submission if fields are empty
+    }
+
+    // 2. Date Validation (Corrected Logic)
+    const dateValue = Programe_Date_Input.value;
+    if (dateValue) {
+        const programDate = new Date(dateValue);
+        const today = new Date();
+        
+        // Zero out the time part for accurate day-to-day comparison
+        programDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        if (programDate > today) {
+            showError("The Program Date (" + dateValue + ") is invalid. It cannot be a future date.");
+            return; // Stop submission if date is in the future
+        }
+    }
+
+
+    // 3. ACTUAL Form Submission (Using your fetch logic)
+    
+    // Get the button to show loading state
+    const Submit_Btn = MyForm.querySelector("button[type='submit']");
+    Submit_Btn.disabled = true;
+    Submit_Btn.textContent = 'Saving...';
+
+    // The fetch request is now here, executed AFTER successful validation
+    fetch(MyForm.action, {
+        method: "POST",
+        // FormData is appropriate here for direct POST to SheetDB
+        body: new FormData(MyForm), 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then((data) => {
+        // Handle success
+        alert('Report Saved Successfully!');
+        MyForm.reset(); // Clear the form
+        hideError();
+        // You would typically show your .form_SuccessMsg here
+    })
+    .catch((error) => {
+        // Handle error
+        console.error('Submission Error:', error);
+        showError("Submission Failed! Please check your network or API link.");
+    })
+    .finally(() => {
+        // Always re-enable the button
+        Submit_Btn.disabled = false;
+        Submit_Btn.textContent = 'Save Report';
+    });
+});
+    </script>
+</body>
+</html>
