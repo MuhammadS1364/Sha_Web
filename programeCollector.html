@@ -246,18 +246,34 @@ button[type="submit"]:hover {
             
             <div class="row">
 
-                <label for="Wing">Your Wing</label>
-                <select name="data[Wing_Name]" id="Wing">
-                    <option value="" disabled selected>Select Your Wing</option>
-                    <option value="Tech Wing">Tech Wing</option>
-                    <option value="Urdu Wing">Urdu Wing</option>
-                    <option value="Arabic Wing">Arabic Wing</option>
-                    <option value="English Wing">English Wing</option>
-                    <option value="Math & Science Wing">Math & Science Wing</option>
-                    <option value="General Knowledge Wing">General Knowledge Wing</option>
-                    <option value="Tazkiya Wing">Tazkiya Wing</option>
-                    <option value="Sport Club">Sport Club</option>
-                </select>
+                <div class="Select-options">
+                    <label for="Wing">Your Wing</label>
+                    <select name="data[Wing_Name]" id="Wing">
+                        <option value="" disabled selected>Select Your Wing</option>
+                        <option value="Tech Wing">Tech Wing</option>
+                        <option value="Urdu Wing">Urdu Wing</option>
+                        <option value="Arabic Wing">Arabic Wing</option>
+                        <option value="English Wing">English Wing</option>
+                        <option value="Math & Science Wing">Math & Science Wing</option>
+                        <option value="General Knowledge Wing">General Knowledge Wing</option>
+                        <option value="Tazkiya Wing">Tazkiya Wing</option>
+                        <option value="Sport Club">Sport Club</option>
+                    </select>
+                </div>
+                
+                <div class="Select-options">
+                    <label for="Class">Your Class</label>
+                    <select name="data[Class]" id="Class">
+                        <option value="U1">U1</option>
+                        <option value="U2">U2</option>
+                        <option value="U3">U3</option>
+                        <option value="U4">U4</option>
+                        <option value="U5" selected>U5</option>
+                        <option value="U6">U6</option>
+                        <option value="U7">U7</option>
+                    </select>
+                </div>
+
             </div>
 
             <div class="row">
@@ -278,61 +294,6 @@ button[type="submit"]:hover {
 
 
     </div>
-
-    <!-- <script>
-        const Inputs_Boxes = document.querySelectorAll("input");
-        const Submit_Btn = document.querySelector("button");
-
-        const MyForm = document.querySelector("form");
-        const ErrorBox = document.querySelector('.error_Box');
-
-        let isError = false;
-        let Programe_Date = document.querySelector('#Pro_Date');
-
-
-        // hide the errorBox while input putting
-
-        Inputs_Boxes.forEach((box)=>{
-            box.addEventListener("input", (e)=>{
-                ErrorBox.style.display = 'none'
-            })
-        })
-
-        MyForm.addEventListener("submit", (event) =>{
-            event.preventDefault()
-            let Date_Value = Programe_Date.value;
-            let thisDay = new Date().getDate();
-            // PREVENTING THE UNFILLED INPUT BOX
-            Inputs_Boxes.forEach((box) =>{
-                if (box.value == ''){
-                    ErrorBox.style.display = 'block'
-                    ErrorBox.innerHTML = "Plz fill all the boxes"
-                }
-            })
-
-            // preventing the Future Date
-            if (Date_Value > thisDay){
-                ErrorBox.innerHTML = Date_Value + "date is invalide..."
-            }
-
-
-            var form = document.getElementById('sheetdb-form');
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    fetch(form.action, {
-        method : "POST",
-        body: new FormData(document.getElementById("sheetdb-form")),
-    }).then(
-        response => response.json()
-    ).then((html) => {
-      // you can put any JS code here
-      alert('success')
-    });
-  });
-
-        })
-
-    </script> -->
 
 
     <script>
